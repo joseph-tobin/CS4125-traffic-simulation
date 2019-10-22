@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Simulation{
 
@@ -12,6 +13,7 @@ public class Simulation{
 		vehicleQuantity = 10;
 		Node start = new Node(10,10);
 		Node end = new Node(10,5);
+
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
 		createNodes();
@@ -30,7 +32,18 @@ public class Simulation{
 	}
 
 	public void createNodes(){
-		
+		// HARDCODED FOR NOW
+		Random r = new Random();
+		float random1;
+		float random2;
+		int numberOfNodes = 50;
+		// HARDCODED FOR NOW
+		for (int i = 0; i < numberOfNodes; i++) {
+			random1 = 0 + r.nextFloat() * (50 - 0);
+			random2 = 0 + r.nextFloat() * (50 - 0);
+			Node node = new Node(random1, random2);
+			nodeList.add(node);
+		}
 	}
 
 	public void createVehicle(Node start, Node end){
