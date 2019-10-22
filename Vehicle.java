@@ -1,11 +1,15 @@
 public class Vehicle{
-	Destination dest;
 
-	public Vehicle(Destination dest){
-		this.dest = dest;
+	private Node start;
+	private Node end;
+
+	public Vehicle(Node start, Node end){
+		this.start = start;
+		this.end = end;
 	}
 
 	public void routeFind(){
 
 	}
+
 }

@@ -7,11 +7,11 @@ public class Destination extends Node{
 		this.capacity = capacity;
 	}
 
-	public getCapacity(){
+	public int getCapacity(){
 		return this.capacity;
 	}
 
-	public setCapacity(int capacity){
+	public void setCapacity(int capacity){
 		this.capacity = capacity;
 	}
 }

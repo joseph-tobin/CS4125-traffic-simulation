@@ -7,6 +7,6 @@ public class Metric{
 	}
 
 	public Metric generateMetrics() {
-		
+		return null;
 	}
 }
