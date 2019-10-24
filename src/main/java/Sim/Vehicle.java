@@ -1,3 +1,5 @@
+package Sim;
+
 import TrafficControl.Node;
 
 public class Vehicle{
@@ -14,4 +16,8 @@ public class Vehicle{
 
 	}
 
+	// TODO: 24-10-19 implement deep copy of vehicle
+	public Vehicle copy() {
+		return this;
+	}
 }

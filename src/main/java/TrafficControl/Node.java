@@ -7,6 +7,9 @@ public class Node{
 	private float y;
 	private ArrayList<Node> adjacent;
 
+	public Node(float x, float y) {
+		this(x, y, new ArrayList<>());
+	}
 	public Node(float x, float y, ArrayList<Node> adj){
 		this.x = x;
 		this.y = y;
@@ -28,5 +31,6 @@ public class Node{
 		this.y = y;
 	}
 	public ArrayList<Node> getAdjacent() {return this.adjacent; }
+	public void setAdjacent(ArrayList<Node> adj) { this.adjacent = adj; }
 
 }

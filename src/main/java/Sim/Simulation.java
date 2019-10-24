@@ -8,9 +8,10 @@ import java.util.Random;
 
 public class Simulation{
 
-	private ArrayList<Node> nodeList;
+	public ArrayList<Node> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 	private HashMap<String, Vehicle> routeMap;
 	private int vehicleQuantity;
+	private ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 	public void run(){
 		// HARCODED FOR NOW
@@ -55,9 +56,10 @@ public class Simulation{
 		float yCoord = 2; // TODO: end.getX + end.getY
 		String xyCoords = String.valueOf(xCoord) + String.valueOf(yCoord);
 		if (routeMap.containsKey(xyCoords)) {
-			// TODO: use old vehicle
+			vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
 			Vehicle newVehicle = new Vehicle(start, end);
+			vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
 	}
