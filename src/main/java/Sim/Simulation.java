@@ -1,3 +1,7 @@
+package Sim;
+
+import TrafficControl.Node;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;

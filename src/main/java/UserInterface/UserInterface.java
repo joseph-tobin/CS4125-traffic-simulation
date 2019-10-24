@@ -1,3 +1,5 @@
+package UserInterface;
+
 public class UserInterface{
 	// needs a rethink? depedency?
 	UIController uic;

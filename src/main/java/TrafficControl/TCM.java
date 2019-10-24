@@ -1,3 +1,5 @@
+package TrafficControl;
+
 public class TCM extends Node {
 
 	public TCM(float x, float y){
@@ -7,7 +9,7 @@ public class TCM extends Node {
 	// needs more vars and methods
 
 	/**
-	 * Abstract create method to be used in the TCM factory
+	 * Abstract create method to be used in the TrafficControl.TCM factory
 	 * @return
 	 */
 	private abstract TCM create();

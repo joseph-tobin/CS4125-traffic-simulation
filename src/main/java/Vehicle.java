@@ -1,3 +1,5 @@
+import TrafficControl.Node;
+
 public class Vehicle{
 
 	private Node start;
