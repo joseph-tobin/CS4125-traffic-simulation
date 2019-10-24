@@ -1,16 +1,11 @@
 package UserInterface;
 
 import Sim.Simulation;
-import processing.core.PApplet;
 
-public class UserInterface extends PApplet{
+public class UserInterface{
 	// needs a rethink? depedency?
 	UIController uic;
-//	Simulation sim;
-
-	public static void main(String [] args){
-		PApplet.main("MainClass", args);
-	}
+	Simulation sim;
 
 	public void draw(){
 
@@ -24,19 +19,19 @@ public class UserInterface extends PApplet{
 
 	}
 
-//	public void run(){
-//		sim.run();
-//	}
-//
-//	public void pause(){
-//		sim.pause();
-//	}
-//
-//	public void reset(){
-//		sim.reset();
-//	}
-//
-//	public void displayMetrics(){
-//		uic.getMetrics();
-//	}
+	public void run(){
+		sim.run();
+	}
+
+	public void pause(){
+		sim.pause();
+	}
+
+	public void reset(){
+		sim.reset();
+	}
+
+	public void displayMetrics(){
+		uic.getMetrics();
+	}
 }
