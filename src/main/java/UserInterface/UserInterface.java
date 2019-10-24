@@ -1,5 +1,7 @@
 package UserInterface;
 
+import Sim.Simulation;
+
 public class UserInterface{
 	// needs a rethink? depedency?
 	UIController uic;
