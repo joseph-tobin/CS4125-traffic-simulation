@@ -4,12 +4,12 @@ import Sim.Simulation;
 import processing.core.PApplet;
 
 public class UserInterface extends PApplet {
-	// needs a rethink? depedency?
+	// needs a rethink? dependency?
 	UIController uic;
 	Simulation sim;
 
 	public static void main(String [] args){
-	    PApplet.main("MainClass", args);
+	    PApplet.main("UserInterface.UserInterface");
     }
 
 //	public void draw(){
