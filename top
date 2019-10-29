@@ -1,0 +1,118 @@
+[33mcommit 21fa570d67b75b25ce8bda852fffdc95f23ea636[m[33m ([m[1;36mHEAD -> [m[1;32msprint1[m[33m, [m[1;31morigin/sprint1[m[33m)[m
+Author: nialldillane <niall.dillane@gmail.com>
+Date:   Sun Oct 27 16:26:16 2019 +0000
+
+    gitignore a bunch of stuff
+
+[33mcommit e9c297213380cfef027161d5a744418221b10b19[m
+Author: nialldillane <niall.dillane@gmail.com>
+Date:   Thu Oct 24 16:52:18 2019 +0100
+
+    UI finished bois
+
+[33mcommit 65aec15d8db6e9f118d48d63a40fa67a7dcac3de[m
+Author: nialldillane <niall.dillane@gmail.com>
+Date:   Thu Oct 24 16:24:51 2019 +0100
+
+    Processing import
+
+[33mcommit 88bd71e0e49d196f48752175925a51d3ab408ab7[m
+Merge: 4aa8940 27a781b
+Author: nialldillane <niall.dillane@gmail.com>
+Date:   Thu Oct 24 16:16:18 2019 +0100
+
+    Merge remote-tracking branch 'origin/sprint1' into sprint1
+    
+    # Conflicts:
+    #       src/main/java/UserInterface/UserInterface.java
+
+[33mcommit 4aa89403aeb97ad0202f22d9b4c449b51cc6627d[m
+Author: nialldillane <niall.dillane@gmail.com>
+Date:   Thu Oct 24 16:15:22 2019 +0100
+
+    Processing import
+
+[33mcommit 27a781ba2113eb044ecb76b8656be3c96f0facde[m
+Author: Adam O Mahony <omahonyadam@gmail.com>
+Date:   Thu Oct 24 16:13:33 2019 +0100
+
+    fix issues to get prelim build
+
+[33mcommit 54ff8253c0e4e35dcb941b501073751a6429ba15[m
+Author: Adam O Mahony <omahonyadam@gmail.com>
+Date:   Thu Oct 24 14:16:10 2019 +0100
+
+    Add A_Star file (without modifications for Traffic Sim application)
+
+[33mcommit c253f4d86dc8715f09f727568339dc567f2f8779[m
+Author: Adam O Mahony <omahonyadam@gmail.com>
+Date:   Thu Oct 24 14:07:15 2019 +0100
+
+    more restructuring - added comments regarding how to proceed
+
+[33mcommit d73077641a7028ad1fbf5ea262af5839c466257f[m
+Author: Adam O Mahony <omahonyadam@gmail.com>
+Date:   Thu Oct 24 13:52:20 2019 +0100
+
+    preliminary package restructure
+
+[33mcommit f6cab75d8817d9fd3117e2d2652a92f4acdecda0[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Adam O Mahony <omahonyadam@gmail.com>
+Date:   Thu Oct 24 13:17:57 2019 +0100
+
+    Migrate to Maven build tool
+
+[33mcommit b20c412dfe275dde60a44197bb9b1fa9ad746868[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Tue Oct 22 17:23:17 2019 +0100
+
+    last was actually removing class files this is the random node creation
+
+[33mcommit 14754927f9fcf94428a63cd5eacad62f7e0b63e5[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Tue Oct 22 17:22:28 2019 +0100
+
+    random node creation
+
+[33mcommit 9641d8d554195023db73bd474acf04b800fb0993[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Tue Oct 22 17:07:28 2019 +0100
+
+    basic sim code with some other small changes
+
+[33mcommit 378a9e6dd819ad763cf86036d396918699b2c4f7[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Mon Oct 21 16:59:40 2019 +0100
+
+    skeleton code
+
+[33mcommit 61ad6fa55ea36e916e4a8b987a0bea58cc42eebf[m
+Merge: 9a8ae8a 02d5cde
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Mon Oct 21 16:18:43 2019 +0100
+
+    Merge branch 'master' of https://github.com/joseph-tobin/CS4125-traffic-simulation
+
+[33mcommit 9a8ae8a4cce69eb3a0defb3e6485ead59346f6d0[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Mon Oct 21 16:18:20 2019 +0100
+
+    empty java files
+
+[33mcommit 02d5cde0ebf75104ad8ba7a47ee8488a5ca91673[m
+Author: Adam O Mahony <24462340+Squrrli@users.noreply.github.com>
+Date:   Mon Oct 21 16:11:10 2019 +0100
+
+    Update to project specific ascii art
+
+[33mcommit bb39fb20356f11f4dab7c5fc76e001f7d7f96048[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Mon Oct 21 16:02:12 2019 +0100
+
+    second
+
+[33mcommit ac8960a572ad4914a04391b3952fd5f17ca6a280[m
+Author: JoeTheToe <16163842@studentmail.ul.ie>
+Date:   Mon Oct 21 15:53:11 2019 +0100
+
+    first commit
