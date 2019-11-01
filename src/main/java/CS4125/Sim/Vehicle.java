@@ -48,4 +48,13 @@ public class Vehicle {
 			}
 		}
 	}
+
+	public void move() {
+		for (int i=0; i<route.size()-1; i++) {
+			if (route.get(i)==currentNode) {
+				lastNode=currentNode;
+				currentNode=route.get(i+1);
+			}
+		}
+	}
 }
