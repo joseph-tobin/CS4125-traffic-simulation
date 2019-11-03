@@ -93,6 +93,10 @@ public class Simulation{
 		return this.nodeList;
 	}
 
+	public ArrayList<Vehicle> getVehicles(){
+		return this.vehicles;
+	}
+
 	public HashMap<String, Vehicle> getRouteMap(){
 		return this.routeMap;
 	}
