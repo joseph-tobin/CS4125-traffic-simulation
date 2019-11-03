@@ -30,8 +30,8 @@ public class Simulation{
 		// TODO: instantiate nodeList and routeMap
 		createNodes();
 		for (int i = 1; i < vehicleQuantity; i++) {
-			// TODO: initialize random start and end node
-			createVehicle(start, end);
+			// INITIALISE RANDOM START AND END NODE
+			createVehicle(nodeList.get(new Random().nextInt(nodeList.size()-1) + 0), nodeList.get(new Random().nextInt(nodeList.size()-1) + 0));
 		}
 	}
 
