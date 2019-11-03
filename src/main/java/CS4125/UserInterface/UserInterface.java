@@ -2,9 +2,13 @@ package CS4125.UserInterface;
 
 import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 import javafx.scene.paint.Color;
@@ -39,13 +43,22 @@ public class UserInterface extends Application {
 		scene = new Scene(split, 900, 600);
 		stage.setScene(scene);
 		stage.show();
+
+		pane.addEventHandler(MouseEvent.ANY,
+				new ClickHandler(null));
 	}
 
+	static class Delta { double x, y; }
+
 	private Circle addNode(double x, double y) {
-		Circle n1 = new Circle(x, y, 10);
-		n1.setFill(Color.FORESTGREEN);
-		pane.getChildren().add(n1);
-		return n1;
+		Circle n = new Circle(x, y, 10);
+		n.setFill(Color.FORESTGREEN);
+		pane.getChildren().add(n);
+
+		n.addEventHandler(MouseEvent.ANY,
+				new ClickHandler(n));
+
+		return n;
 	}
 
 	private void addEdge(Circle n1, Circle n2) {
@@ -74,6 +87,69 @@ public class UserInterface extends Application {
 		t.setCycleCount(PathTransition.INDEFINITE);
 		t.setPath(p);
 		t.play();
+	}
+
+	public class ClickHandler implements EventHandler<MouseEvent> {
+
+		private boolean dragging = false;
+
+		// handler for dragging and dropping nodes
+		public ClickHandler(Circle n) {
+			if(n == null)
+				return;
+			final Delta dragDelta = new Delta();
+
+			n.setOnMousePressed(mouseEvent -> {
+				// record a delta distance for the drag and drop operation.
+				dragDelta.x = n.getCenterX() - mouseEvent.getX();
+				dragDelta.y = n.getCenterY() - mouseEvent.getY();
+				n.getScene().setCursor(Cursor.MOVE);
+			});
+			n.setOnMouseReleased(mouseEvent -> {
+				n.getScene().setCursor(Cursor.HAND);
+			});
+			n.setOnMouseDragged(mouseEvent -> {
+				n.setCenterX(mouseEvent.getX() + dragDelta.x);
+				n.setCenterY(mouseEvent.getY() + dragDelta.y);
+			});
+			n.setOnMouseEntered(mouseEvent -> {
+				if (!mouseEvent.isPrimaryButtonDown()) {
+					n.getScene().setCursor(Cursor.HAND);
+				}
+			});
+			n.setOnMouseExited(mouseEvent -> {
+				if (!mouseEvent.isPrimaryButtonDown()) {
+					n.getScene().setCursor(Cursor.DEFAULT);
+				}
+			});
+		}
+
+		@Override
+		public void handle(MouseEvent e) {
+			if (e.getEventType() == MouseEvent.MOUSE_PRESSED) {
+				dragging = false;
+			}
+			else if (e.getEventType() == MouseEvent.DRAG_DETECTED) {
+				dragging = true;
+			}
+			else if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+				if (!dragging) {
+					if (e.getButton() == MouseButton.PRIMARY) {
+						double x = e.getX(); // remove pane's coordinates
+						double y = e.getY(); // remove pane's coordinates
+						Circle c = addNode(x, y);
+
+						pane.getChildren().add(c);
+					} else if (e.getButton() == MouseButton.SECONDARY) {
+						// if circle was clicked, remove it
+						Circle picked = (Circle) e.getPickResult().getIntersectedNode();
+						if (picked instanceof Circle) {
+							pane.getChildren().remove(picked);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
