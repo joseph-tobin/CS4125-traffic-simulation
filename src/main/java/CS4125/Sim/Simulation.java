@@ -30,8 +30,8 @@ public class Simulation{
 		// TODO: instantiate nodeList and routeMap
 		createNodes();
 		for (int i = 1; i < vehicleQuantity; i++) {
-			// TODO: initialize random start and end node
-			createVehicle(start, end);
+			// INITIALISE RANDOM START AND END NODE
+			createVehicle(nodeList.get(new Random().nextInt(nodeList.size()-1) + 0), nodeList.get(new Random().nextInt(nodeList.size()-1) + 0));
 		}
 	}
 
@@ -48,13 +48,22 @@ public class Simulation{
 		Random r = new Random();
 		float random1;
 		float random2;
-		int numberOfNodes = 50;
+		int numberOfNodes = 5;
+		ArrayList<Node> adjNode = new ArrayList<Node>();
+
 		// HARDCODED FOR NOW
+		// This is for start node, rest are inside for loop
+		random1 = 1; // random x coord
+		random2 = 2; // random y coord
+		Node node = new Node(random1, random2);
+		nodeList.add(node);
 		for (int i = 0; i < numberOfNodes; i++) {
 			random1 = 0 + r.nextFloat() * (50 - 0);
 			random2 = 0 + r.nextFloat() * (50 - 0);
-			Node node = new Node(random1, random2);
-			nodeList.add(node);
+			adjNode.add(nodeList.get(i)); // add the previous node to adjNode list
+			Node n = new Node(random1, random2, new ArrayList<Node>(adjNode)); // create new node with adjNode list
+			nodeList.add(n);
+			adjNode.clear();
 		}
 	}
 
@@ -82,6 +91,10 @@ public class Simulation{
 
 	public ArrayList<Node> getNodeList(){
 		return this.nodeList;
+	}
+
+	public ArrayList<Vehicle> getVehicles(){
+		return this.vehicles;
 	}
 
 	public HashMap<String, Vehicle> getRouteMap(){
