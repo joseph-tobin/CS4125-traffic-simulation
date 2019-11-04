@@ -227,6 +227,7 @@ public class A_Star {
         }
     }
 
+    /**  Validator not needed*/
     /* Validator
      * Validate and handle user input.
      */
@@ -361,6 +362,8 @@ public class A_Star {
         }
     }
 
+
+    /** Not needed */
     /* getGameSize
      * Uses a JOptionPane to determine the board size: either 8-puzzle or 15-puzzle
      */
