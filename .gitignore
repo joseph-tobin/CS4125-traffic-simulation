@@ -36,7 +36,6 @@
 # *.iml
 # *.ipr
 
-.idea
 target
 
 # CMake
