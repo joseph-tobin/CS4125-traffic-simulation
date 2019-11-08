@@ -1,10 +1,9 @@
 package CS4125.TrafficControl;
 
+/**
+ * Interface which describes the endpoint on a graph.
+ */
 public interface IEndpoint {
-
-	int capacity = 0;
-
 	public abstract int getCapacity();
-
 	public abstract void setCapacity(int capacity);
 }

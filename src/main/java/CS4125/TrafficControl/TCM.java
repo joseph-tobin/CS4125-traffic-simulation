@@ -14,6 +14,7 @@ public abstract class TCM extends Node {
 	 * Abstract create method to be used in the CS4125.TrafficControl.TCM factory
 	 * @return
 	 */
-	abstract TCM create();
+	abstract TCM create(); // TODO: 08-11-19 reconsider the implementation of the factory methods
+
 
 }

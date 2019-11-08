@@ -1,9 +1,11 @@
 package CS4125.Sim;
 
 import CS4125.TrafficControl.Node;
+import CS4125.utils.Observer;
+
 import java.util.*;
 
-public class Vehicle {
+public class Vehicle extends Observer {
 	private Node currentNode;
 	private Node lastNode;
 	private Node startNode;
@@ -78,5 +80,10 @@ public class Vehicle {
 				currentNode=route.get(i+1);
 			}
 		}
+	}
+
+	@Override
+	public void update() {
+		// TODO: 08-11-19 add implementation
 	}
 }
