@@ -34,7 +34,7 @@ public class TCMFactory {
         switch (type) {
             // TODO: 08-11-19 create concrete TCM classes
             case SIMPLE_JUNCTION: ;
-            case TRAFFIC_LIGHTS: ;
+            case TRAFFIC_LIGHTS: return new TrafficLights(x, y, adj);
             case ROUNDABOUT: ;
             case CAR_PARK: ;
             default: ; // Print error
