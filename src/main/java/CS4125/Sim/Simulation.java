@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Simulation{
+public enum Simulation{
+
+	INSTANCE;
 
 	public ArrayList<Node> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 	private HashMap<String, Vehicle> routeMap;
 	private int vehicleQuantity;
 	private ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-	public Simulation() {
+	Simulation() {
 		this.nodeList = new ArrayList<Node>();
 		this.routeMap = new HashMap<String, Vehicle>();
 		this.vehicles = new ArrayList<>();
