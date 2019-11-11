@@ -11,5 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="org.processing:core:3.3.6" level="project" />
+    <orderEntry type="library" name="Maven: org.processing:core:3.3.6" level="project" />
   </component>
 </module>
