@@ -182,15 +182,6 @@ public class A_Star {
             return output;
         }
 
-        /* winPath
-         * Recursively prints the path from the root node to this State.
-         */
-        public String winPath(){
-            if(this.prev != null)
-                return (this.prev).winPath() + this.toString();
-            return this.toString();
-        }
-
         /* compareTo
          * Necessary to implement Comparable, which is in turn necessary to be used in a PriorityQueue.
          */
@@ -227,92 +218,7 @@ public class A_Star {
         }
     }
 
-    /**  Validator not needed*/
-    /* Validator
-     * Validate and handle user input.
-     */
-    protected static class Validator {
-        private static String inputPat15 = "^([0-9.,A-F]\\s+){15}[0-9.,A-F]$";
-        private static String inputPat8 = "^([0-8.]\\s+){8}[0-8.]$";
-        private static Pattern r15 = Pattern.compile(inputPat15);
-        private static Pattern r8 = Pattern.compile(inputPat8);
-        private static Matcher stringMatcher;
-
-        /* parse
-         * Parses a string with the inputPat regex to confirm the user has adhered to the format.
-         */
-        protected static Boolean parse(String input) {
-            stringMatcher = (State.BOARD_SIZE == 16) ? r15.matcher(input) : r8.matcher(input);
-            if (!stringMatcher.find()){
-                return false;
-            }
-
-            return true;
-        }
-
-        /* formatInput
-         * Converts a string to a short[]
-         */
-        private static short[] formatInput(String input){
-            String[] strArr = input.split("\\s+");
-            short[] shortArr = new short[strArr.length];
-
-            for(int i = 0; i < shortArr.length; i++){
-                shortArr[i] = Short.parseShort( strArr[i], 16 );
-            }
-
-            return shortArr;
-        }
-
-        /* containsDuplicates
-         * Checks whether a short[] has duplicates in it.
-         */
-        protected static Boolean containsDuplicates(short[] arr){
-            boolean[] seen = new boolean[State.BOARD_SIZE];
-            for(int i = 0; i < arr.length; i++){
-                short val = arr[i];
-                if(val >= State.BOARD_SIZE || val < 0) {
-                    return true;
-                }
-                if(seen[val]) {
-                    return true;
-                }
-
-                seen[val] = true;
-            }
-
-            return false;
-        }
-
-        /* getBoard
-         * Takes the name of the board to show to the user ("Start"/"End") and returns a fully validated board.
-         */
-        public static short[] getBoard(String name, String level) {
-            String rules = "8";
-            if(level=="15 Puzzle")
-                rules = "9 and letters A through F"; // space saving boiiii
-
-            while(true) {
-                String input = JOptionPane.showInputDialog(null,
-                        name + " State:\n* Numbers 0 through " + rules +"\n* In any order\n* Separated by spaces");
-                if(input == null) {
-                    // The user hit "Cancel"
-                    System.exit(0);
-                }
-                if(!parse(input)) {
-                    JOptionPane.showMessageDialog(null, "Incorrect format. Try again.");
-                    continue;
-                }
-                short[] output = formatInput(input);
-                if(containsDuplicates(output)) {
-                    JOptionPane.showMessageDialog(null, "Must contain all numbers 0 through " + rules + ",\nand cannot have duplicates. \nTry again.");
-                    continue;
-                }
-
-                return output;
-            }
-        }
-    }
+    /* End of State class */
 
     /* main
      * Takes input from the user, validates it, and prints the state and its children to the screen.
@@ -321,8 +227,8 @@ public class A_Star {
         String response = getGameSize();
 
         // Get boards
-        short board_start[] = Validator.getBoard("Start", response);
-        short board_end[] = Validator.getBoard("End", response);
+        short board_start[] = new short[5];
+        short board_end[] = new short[5];
 
         // Set goal board
         State.setEndBoard(board_end);
