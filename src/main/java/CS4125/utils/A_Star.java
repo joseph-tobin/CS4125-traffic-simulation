@@ -228,7 +228,38 @@ public class A_Star {
      * @return List of nodes in a graph describing the best route found from start to end nodes
      */
     public static List<IGraphable> findRoute(IGraphable start, IGraphable end) {
+
+        // TODO: 16-11-19 How does do Node know what node came before it? Node has member variable Node parent, look into using the state inner class but passing IGraphable object to the state
+        // TODO: 16-11-19 Passing IGraphable to State object would solve parent issue and possible allow for easier estimatedCost() and heuristic() calculation
+
         List<IGraphable> route = new ArrayList<IGraphable>();
+        HashSet<IGraphable> seen = new HashSet<IGraphable>();
+        PriorityQueue<IGraphable> open = new PriorityQueue<IGraphable>();
+
+        seen.add(start);
+        open.add(start);
+
+        try {
+            IGraphable temp = open.poll();
+            while(temp.getHeuristic() != 0){ //
+                for(IGraphable child : temp.getNextStates()){
+                    if(!(seen.contains(child))){
+                        open.add(child);
+                        seen.add(child);
+                    }
+                }
+
+                temp=open.poll();
+            }
+
+        } catch (OutOfMemoryError e) {
+            System.out.println("Error: Out of Memory, search space too large.");
+            return null;
+        } catch (NullPointerException e) {
+            System.out.println("Search exhausted: unreachable destination");
+            return null;
+        }
+
         return route;
     }
 
