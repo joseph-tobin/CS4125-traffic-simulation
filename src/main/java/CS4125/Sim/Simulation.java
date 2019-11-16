@@ -1,8 +1,12 @@
 package CS4125.Sim;
 
 import CS4125.TrafficControl.Node;
+import CS4125.TrafficControl.SimpleJunction;
+import CS4125.TrafficControl.TCMFactory;
+import CS4125.TrafficControl.TrafficLights;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -46,27 +50,24 @@ public enum Simulation{
 	}
 
 	public void createNodes(){
-		// HARDCODED FOR NOW
-		Random r = new Random();
-		float random1;
-		float random2;
-		int numberOfNodes = 5;
-		ArrayList<Node> adjNode = new ArrayList<Node>();
+		// Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
+		// TODO: 14-11-19 Implement remaining TCM types
+		TCMFactory factory = new TCMFactory();
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		TrafficLights flagpoles = (TrafficLights) factory.getTCM(TCMFactory.TCMType.TRAFFIC_LIGHTS, 0, 0);			nodeList.add(flagpoles);
+		SimpleJunction libRoundabout = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);		nodeList.add(libRoundabout);
+		SimpleJunction leroRoundabout = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);	nodeList.add(leroRoundabout);
+		SimpleJunction stables = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);			nodeList.add(stables);
+		SimpleJunction stablesCarpark = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);	nodeList.add(stablesCarpark);
+		TrafficLights eastGate = (TrafficLights) factory.getTCM(TCMFactory.TCMType.TRAFFIC_LIGHTS, 0, 0);				nodeList.add(eastGate);
 
-		// HARDCODED FOR NOW
-		// This is for start node, rest are inside for loop
-		random1 = 1; // random x coord
-		random2 = 2; // random y coord
-		Node node = new Node(random1, random2);
-		nodeList.add(node);
-		for (int i = 0; i < numberOfNodes; i++) {
-			random1 = 0 + r.nextFloat() * (50 - 0);
-			random2 = 0 + r.nextFloat() * (50 - 0);
-			adjNode.add(nodeList.get(i)); // add the previous node to adjNode list
-			Node n = new Node(random1, random2, new ArrayList<Node>(adjNode)); // create new node with adjNode list
-			nodeList.add(n);
-			adjNode.clear();
-		}
+		// Setup adjacency lists for each of the original nodes
+		flagpoles.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
+		libRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(flagpoles, leroRoundabout, stables)));
+		leroRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
+		stables.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout, stablesCarpark, eastGate)));
+		stablesCarpark.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
+		eastGate.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
 	}
 
 	public void createVehicle(Node start, Node end){

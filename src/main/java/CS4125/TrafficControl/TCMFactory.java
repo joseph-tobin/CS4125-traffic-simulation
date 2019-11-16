@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TCMFactory {
 
-    enum TCMType {
+    public enum TCMType {
         SIMPLE_JUNCTION,
         TRAFFIC_LIGHTS,
         ROUNDABOUT,
@@ -13,7 +13,7 @@ public class TCMFactory {
 
     /**
      * Overloaded Factory method which creates a TCM with an empty adjacency list
-     * @param type Enumerated TCM type to create
+     * @param type Enumerated TCM type to createImage
      * @param x X Coordinate of TCM on UI
      * @param y Y Coordinate of TCM on UI
      * @return Concrete TCM object specified by type parameter
@@ -33,7 +33,7 @@ public class TCMFactory {
     public TCM getTCM(TCMType type, int x, int y, ArrayList<Node> adj) {
         switch (type) {
             // TODO: 08-11-19 create concrete TCM classes
-            case SIMPLE_JUNCTION: ;
+            case SIMPLE_JUNCTION: return new SimpleJunction(x,y, adj);
             case TRAFFIC_LIGHTS: return new TrafficLights(x, y, adj);
             case ROUNDABOUT: ;
             case CAR_PARK: ;
