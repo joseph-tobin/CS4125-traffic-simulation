@@ -8,6 +8,7 @@ package CS4125.utils;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.HashSet;
@@ -219,6 +220,19 @@ public class A_Star {
     }
 
     /* End of State class */
+
+    /**
+     *
+     * @param start Starting node of a searchable graph
+     * @param end Destination node of a searchable graph
+     * @return List of nodes in a graph describing the best route found from start to end nodes
+     */
+    public static List<IGraphable> findRoute(IGraphable start, IGraphable end) {
+        List<IGraphable> route = new ArrayList<IGraphable>();
+        return route;
+    }
+
+
 
     /* main
      * Takes input from the user, validates it, and prints the state and its children to the screen.
