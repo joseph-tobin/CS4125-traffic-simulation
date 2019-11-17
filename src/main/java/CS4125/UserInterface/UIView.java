@@ -20,22 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import oracle.jvm.hotspot.jfr.JFRStackFrame;
 
-class NodeDelay {
-	Circle n;
-	int delay;
-
-	public NodeDelay(Circle n, int delay) {
-		this.n = n;
-		this.delay = delay;
-	}
-	public Circle getNode(){
-		return n;
-	}
-	public int getDelay(){
-		return delay;
-	}
-}
-
 public class UIView extends Application {
 
 	private SplitPane split;
@@ -47,10 +31,18 @@ public class UIView extends Application {
 	private UIController.ClickHandler clickController;
 	private UISim sim;
 
+
+	/**
+	 * Start point of the application
+	 * @param args: null
+	 */
 	public static void main(String [] args){
 		Application.launch();
 	}
 
+	/**
+	 * Creating the sim and the controller from here
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		split = new SplitPane();

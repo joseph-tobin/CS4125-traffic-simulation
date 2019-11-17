@@ -19,6 +19,12 @@ public class UIController{
 		this.view = view;
 	}
 
+	/**
+	 * Add a Node to the UI "map"
+	 * @param x: x co-ordinate of Node
+	 * @param y: y co-ordinate of Node
+	 * @return added node object
+	 */
 	Circle addNode(double x, double y) {
 		Circle n = new Circle(x, y, 10);
 		n.setFill(Color.FORESTGREEN);
@@ -30,6 +36,11 @@ public class UIController{
 		return n;
 	}
 
+	/**
+	 * Add an edge between two existing nodes
+	 * @param n1: node 1
+	 * @param n2: node 2
+	 */
 	void addEdge(Circle n1, Circle n2) {
 		Line edge = new Line();
 		edge.startXProperty().bind(n1.centerXProperty());
@@ -40,6 +51,10 @@ public class UIController{
 		edge.toBack();
 	}
 
+	/**
+	 * Add a "car" animated along a path of nodes
+	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
+	 */
 	void addCar(NodeDelay [] path) {
 		Circle c = new Circle(path[0].getNode().getCenterX(), path[0].getNode().getCenterY(), 5);
 		c.setFill(Color.INDIANRED);
@@ -64,14 +79,21 @@ public class UIController{
 		seq.play();
 	}
 
+	/**
+	 * For calculating the difference in distance along drag and drop
+	 */
 	static class Delta { double x, y; }
 
+	/**
+	 * Inner class specifically for click handling
+	 */
 	public class ClickHandler implements EventHandler<MouseEvent> {
 
 		private boolean dragging = false;
 
-		/*
-		 * Dragging and Dropping Nodes
+		/**
+		 * Drag and drop a node
+		 * @param n: selected node
 		 */
 		ClickHandler(Circle n) {
 			if(n.getRadius() == -1)
@@ -103,8 +125,9 @@ public class UIController{
 			});
 		}
 
-		/*
-		 * Adding and Removing Nodes
+		/**
+		 * Adding and removing nodes on click
+		 * @param e: mouse event, to distinguish from drag-drop
 		 */
 		@Override
 		public void handle(MouseEvent e) {
