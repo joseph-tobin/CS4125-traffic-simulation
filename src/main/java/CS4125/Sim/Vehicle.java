@@ -1,7 +1,6 @@
 package CS4125.Sim;
 
 import CS4125.TrafficControl.ITCM;
-import CS4125.TrafficControl.Node;
 import CS4125.utils.Observer;
 
 import java.util.*;

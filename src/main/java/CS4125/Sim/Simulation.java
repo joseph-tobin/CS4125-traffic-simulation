@@ -1,12 +1,9 @@
 package CS4125.Sim;
 
 import CS4125.TrafficControl.ITCM;
-import CS4125.TrafficControl.Node;
 import CS4125.TrafficControl.SimpleJunction;
-import CS4125.TrafficControl.TrafficLights;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -29,8 +26,8 @@ public enum Simulation{
 	public void run(){
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
-		Node start = new Node(10,10);
-		Node end = new Node(10,5);
+		ITCM start = new SimpleJunction(10, 10, new ArrayList<ITCM>()) {};
+		ITCM end = new SimpleJunction(10,5, new ArrayList<ITCM>());
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
