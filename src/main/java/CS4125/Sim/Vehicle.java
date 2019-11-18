@@ -1,28 +1,29 @@
 package CS4125.Sim;
 
+import CS4125.TrafficControl.ITCM;
 import CS4125.TrafficControl.Node;
 import CS4125.utils.Observer;
 
 import java.util.*;
 
 public class Vehicle extends Observer {
-	private Node currentNode;
-	private Node lastNode;
-	private Node startNode;
-	private Node endNode;
-	private ArrayList<Node> route;
+	private ITCM currentNode;
+	private ITCM lastNode;
+	private ITCM startNode;
+	private ITCM endNode;
+	private ArrayList<ITCM> route;
 	private boolean routeFound=false;
 
-	public Vehicle(Node start, Node end){
+	public Vehicle(ITCM start, ITCM end){
 		startNode=start;
 		currentNode=start;
 		endNode=end;
-		ArrayList<Node> routeArray=new ArrayList<Node>();
+		ArrayList<ITCM> routeArray=new ArrayList<ITCM>();
 		routeArray.add(start);
 		route=routeArray;
 		routeFind(routeArray);
 	}
-	public Vehicle(Node curr, Node last, Node start, Node end, ArrayList<Node> route){
+	public Vehicle(ITCM curr, ITCM last, ITCM start, ITCM end, ArrayList<ITCM> route){
 		this.currentNode=curr;
 		this.lastNode=last;
 		this.startNode=start;
@@ -32,14 +33,14 @@ public class Vehicle extends Observer {
 	public Vehicle copy(){
 		return new Vehicle(this.currentNode, this.lastNode, this.startNode, this.endNode, this.route);
 	}
-	public Node getCurrentNode()		{return currentNode;}
-	public Node getLastNode()			{return lastNode;}
-	public Node getStartNode()			{return startNode;}
-	public Node getEndNode()			{return endNode;}
-	public ArrayList<Node> getRoute()	{return route;}
+	public ITCM getCurrentNode()		{return currentNode;}
+	public ITCM getLastNode()			{return lastNode;}
+	public ITCM getStartNode()			{return startNode;}
+	public ITCM getEndNode()			{return endNode;}
+	public ArrayList<ITCM> getRoute()	{return route;}
 
-	private void routeFind(ArrayList<Node> in){
-		Node lastIn=in.get(in.size()-1);
+	private void routeFind(ArrayList<ITCM> in){
+		ITCM lastIn=in.get(in.size()-1);
 		//System.out.println("Vehicle.routeFind - lastIn: "+lastIn);
 		//System.out.println("Vehicle.routeFind - endNode: "+endNode);
 		//System.out.println("I am "+lastIn+". Looking at "+lastIn.getAdjacent().get(0));
@@ -47,7 +48,7 @@ public class Vehicle extends Observer {
 			routeFound=true;
 			route=in;
 		}
-		ArrayList<Node> temp=in;
+		ArrayList<ITCM> temp=in;
 		if(lastIn.getAdjacent().size()==1){
 			//System.out.println("Vehicle.routeFind - lastIn: "+lastIn+" has 1 adjacent");
 			temp.add(lastIn.getAdjacent().get(0));
