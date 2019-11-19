@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class TrafficLights extends TCMDecorator {
 
-    TrafficLights(ITCM tcm, int x, int y, ArrayList<ITCM> adj) {
+    TrafficLights(ITCM tcm) {
         super(tcm);
     }
 
@@ -21,27 +21,23 @@ public class TrafficLights extends TCMDecorator {
 
     @Override
     public float getX() {
-        return 0;
+        return super.getTcm().getX();
     }
 
     @Override
-    public float getY() {
-        return 0;
-    }
+    public float getY() { return super.getTcm().getY(); }
 
     @Override
-    public List<ITCM> getAdjacent() {
-        return null;
-    }
+    public List<ITCM> getAdjacent() { return  super.getTcm().getAdjacent(); }
 
     @Override
     public void setX(float x) {
-
+        super.getTcm().setX(x);
     }
 
     @Override
     public void setY(float y) {
-
+        super.getTcm().setY(y);
     }
 
     @Override
