@@ -10,12 +10,17 @@ public class SimpleJunction implements ITCM {
     private float x;
     private float y;
     private int capacity;
-    private ArrayList<ITCM> adjacent;
+    private List<NodePair> adjacent;
 
-    public SimpleJunction(int x, int y, ArrayList<ITCM> adj) {
+    public SimpleJunction(int x, int y, List<NodePair> adj) {
         this.x = x;
         this.y = y;
         this.adjacent = adj;
+    }
+
+    public SimpleJunction(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     /* ---- Override Methods ---- */
@@ -30,7 +35,7 @@ public class SimpleJunction implements ITCM {
     }
 
     @Override
-    public List<ITCM> getAdjacent() {
+    public List<NodePair> getAdjacent() {
         return this.adjacent;
     }
 
@@ -45,8 +50,8 @@ public class SimpleJunction implements ITCM {
     }
 
     @Override
-    public void setAdjacent(List<ITCM> adj) {
-
+    public void setAdjacent(List<NodePair> adj) {
+        this.adjacent = adj;
     }
 
     @Override

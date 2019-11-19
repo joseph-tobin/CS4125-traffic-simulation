@@ -39,6 +39,7 @@ public class UIController{
 	}
 
 	/**
+	/**
 	 * Add an edge between two existing nodes
 	 * @param n1: node 1
 	 * @param n2: node 2

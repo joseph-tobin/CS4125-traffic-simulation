@@ -15,8 +15,8 @@ public interface ITCM extends IGraphable {
     abstract void updateState();
     abstract float getX();
     abstract float getY();
-    abstract List<ITCM> getAdjacent();
+    abstract List<NodePair> getAdjacent();
     abstract void setX(float x);
     abstract void setY(float y);
-    abstract void setAdjacent(List<ITCM> adj);
+    abstract void setAdjacent(List<NodePair> adj);
 }
