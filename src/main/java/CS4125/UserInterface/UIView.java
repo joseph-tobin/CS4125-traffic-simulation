@@ -1,5 +1,6 @@
 package CS4125.UserInterface;
 
+import CS4125.Sim.Simulation;
 import com.sun.javafx.application.PlatformImpl;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
@@ -18,7 +19,6 @@ import javafx.scene.shape.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import oracle.jvm.hotspot.jfr.JFRStackFrame;
 
 public class UIView extends Application {
 
@@ -29,7 +29,7 @@ public class UIView extends Application {
 
 	private UIController controller;
 	private UIController.ClickHandler clickController;
-	private UISim sim;
+	private Simulation sim;
 
 
 	/**
@@ -52,7 +52,9 @@ public class UIView extends Application {
 
 		controller = new UIController(this);
 		clickController = controller.new ClickHandler(new Circle(-1));
-		sim = new UISim(controller);
+		//sim = new UISim(controller);
+		Simulation.INSTANCE.init(controller);
+
 	}
 
 	private void setup(Stage stage) {

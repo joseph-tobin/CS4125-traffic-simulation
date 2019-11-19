@@ -1,9 +1,9 @@
 package CS4125.Sim;
 
-import CS4125.TrafficControl.Node;
-import CS4125.TrafficControl.SimpleJunction;
-import CS4125.TrafficControl.TCMFactory;
-import CS4125.TrafficControl.TrafficLights;
+import CS4125.TrafficControl.*;
+import CS4125.UserInterface.NodeDelay;
+import CS4125.UserInterface.UIController;
+import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,12 +18,14 @@ public enum Simulation{
 	private HashMap<String, Vehicle> routeMap;
 	private int vehicleQuantity;
 	private ArrayList<Vehicle> vehicles = new ArrayList<>();
+	private static UIController controller;
 
-	Simulation() {
+	public void init(UIController controller) {
 		this.nodeList = new ArrayList<Node>();
 		this.routeMap = new HashMap<String, Vehicle>();
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
+		this.controller = controller;
 	}
 
 	public void run(){
@@ -39,6 +41,16 @@ public enum Simulation{
 			// INITIALISE RANDOM START AND END NODE
 			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
 		}
+
+		Circle n1 = controller.addNode(200, 200); // Adding nodes
+		Circle n2 = controller.addNode(300, 400);
+		Circle n3 = controller.addNode(400, 200);
+
+		controller.addEdge(n1, n2); // Adding roads between nodes
+		controller.addEdge(n2, n3);
+
+		// Adding car animated along path in list of NodeDelay (
+		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 1000),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
 	}
 
 	public void pause(){
@@ -62,12 +74,14 @@ public enum Simulation{
 		TrafficLights eastGate = (TrafficLights) factory.getTCM(TCMFactory.TCMType.TRAFFIC_LIGHTS, 0, 0);				nodeList.add(eastGate);
 
 		// Setup adjacency lists for each of the original nodes
-		flagpoles.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
-		libRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(flagpoles, leroRoundabout, stables)));
-		leroRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
-		stables.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout, stablesCarpark, eastGate)));
-		stablesCarpark.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
-		eastGate.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
+
+		//flagpoles.setAdjacent(new ArrayList<Node.NodePair>(Arrays.asList(libRoundabout)));
+		flagpoles.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(flagpoles, 2))));
+		libRoundabout.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(flagpoles, 2), new NodePair(leroRoundabout,4), new NodePair(stables, 8))));
+		leroRoundabout.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(libRoundabout, 1))));
+		stables.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(libRoundabout, 9), new NodePair(stablesCarpark, 82), new NodePair(eastGate,10))));
+		stablesCarpark.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(stables, 2))));
+		eastGate.setAdjacent(new ArrayList<NodePair>(Arrays.asList(new NodePair(stables,4))));
 	}
 
 	public void createVehicle(Node start, Node end){

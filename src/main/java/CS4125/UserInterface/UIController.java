@@ -19,13 +19,15 @@ public class UIController{
 		this.view = view;
 	}
 
+	public UIController getUIC() {return this;}
+
 	/**
 	 * Add a Node to the UI "map"
 	 * @param x: x co-ordinate of Node
 	 * @param y: y co-ordinate of Node
 	 * @return added node object
 	 */
-	Circle addNode(double x, double y) {
+	public Circle addNode(double x, double y) {
 		Circle n = new Circle(x, y, 10);
 		n.setFill(Color.FORESTGREEN);
 		view.getPane().getChildren().add(n);
@@ -41,7 +43,7 @@ public class UIController{
 	 * @param n1: node 1
 	 * @param n2: node 2
 	 */
-	void addEdge(Circle n1, Circle n2) {
+	public void addEdge(Circle n1, Circle n2) {
 		Line edge = new Line();
 		edge.startXProperty().bind(n1.centerXProperty());
 		edge.startYProperty().bind(n1.centerYProperty());
@@ -55,7 +57,7 @@ public class UIController{
 	 * Add a "car" animated along a path of nodes
 	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
 	 */
-	void addCar(NodeDelay [] path) {
+	public void addCar(NodeDelay [] path) {
 		Circle c = new Circle(path[0].getNode().getCenterX(), path[0].getNode().getCenterY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getPane().getChildren().add(c);

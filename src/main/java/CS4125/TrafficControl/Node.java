@@ -4,17 +4,21 @@ import CS4125.utils.IGraphable;
 import CS4125.utils.Subject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class Node extends Subject implements IEndpoint, IGraphable {
+
 	private float x;
 	private float y;
 	private int capacity;
-	private ArrayList<Node> adjacent;
+	private ArrayList<NodePair> adjacent;
+
 
 	public Node(float x, float y) {
 		this(x, y, new ArrayList<>());
 	}
-	public Node(float x, float y, ArrayList<Node> adj){
+	public Node(float x, float y, ArrayList<NodePair> adj){
 		this.x = x;
 		this.y = y;
 		this.adjacent = adj;
@@ -34,8 +38,8 @@ public class Node extends Subject implements IEndpoint, IGraphable {
 	public void setY(float y){
 		this.y = y;
 	}
-	public ArrayList<Node> getAdjacent() {return this.adjacent; }
-	public void setAdjacent(ArrayList<Node> adj) { this.adjacent = adj; }
+	public ArrayList<NodePair> getAdjacent() {return this.adjacent; }
+	public void setAdjacent(ArrayList<NodePair> adj) { this.adjacent = adj; }
 
 
 	/**
