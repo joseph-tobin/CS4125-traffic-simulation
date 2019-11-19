@@ -1,47 +1,66 @@
 package CS4125.TrafficControl;
 
+import CS4125.utils.IGraphable;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Concrete TCM class that models an intersection with traffic lights
  */
-public class TrafficLights extends TCM {
+public class TrafficLights extends TCMDecorator {
 
-    /**
-     * Models Traffic light's 3 state
-     */
-    enum State {
-        GO(0),
-        YIELD(1),
-        STOP(2);
-
-        private int value;
-        private State(int value) {
-            this.value = value;
-        }
-        public int getValue() { return value; }
+    TrafficLights(ITCM tcm, int x, int y, ArrayList<ITCM> adj) {
+        super(tcm);
     }
 
-    private State state;
-    private int stateValue;
-
-    TrafficLights(int x, int y, ArrayList<Node> adj) {
-        super(x, y, adj);
-        this.state = State.GO;
-        this.stateValue = state.getValue();
-        // Call to Subject's setState(int state) method to notify observers of state change
-        setState(stateValue);
-    }
-
-    /**
-     * Override TCM create method for use in TCM Factory
-     * @param x x coordinate of node
-     * @param y y coordinate of node
-     * @param adj list of adjacent nodes
-     * @return Roundabout object
-     */
     @Override
-    TCM create(int x, int y, ArrayList<Node> adj) {
-        return new TrafficLights(x, y, adj);
+    public void updateState() {
+        // TODO: 18-11-19 Update state method here - State depending on the type of TCM decorators that are applied
+    }
+
+    @Override
+    public float getX() {
+        return 0;
+    }
+
+    @Override
+    public float getY() {
+        return 0;
+    }
+
+    @Override
+    public List<ITCM> getAdjacent() {
+        return null;
+    }
+
+    @Override
+    public void setX(float x) {
+
+    }
+
+    @Override
+    public void setY(float y) {
+
+    }
+
+    @Override
+    public void setAdjacent(List<ITCM> adj) {
+
+    }
+
+    @Override
+    public int getHeuristic() {
+        return 0;
+    }
+
+    @Override
+    public List<IGraphable> getPossibleNext() {
+        return null;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }
