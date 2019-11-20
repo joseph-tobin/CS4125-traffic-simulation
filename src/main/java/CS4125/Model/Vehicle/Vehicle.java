@@ -1,7 +1,7 @@
 package CS4125.Model.Vehicle;
 
 import CS4125.Model.TrafficControl.ITCM;
-import CS4125.Model.utils.Observer;
+import CS4125.Model.Utils.Observer;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package CS4125.Model.TrafficControl;
 
-import CS4125.Model.utils.IGraphable;
+import CS4125.Model.Utils.IGraphable;
 
 import java.util.List;
 
