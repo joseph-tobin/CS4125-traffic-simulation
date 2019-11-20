@@ -1,6 +1,6 @@
 package CS4125;
 
-import CS4125.Sim.Simulation;
+import CS4125.Controller.Sim.Simulation;
 
 public class Main {
 

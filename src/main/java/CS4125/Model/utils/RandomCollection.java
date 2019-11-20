@@ -1,4 +1,4 @@
-package CS4125.utils;
+package CS4125.Model.utils;
 
 import java.util.NavigableMap;
 import java.util.Random;

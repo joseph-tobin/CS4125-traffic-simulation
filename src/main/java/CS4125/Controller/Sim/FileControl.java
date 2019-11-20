@@ -1,4 +1,4 @@
-package CS4125.Sim;
+package CS4125.Controller.Sim;
 
 public class FileControl{
 	

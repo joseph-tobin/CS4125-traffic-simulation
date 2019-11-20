@@ -1,19 +1,14 @@
-package CS4125.Sim.Sim_Tests;
+package CS4125.Model.Vehicle.Vehicle_Tests;
 
-import CS4125.Sim.Vehicle;
-import CS4125.TrafficControl.ITCM;
-import CS4125.TrafficControl.SimpleJunction;
+import CS4125.Model.Vehicle.Vehicle;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
 import static org.junit.jupiter.api.Assertions.*;
 
 class VehicleTest {
-    private final ITCM curr = new SimpleJunction(1,2, new ArrayList<ITCM>());
+    private final ITCM curr = new ITCM(1,2);
     private final ITCM start = curr;
-    private final ITCM end = new SimpleJunction (5,6, new ArrayList<ITCM>());
+    private final ITCM end = new ITCM(5,6);
     private final Vehicle Vehicle_T = new Vehicle(start, end);
 
     @Test

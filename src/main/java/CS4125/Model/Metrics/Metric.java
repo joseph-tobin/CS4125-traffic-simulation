@@ -1,4 +1,4 @@
-package CS4125.Sim;
+package CS4125.Model.Metrics;
 
 public class Metric{
 

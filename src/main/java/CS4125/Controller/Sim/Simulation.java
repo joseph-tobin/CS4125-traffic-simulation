@@ -1,17 +1,17 @@
-package CS4125.Sim;
+package CS4125.Controller.Sim;
 
 
-import CS4125.TrafficControl.*;
+import CS4125.Model.Metrics.Metric;
+import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.TrafficControl.*;
 //import CS4125.UserInterface.NodeDelay;
+import CS4125.View.EventHandlers.UIController;
 import CS4125.UserInterface.UIController;
-import CS4125.utils.IGraphable;
 import javafx.scene.shape.Circle;
-import CS4125.TrafficControl.ITCM;
-import CS4125.TrafficControl.SimpleJunction;
+import CS4125.Model.TrafficControl.IGraphable;
+import CS4125.Model.TrafficControl.SimpleJunction;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public enum Simulation{
 
@@ -19,6 +19,7 @@ public enum Simulation{
 
 	public ArrayList<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 	private HashMap<String, Vehicle> routeMap;
+	private List<Circle> circles;
 	private int vehicleQuantity;
 	private ArrayList<Vehicle> vehicles = new ArrayList<>();
 	private static UIController controller;
@@ -30,6 +31,7 @@ public enum Simulation{
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
+		this.circles = new ArrayList<>();
 	}
 	Simulation() {
 	}
@@ -37,8 +39,8 @@ public enum Simulation{
 	public void run(){
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
-		ITCM start = new SimpleJunction(10, 10, new ArrayList<IGraphable>()) {};
-		ITCM end = new SimpleJunction(10,5, new ArrayList<IGraphable>());
+		ITCM start = new SimpleJunction(10, 10, new ArrayList<NodePair>()) {};
+		ITCM end = new SimpleJunction(10,5, new ArrayList<NodePair>());
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
@@ -48,7 +50,17 @@ public enum Simulation{
 			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
 		}
 
-		Circle n1 = controller.addNode(200, 200); // Adding nodes
+		for (int j = 0; j < nodeList.size(); j++) {
+			Circle circle = controller.addNode(nodeList.get(j).getX(), nodeList.get(j).getY());
+			circles.add(circle);
+		}
+		for (int j = 0; j < circles.size(); j++) {
+			for (int k = 0; k < nodeList.get(j).getAdjacent().size(); k++) {
+				//controller.addEdge(circles.get(j), nodeList.get(j).getAdjacent().get(k).getNode());
+			}
+		}
+
+		Circle n1 = controller.addNode(100, 200); // Adding nodes
 		Circle n2 = controller.addNode(300, 400);
 		Circle n3 = controller.addNode(400, 200);
 
@@ -59,7 +71,8 @@ public enum Simulation{
 		//controller.addEdge(ITCM node, ITCM node);
 
 		// Adding car animated along path in list of NodeDelay (
-		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 1000),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
+		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 100
+		// 0),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
 	}
 
 	public void pause(){
@@ -73,22 +86,19 @@ public enum Simulation{
 	public void createNodes(){
 		// Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
-//		TCMFactory factory = new TCMFactory();
-//		ArrayList<Node> nodes = new ArrayList<Node>();
-//		TrafficLights flagpoles = (TrafficLights) factory.getTCM(TCMFactory.TCMType.TRAFFIC_LIGHTS, 0, 0);			nodeList.add(flagpoles);
-//		SimpleJunction libRoundabout = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);		nodeList.add(libRoundabout);
-//		SimpleJunction leroRoundabout = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);	nodeList.add(leroRoundabout);
-//		SimpleJunction stables = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);			nodeList.add(stables);
-//		SimpleJunction stablesCarpark = (SimpleJunction) factory.getTCM(TCMFactory.TCMType.SIMPLE_JUNCTION, 0, 0);	nodeList.add(stablesCarpark);
-//		TrafficLights eastGate = (TrafficLights) factory.getTCM(TCMFactory.TCMType.TRAFFIC_LIGHTS, 0, 0);				nodeList.add(eastGate);
-//
+		List<ITCM> nodes = new ArrayList<ITCM>();
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(flagpoles);
+		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(libRoundabout);
+		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(leroRoundabout);
+		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
+		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
+
 //		// Setup adjacency lists for each of the original nodes
-//		flagpoles.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
-//		libRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(flagpoles, leroRoundabout, stables)));
-//		leroRoundabout.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout)));
-//		stables.setAdjacent(new ArrayList<Node>(Arrays.asList(libRoundabout, stablesCarpark, eastGate)));
-//		stablesCarpark.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
-//		eastGate.setAdjacent(new ArrayList<Node>(Arrays.asList(stables)));
+		flagpoles.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 3)));
+		libRoundabout.setAdjacent(Arrays.asList(new NodePair(flagpoles, 3), new NodePair(leroRoundabout, 1), new NodePair(stables, 2)));
+		leroRoundabout.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 1)));
+		stables.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 2), new NodePair(eastGate, 4)));
+		eastGate.setAdjacent(Arrays.asList(new NodePair(stables, 4)));
 	}
 
 	public void createVehicle(ITCM start, ITCM end){

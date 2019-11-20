@@ -1,9 +1,8 @@
-package CS4125.TrafficControl;
+package CS4125.Model.TrafficControl;
 
-import CS4125.utils.IGraphable;
-import CS4125.utils.Subject;
+import CS4125.Model.utils.Subject;
+import CS4125.Model.utils.IGraphable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleJunction extends Subject implements ITCM {
@@ -21,7 +20,9 @@ public class SimpleJunction extends Subject implements ITCM {
         STOP(0);
 
         private int stateNum;
+    private List<NodePair> adjacent;
 
+    public SimpleJunction(int x, int y, List<NodePair> adj) {
         State(int num) {
             this.stateNum = num;
         }
@@ -49,7 +50,7 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     @Override
-    public List<IGraphable> getAdjacent() {
+    public List<NodePair> getAdjacent() {
         return this.adjacent;
     }
 
@@ -64,7 +65,7 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     @Override
-    public void setAdjacent(List<IGraphable> adj) {
+    public void setAdjacent(List<NodePair> adj) {
         this.adjacent = adj;
     }
 

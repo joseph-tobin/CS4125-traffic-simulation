@@ -1,6 +1,7 @@
-package CS4125.UserInterface;
+package CS4125.View.EventHandlers;
 
-import CS4125.Sim.Simulation;
+import CS4125.View.NodeDelay;
+import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
 import javafx.event.EventHandler;
@@ -15,7 +16,7 @@ public class UIController{
 
 	private UIView view;
 
-	UIController(UIView view){
+	public UIController(UIView view){
 		this.view = view;
 	}
 
@@ -39,6 +40,7 @@ public class UIController{
 	}
 
 	/**
+	/**
 	 * Add an edge between two existing nodes
 	 * @param n1: node 1
 	 * @param n2: node 2
@@ -57,7 +59,7 @@ public class UIController{
 	 * Add a "car" animated along a path of nodes
 	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
 	 */
-	public void addCar(NodeDelay [] path) {
+	public void addCar(NodeDelay[] path) {
 		Circle c = new Circle(path[0].getNode().getCenterX(), path[0].getNode().getCenterY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getPane().getChildren().add(c);
@@ -97,7 +99,7 @@ public class UIController{
 		 * Drag and drop a node
 		 * @param n: selected node
 		 */
-		ClickHandler(Circle n) {
+		public ClickHandler(Circle n) {
 			if(n.getRadius() == -1)
 				return;
 			final Delta dragDelta = new Delta();
