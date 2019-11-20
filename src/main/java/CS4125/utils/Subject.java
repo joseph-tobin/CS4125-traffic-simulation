@@ -1,6 +1,7 @@
 package CS4125.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Subject {
     ArrayList<Observer> observers = new ArrayList<Observer>();
@@ -23,6 +24,17 @@ public class Subject {
         for (Observer observer : observers) {
             observer.update();
         }
+    }
+
+    /**
+     * Update specific observers of a given subject 
+     * @param observerList list of observers to update
+     */ // TODO: 20-11-19 Possibly remove due to not fitting with Observer pattern properly
+    public void notifyObservers(List<Observer> observerList) {
+        for(Observer o : observerList) {
+            o.update();
+        }
+
     }
 
 }
