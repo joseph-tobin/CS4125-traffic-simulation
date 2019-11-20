@@ -14,6 +14,8 @@ public class TrafficLights extends TCMDecorator {
         super(tcm);
     }
 
+
+    // Override ITCM methods
     @Override
     public void updateState() {
         // TODO: 18-11-19 Update state method here - State depending on the type of TCM decorators that are applied
@@ -41,10 +43,9 @@ public class TrafficLights extends TCMDecorator {
     }
 
     @Override
-    public void setAdjacent(List<ITCM> adj) {
+    public void setAdjacent(List<ITCM> adj) { super.getTcm().setAdjacent(adj); }
 
-    }
-
+    // Override IGraphable Methods
     @Override
     public int getHeuristic() {
         return 0;

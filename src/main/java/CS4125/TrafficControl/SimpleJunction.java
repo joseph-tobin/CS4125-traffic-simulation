@@ -1,21 +1,40 @@
 package CS4125.TrafficControl;
 
 import CS4125.utils.IGraphable;
+import CS4125.utils.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleJunction implements ITCM {
+public class SimpleJunction extends Subject implements ITCM {
 
     private float x;
     private float y;
     private int capacity;
-    private ArrayList<ITCM> adjacent;
+    private List<IGraphable> adjacent;
+    private State currentState;
+    private int currentStateNum;
 
-    public SimpleJunction(int x, int y, ArrayList<ITCM> adj) {
+
+    public enum State {
+        GO(1),
+        STOP(0);
+
+        private int stateNum;
+
+        State(int num) {
+            this.stateNum = num;
+        }
+        public int getStateNum() { return stateNum; }
+    }
+
+    public SimpleJunction(int x, int y, ArrayList<IGraphable> adj) {
         this.x = x;
         this.y = y;
         this.adjacent = adj;
+        // GO is default state of SimpleJunction -> Pass through junction when possible
+        currentState = State.GO;
+        currentState.getStateNum();
     }
 
     /* ---- Override Methods ---- */
@@ -30,7 +49,7 @@ public class SimpleJunction implements ITCM {
     }
 
     @Override
-    public List<ITCM> getAdjacent() {
+    public List<IGraphable> getAdjacent() {
         return this.adjacent;
     }
 
@@ -45,12 +64,17 @@ public class SimpleJunction implements ITCM {
     }
 
     @Override
-    public void setAdjacent(List<ITCM> adj) {
-
+    public void setAdjacent(List<IGraphable> adj) {
+        this.adjacent = adj;
     }
 
+
+    /**
+     * Update state of TCM and inform all Observers of the change in state
+     * If stateNum = current state, don't update observers
+     */
     @Override
-    public void updateState() {
+    public void updateState(int stateNum) {
 
     }
 
@@ -61,7 +85,16 @@ public class SimpleJunction implements ITCM {
 
     @Override
     public List<IGraphable> getPossibleNext() {
-        return null;
+        return this.adjacent;
+    }
+
+    /**
+     * Estimated cost = Average of how busy each adjacent
+     * @return Estimated cost of going to this Node
+     */
+    @Override
+    public float getEstimatedCost() {
+        return 0;
     }
 
     @Override

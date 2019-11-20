@@ -12,11 +12,11 @@ import java.util.List;
 public interface ITCM extends IGraphable {
     // TODO: 17-11-19 See if saving all possible states as an enum here is possible/ worth while
 
-    abstract void updateState();
+    abstract void updateState(int stateNum);
     abstract float getX();
     abstract float getY();
-    abstract List<ITCM> getAdjacent();
+    abstract List<IGraphable> getAdjacent();
     abstract void setX(float x);
     abstract void setY(float y);
-    abstract void setAdjacent(List<ITCM> adj);
+    abstract void setAdjacent(List<IGraphable> adj);
 }

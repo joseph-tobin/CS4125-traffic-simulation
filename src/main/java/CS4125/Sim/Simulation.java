@@ -4,6 +4,7 @@ package CS4125.Sim;
 import CS4125.TrafficControl.*;
 //import CS4125.UserInterface.NodeDelay;
 import CS4125.UserInterface.UIController;
+import CS4125.utils.IGraphable;
 import javafx.scene.shape.Circle;
 import CS4125.TrafficControl.ITCM;
 import CS4125.TrafficControl.SimpleJunction;
@@ -36,8 +37,8 @@ public enum Simulation{
 	public void run(){
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
-		ITCM start = new SimpleJunction(10, 10, new ArrayList<ITCM>()) {};
-		ITCM end = new SimpleJunction(10,5, new ArrayList<ITCM>());
+		ITCM start = new SimpleJunction(10, 10, new ArrayList<IGraphable>()) {};
+		ITCM end = new SimpleJunction(10,5, new ArrayList<IGraphable>());
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
@@ -53,6 +54,9 @@ public enum Simulation{
 
 		controller.addEdge(n1, n2); // Adding roads between nodes
 		controller.addEdge(n2, n3);
+
+		// @Niall we want addEdge to take in type ITCM not type Circle
+		//controller.addEdge(ITCM node, ITCM node);
 
 		// Adding car animated along path in list of NodeDelay (
 		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 1000),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
