@@ -1,7 +1,7 @@
-package CS4125.Sim;
+package CS4125.Model.Vehicle;
 
-import CS4125.TrafficControl.ITCM;
-import CS4125.utils.Observer;
+import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.utils.Observer;
 
 import java.util.*;
 

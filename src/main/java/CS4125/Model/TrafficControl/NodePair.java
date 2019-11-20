@@ -1,4 +1,4 @@
-package CS4125.TrafficControl;
+package CS4125.Model.TrafficControl;
 
 public class NodePair {
 

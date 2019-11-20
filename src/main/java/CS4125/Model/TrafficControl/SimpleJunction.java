@@ -1,8 +1,7 @@
-package CS4125.TrafficControl;
+package CS4125.Model.TrafficControl;
 
-import CS4125.utils.IGraphable;
+import CS4125.Model.utils.IGraphable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleJunction implements ITCM {

@@ -1,4 +1,4 @@
-package CS4125.TrafficControl.TrafficControl_Tests;
+package CS4125.Model.TrafficControl.TrafficControl_Tests;
 
 import org.junit.jupiter.api.Test;
 

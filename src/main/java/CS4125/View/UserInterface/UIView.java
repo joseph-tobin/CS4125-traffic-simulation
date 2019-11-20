@@ -1,24 +1,15 @@
-package CS4125.UserInterface;
+package CS4125.View.UserInterface;
 
-import CS4125.Sim.Simulation;
-import com.sun.javafx.application.PlatformImpl;
-import javafx.animation.PathTransition;
-import javafx.animation.SequentialTransition;
+import CS4125.Controller.Sim.Simulation;
+import CS4125.View.EventHandlers.UIController;
 import javafx.application.Application;
-import javafx.embed.swing.JFXPanel;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class UIView extends Application {
 

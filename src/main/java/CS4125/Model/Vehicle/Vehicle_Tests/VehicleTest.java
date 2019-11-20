@@ -1,6 +1,6 @@
-package CS4125.Sim.Sim_Tests;
+package CS4125.Model.Vehicle.Vehicle_Tests;
 
-import CS4125.Sim.Vehicle;
+import CS4125.Model.Vehicle.Vehicle;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

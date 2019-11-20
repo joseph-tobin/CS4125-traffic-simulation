@@ -1,12 +1,14 @@
-package CS4125.Sim;
+package CS4125.Controller.Sim;
 
 
-import CS4125.TrafficControl.*;
+import CS4125.Model.Metrics.Metric;
+import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.TrafficControl.*;
 //import CS4125.UserInterface.NodeDelay;
-import CS4125.UserInterface.UIController;
+import CS4125.View.EventHandlers.UIController;
 import javafx.scene.shape.Circle;
-import CS4125.TrafficControl.ITCM;
-import CS4125.TrafficControl.SimpleJunction;
+import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.TrafficControl.SimpleJunction;
 
 import java.util.*;
 
@@ -57,7 +59,7 @@ public enum Simulation{
 			}
 		}
 
-		Circle n1 = controller.addNode(, 200); // Adding nodes
+		Circle n1 = controller.addNode(100, 200); // Adding nodes
 		Circle n2 = controller.addNode(300, 400);
 		Circle n3 = controller.addNode(400, 200);
 
@@ -65,7 +67,8 @@ public enum Simulation{
 		controller.addEdge(n2, n3);
 
 		// Adding car animated along path in list of NodeDelay (
-		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 1000),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
+		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 100
+		// 0),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
 	}
 
 	public void pause(){
