@@ -2,6 +2,7 @@ package CS4125.Model.TrafficControl;
 
 
 import CS4125.Model.Utils.IGraphable;
+import CS4125.Model.Vehicle.Vehicle;
 
 import java.util.List;
 
@@ -15,8 +16,9 @@ public interface ITCM extends IGraphable {
     abstract void updateState(int stateNum);
     abstract float getX();
     abstract float getY();
-    abstract List<IGraphable> getAdjacent();
+    abstract List<ITCM> getAdjacent();
     abstract void setX(float x);
     abstract void setY(float y);
-    abstract void setAdjacent(List<IGraphable> adj);
+    abstract void setAdjacent(List<ITCM> adj);
+    abstract boolean enterQueue(ITCM origin, Vehicle vehicle);
 }

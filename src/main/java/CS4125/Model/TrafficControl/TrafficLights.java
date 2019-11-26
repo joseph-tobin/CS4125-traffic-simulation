@@ -1,6 +1,7 @@
 package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
+import CS4125.Model.Vehicle.Vehicle;
 
 import java.util.List;
 
@@ -15,9 +16,10 @@ public class TrafficLights extends TCMDecorator {
 
 
     // Override ITCM methods
+
     @Override
-    public void updateState() {
-        // TODO: 18-11-19 Update state method here - State depending on the type of TCM decorators that are applied
+    public void updateState(int stateNum) {
+        // TODO: 20-11-19 Update only relevant obserevrs of state change
     }
 
     @Override
@@ -29,7 +31,7 @@ public class TrafficLights extends TCMDecorator {
     public float getY() { return super.getTcm().getY(); }
 
     @Override
-    public List<NodePair> getAdjacent() { return  super.getTcm().getAdjacent(); }
+    public List<ITCM> getAdjacent() { return  super.getTcm().getAdjacent(); }
 
     @Override
     public void setX(float x) {
@@ -42,8 +44,13 @@ public class TrafficLights extends TCMDecorator {
     }
 
     @Override
-    public void setAdjacent(List<NodePair> adj) {
+    public void setAdjacent(List<ITCM> adj) {
         super.getTcm().setAdjacent(adj);
+    }
+
+    @Override
+    public boolean enterQueue(ITCM origin, Vehicle vehicle) {
+        return false;
     }
 
     @Override
@@ -53,11 +60,19 @@ public class TrafficLights extends TCMDecorator {
 
     @Override
     public List<IGraphable> getPossibleNext() {
+
+        // TODO: 20-11-19 create and return new lsit
         return null;
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int getEstimatedCost() {
+        // TODO: 26-11-19 modify the SimpleJunctions cost to be relevant to TrafficLights
         return 0;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return super.getTcm().compareTo(o);
     }
 }
