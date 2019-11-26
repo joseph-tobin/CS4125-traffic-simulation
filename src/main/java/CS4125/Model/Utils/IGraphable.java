@@ -19,7 +19,7 @@ public interface IGraphable extends Comparable {
 
     /**
      * Calculate the estimated cost of going to a Node
-     * @return float - Estimated cost.
+     * @return int - Estimated cost.
      */
-    abstract float getEstimatedCost();
+    abstract int getEstimatedCost();
 }
