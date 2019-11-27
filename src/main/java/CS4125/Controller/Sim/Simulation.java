@@ -82,23 +82,22 @@ public enum Simulation{
 	}
 
 	public void createNodes(){
-		/* Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
+		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
-		List<ITCM> nodes = new ArrayList<ITCM>();
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(flagpoles);
-		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(libRoundabout);
-		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(leroRoundabout);
-		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
-		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
-
+//		List<ITCM> nodes = new ArrayList<ITCM>();
+//		TrafficLights flagpoles = newgit  TrafficLights(new SimpleJunction(1,2));	nodeList.add(flagpoles);
+//		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(libRoundabout);
+//		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(leroRoundabout);
+//		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
+//		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
+//
 //		// Setup adjacency lists for each of the original nodes
-		flagpoles.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 3)));
-		libRoundabout.setAdjacent(Arrays.asList(new NodePair(flagpoles, 3), new NodePair(leroRoundabout, 1), new NodePair(stables, 2)));
-		leroRoundabout.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 1)));
-		stables.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 2), new NodePair(eastGate, 4)));
-		eastGate.setAdjacent(Arrays.asList(new NodePair(stables, 4)));
+//		flagpoles.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 3)));
+//		libRoundabout.setAdjacent(Arrays.asList(new NodePair(flagpoles, 3), new NodePair(leroRoundabout, 1), new NodePair(stables, 2)));
+//		leroRoundabout.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 1)));
+//		stables.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 2), new NodePair(eastGate, 4)));
+//		eastGate.setAdjacent(Arrays.asList(new NodePair(stables, 4)));
 
-		 */
 	}
 
 	public void createVehicle(ITCM start, ITCM end){
