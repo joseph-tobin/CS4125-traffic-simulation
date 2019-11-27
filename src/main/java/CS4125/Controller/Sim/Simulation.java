@@ -68,7 +68,8 @@ public enum Simulation{
 		controller.addEdge(n2, n3);
 
 		// @Niall we want addEdge to take in type ITCM not type Circle
-		//controller.addEdge(ITCM node, ITCM node);
+		// @Joe method has been modified, fix following line to call
+		// controller.addEdge(ITCM node, ITCM node);
 
 		// Adding car animated along path in list of NodeDelay (
 		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 100
