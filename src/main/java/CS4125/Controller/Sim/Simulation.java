@@ -4,11 +4,8 @@ package CS4125.Controller.Sim;
 import CS4125.Model.Metrics.Metric;
 import CS4125.Model.Vehicle.Vehicle;
 import CS4125.Model.TrafficControl.*;
-//import CS4125.UserInterface.NodeDelay;
 import CS4125.View.EventHandlers.UIController;
-import CS4125.UserInterface.UIController;
 import javafx.scene.shape.Circle;
-import CS4125.Model.TrafficControl.IGraphable;
 import CS4125.Model.TrafficControl.SimpleJunction;
 
 import java.util.*;
@@ -39,8 +36,8 @@ public enum Simulation{
 	public void run(){
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
-		ITCM start = new SimpleJunction(10, 10, new ArrayList<NodePair>()) {};
-		ITCM end = new SimpleJunction(10,5, new ArrayList<NodePair>());
+		ITCM start = new SimpleJunction(10, 10, new ArrayList<ITCM>()) {};
+		ITCM end = new SimpleJunction(10,5, new ArrayList<ITCM>());
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
@@ -64,8 +61,8 @@ public enum Simulation{
 		Circle n2 = controller.addNode(300, 400);
 		Circle n3 = controller.addNode(400, 200);
 
-		controller.addEdge(n1, n2); // Adding roads between nodes
-		controller.addEdge(n2, n3);
+		//controller.addEdge(n1, n2); // Adding roads between nodes
+		//controller.addEdge(n2, n3);
 
 		// @Niall we want addEdge to take in type ITCM not type Circle
 		// @Joe method has been modified, fix following line to call
@@ -85,7 +82,7 @@ public enum Simulation{
 	}
 
 	public void createNodes(){
-		// Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
+		/* Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		List<ITCM> nodes = new ArrayList<ITCM>();
 		TrafficLights flagpoles = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(flagpoles);
@@ -100,6 +97,8 @@ public enum Simulation{
 		leroRoundabout.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 1)));
 		stables.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 2), new NodePair(eastGate, 4)));
 		eastGate.setAdjacent(Arrays.asList(new NodePair(stables, 4)));
+
+		 */
 	}
 
 	public void createVehicle(ITCM start, ITCM end){
