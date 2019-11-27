@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
+import CS4125.Model.TrafficControl.ITCM;
 
 public class UIController{
 
@@ -41,16 +42,16 @@ public class UIController{
 
 	/**
 	/**
-	 * Add an edge between two existing nodes
+	 * Add an edge between two existing nodes, getting their X and Y co-ords
 	 * @param n1: node 1
 	 * @param n2: node 2
 	 */
-	public void addEdge(Circle n1, Circle n2) {
+	public void addEdge(ITCM n1, ITCM n2) {
 		Line edge = new Line();
-		edge.startXProperty().bind(n1.centerXProperty());
-		edge.startYProperty().bind(n1.centerYProperty());
-		edge.endXProperty().bind(n2.centerXProperty());
-		edge.endYProperty().bind(n2.centerYProperty());
+		edge.setStartX(n1.getX());
+		edge.setStartY(n1.getY());
+		edge.setEndX(n2.getX());
+		edge.setEndX(n2.getY());
 		view.getPane().getChildren().add(edge);
 		edge.toBack();
 	}
