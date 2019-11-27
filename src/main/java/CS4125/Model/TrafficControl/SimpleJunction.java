@@ -130,6 +130,12 @@ public class SimpleJunction extends Subject implements ITCM {
         return cost;
     }
 
+    @Override
+    public float distanceTo(IGraphable node) {
+        return (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)
+                + (((ITCM)node).getX() - x) * (((ITCM)node).getX() - x));
+    }
+
     /**
      * Implementation of Comparable Interface
      * @param o Object to compare to

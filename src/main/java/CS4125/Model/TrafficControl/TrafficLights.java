@@ -68,7 +68,12 @@ public class TrafficLights extends TCMDecorator {
     @Override
     public int getEstimatedCost() {
         // TODO: 26-11-19 modify the SimpleJunctions cost to be relevant to TrafficLights
-        return 0;
+        return super.getTcm().getEstimatedCost();
+    }
+
+    @Override
+    public float distanceTo(IGraphable node) {
+        return super.getTcm().distanceTo(node);
     }
 
     @Override

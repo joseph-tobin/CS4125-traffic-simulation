@@ -15,6 +15,7 @@ public class Adjacency {
         initQueue(x, y);
     }
 
+    // TODO: 27-11-19 remove init queue, add distance to constructor
     /**
      * Function to calculate the maximum capacity of this adjacency and instantiate the queue
      * @param x X coordinate of owning ITCM
