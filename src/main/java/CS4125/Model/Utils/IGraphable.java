@@ -22,4 +22,9 @@ public interface IGraphable extends Comparable {
      * @return int - Estimated cost.
      */
     abstract int getEstimatedCost();
+
+    abstract float distanceTo(IGraphable node);
+
+    abstract boolean equals(Object o);
+    abstract int hashCode();
 }
