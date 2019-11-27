@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
+import CS4125.Model.TrafficControl.ITCM;
 
 public class UIController{
 
@@ -47,6 +48,7 @@ public class UIController{
 	 */
 	public void addEdge(Circle n1, Circle n2) {
 		Line edge = new Line();
+		// instead of n1.centerXProperty(), it will be node.getX()
 		edge.startXProperty().bind(n1.centerXProperty());
 		edge.startYProperty().bind(n1.centerYProperty());
 		edge.endXProperty().bind(n2.centerXProperty());

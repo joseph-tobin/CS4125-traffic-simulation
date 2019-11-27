@@ -50,19 +50,19 @@ public class Vehicle extends Observer {
 		ArrayList<ITCM> temp=in;
 		if(lastIn.getAdjacent().size()==1){
 			//System.out.println("Vehicle.routeFind - lastIn: "+lastIn+" has 1 adjacent");
-			temp.add(lastIn.getAdjacent().get(0));
+			temp.add((ITCM) lastIn.getAdjacent().get(0));
 			routeFind(temp);
 		} else if(lastIn.getAdjacent().size()==2) {
 			//System.out.println("Vehicle.routeFind - lastIn: "+lastIn+" has 2 adjacent");
 			if(lastIn.getAdjacent().get(0)!=in.get(in.size()-2))
-				temp.add(lastIn.getAdjacent().get(0));
+				temp.add((ITCM) lastIn.getAdjacent().get(0));
 			else
-				temp.add(lastIn.getAdjacent().get(1));
+				temp.add((ITCM) lastIn.getAdjacent().get(1));
 			routeFind(temp);
 		} else if(lastIn.getAdjacent().size()>2) {
 			for (int i=0; i<lastIn.getAdjacent().size(); i++) {
 				if (lastIn.getAdjacent().get(i)!=in.get(in.size()-2)) {
-					temp.add(lastIn.getAdjacent().get(i));
+					temp.add((ITCM) lastIn.getAdjacent().get(i));
 					routeFind(temp);
 					if(!routeFound) {
 						temp.remove(temp.size()-1);
