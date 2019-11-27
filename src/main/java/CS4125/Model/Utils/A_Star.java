@@ -1,4 +1,4 @@
-package CS4125.Model.utils;
+package CS4125.Model.Utils;
 
 /*
  * Austin Bohannon [18286119]
