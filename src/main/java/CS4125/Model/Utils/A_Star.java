@@ -55,7 +55,7 @@ public class A_Star {
          * Returns f = g + h.
          */
         public int getEstimatedCost() {
-            return (int) (depth + current.getEstimatedCost() * current.distanceTo(destination));
+            return (int)(depth + current.getEstimatedCost() * current.distanceTo(destination));
         }
 
 
