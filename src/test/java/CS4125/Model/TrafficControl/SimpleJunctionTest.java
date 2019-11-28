@@ -47,7 +47,7 @@ class SimpleJunctionTest {
         // Setup
 
         // Run the test
-        simpleJunctionUnderTest.updateState();
+        simpleJunctionUnderTest.updateState(1);
 
         // Verify the results
     }
