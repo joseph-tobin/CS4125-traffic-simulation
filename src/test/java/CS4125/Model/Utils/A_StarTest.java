@@ -1,47 +1,38 @@
-
-                                                                                                                                
 package CS4125.Model.Utils;
 
-import static org.mockito.MockitoAnnotations.initMocks;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-    import static org.mockito.Matchers.any;
-    import static org.mockito.Matchers.anyInt;
-    import static org.mockito.Matchers.anyString;
-    import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.junit.jupiter.api.BeforeEach;
+import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.TrafficControl.SimpleJunction;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.InjectMocks;
-import org.mockito.stubbing.Answer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class A_StarTest {
 
     @Test
-    void testFindRoute() throws Exception {
-    // Setup
-                final CS4125.Model.Utils.IGraphable start = null;
-        final CS4125.Model.Utils.IGraphable end = null;
-        final java.util.List<CS4125.Model.Utils.IGraphable> expectedResult = java.util.Arrays.asList();
+    void testFindRoute() {
+        // Setup
+        ITCM start = new SimpleJunction(1, 1, null);
+        ITCM end = new SimpleJunction(6, 3, null);
+        ITCM B = new SimpleJunction(5,1,null);
+        ITCM C = new SimpleJunction(3,4,null);
+        ITCM D = new SimpleJunction(5,4,null);
 
-    // Run the test
- final java.util.List<CS4125.Model.Utils.IGraphable> result =  A_Star.findRoute(start,end);
+        start.setAdjacent((Arrays.asList(B, C)));
+        end.setAdjacent((Arrays.asList(D)));
+        B.setAdjacent((Arrays.asList(start, C)));
+        C.setAdjacent((Arrays.asList(start, B)));
+        D.setAdjacent((Arrays.asList(end, C)));
+
+        final List<IGraphable> expectedResult = Arrays.asList(end, D, C, start);
+
+        // Run the test
+        final List<IGraphable> result = A_Star.findRoute(start, end);
 
         // Verify the results
- assertEquals(expectedResult, result) ;
+        assertEquals(expectedResult, result);
     }
-                                                                }
-
+}
