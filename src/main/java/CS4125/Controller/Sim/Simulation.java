@@ -37,46 +37,23 @@ public enum Simulation{
 	public void run(){
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
-		ITCM start = new SimpleJunction(10, 10, new ArrayList<ITCM>()) {};
-		ITCM end = new SimpleJunction(10,5, new ArrayList<ITCM>());
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
 		createNodes();
+
 		for (int i = 1; i < vehicleQuantity; i++) {
-			// INITIALISE RANDOM START AND END NODE
 			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
 		}
 
 		for (int j = 0; j < nodeList.size(); j++) {
-			//Circle circle = controller.addNode(nodeList.get(j).getX(), nodeList.get(j).getY());
 			controller.addNode(nodeList.get(j));
 			List<ITCM> adj = new ArrayList<ITCM>();
 			adj = nodeList.get(j).getAdjacent();
 			for (int k = 0; k < adj.size(); k++) {
 				controller.addEdge(nodeList.get(j), adj.get(k));
+			}
 		}
-//		for (int j = 0; j < circles.size(); j++) {
-//			for (int k = 0; k < nodeList.get(j).getAdjacent().size(); k++) {
-//				//controller.addEdge(circles.get(j), nodeList.get(j).getAdjacent().get(k).getNode());
-//			}
-		}
-
-		//Circle n1 = controller.addNode(100, 200); // Adding nodes
-		//Circle n2 = controller.addNode(300, 400);
-		//Circle n3 = controller.addNode(400, 200);
-
-		//controller.addEdge(n1, n2); // Adding roads between nodes
-		//controller.addEdge(n2, n3);
-		//controller.addNode()
-
-		// @Niall we want addEdge to take in type ITCM not type Circle
-		// @Joe method has been modified, fix following line to call
-		// controller.addEdge(ITCM node, ITCM node);
-
-		// Adding car animated along path in list of NodeDelay (
-		//controller.addCar(new NodeDelay[]{new NodeDelay(n1, 100
-		// 0),new NodeDelay(n2, 1000),new NodeDelay(n3, 5000)});
 	}
 
 	public void pause(){
