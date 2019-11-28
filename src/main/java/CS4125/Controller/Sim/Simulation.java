@@ -64,11 +64,22 @@ public enum Simulation{
 
 	}
 
-	public void createNode(int x, int y) {
+	public void createNode(int type, int x, int y) {
 		ITCM n;
-		// some kind of decorator ass shit idfk but how do we do it dynamically and not like in the lines below in defaultNodes.
+		switch (type) {
+			case 0: n = new SimpleJunction(x,y,new ArrayList<ITCM>()); break;
+			case 1: n = new TrafficLights(new SimpleJunction(x,y,new ArrayList<ITCM>())); break;
+			default: n = new SimpleJunction(x,y,new ArrayList<ITCM>()); break;
+		}
 
 		nodeList.add(n);
+	}
+
+	public void addAdjacent(ITCM n1, ITCM n2) {
+		List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
+		List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
+		n1.setAdjacent(n1list);
+		n2.setAdjacent(n2list);
 	}
 
 
