@@ -1,17 +1,13 @@
 package CS4125.View.EventHandlers;
 
+import CS4125.Model.TrafficControl.ITCM;
 import CS4125.View.NodeDelay;
 import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
-import CS4125.Model.TrafficControl.ITCM;
 
 public class UIController{
 
@@ -25,19 +21,12 @@ public class UIController{
 
 	/**
 	 * Add a Node to the UI "map"
-	 * @param x: x co-ordinate of Node
-	 * @param y: y co-ordinate of Node
-	 * @return added node object
+	 * @param n Node to be added
 	 */
-	public Circle addNode(double x, double y) {
-		Circle n = new Circle(x, y, 10);
-		n.setFill(Color.FORESTGREEN);
-		view.getPane().getChildren().add(n);
-
-		n.addEventHandler(MouseEvent.ANY,
-				new UIController.ClickHandler(n));
-
-		return n;
+	public void addNode(ITCM n) {
+		Circle c = new Circle(n.getX(), n.getY(), 10);
+		c.setFill(Color.FORESTGREEN);
+		view.getSimPane().getChildren().add(c);
 	}
 
 	/**
@@ -51,8 +40,8 @@ public class UIController{
 		edge.setStartX(n1.getX());
 		edge.setStartY(n1.getY());
 		edge.setEndX(n2.getX());
-		edge.setEndX(n2.getY());
-		view.getPane().getChildren().add(edge);
+		edge.setEndY(n2.getY());
+		view.getSimPane().getChildren().add(edge);
 		edge.toBack();
 	}
 
@@ -61,16 +50,16 @@ public class UIController{
 	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
 	 */
 	public void addCar(NodeDelay[] path) {
-		Circle c = new Circle(path[0].getNode().getCenterX(), path[0].getNode().getCenterY(), 5);
+		Circle c = new Circle(path[0].getX(), path[0].getY(), 5);
 		c.setFill(Color.INDIANRED);
-		view.getPane().getChildren().add(c);
+		view.getSimPane().getChildren().add(c);
 		c.toFront();
 
 		SequentialTransition seq = new SequentialTransition();
 		for(int i = 0; i < path.length - 1; i++){
 			Path p = new Path();
-			p.getElements().add(new MoveTo(path[i].getNode().getCenterX(), path[i].getNode().getCenterY()));
-			p.getElements().add(new LineTo(path[i+1].getNode().getCenterX(), path[i+1].getNode().getCenterY()));
+			p.getElements().add(new MoveTo(path[i].getX(), path[i].getY()));
+			p.getElements().add(new LineTo(path[i+1].getX(), path[i+1].getY()));
 
 			PathTransition t = new PathTransition();
 			t.setNode(c);
@@ -84,84 +73,6 @@ public class UIController{
 		seq.play();
 	}
 
-	/**
-	 * For calculating the difference in distance along drag and drop
-	 */
-	static class Delta { double x, y; }
-
-	/**
-	 * Inner class specifically for click handling
-	 */
-	public class ClickHandler implements EventHandler<MouseEvent> {
-
-		private boolean dragging = false;
-
-		/**
-		 * Drag and drop a node
-		 * @param n: selected node
-		 */
-		public ClickHandler(Circle n) {
-			if(n.getRadius() == -1)
-				return;
-			final Delta dragDelta = new Delta();
-
-			n.setOnMousePressed(mouseEvent -> {
-				// record a delta distance for the drag and drop operation.
-				dragDelta.x = n.getCenterX() - mouseEvent.getX();
-				dragDelta.y = n.getCenterY() - mouseEvent.getY();
-				n.getScene().setCursor(Cursor.MOVE);
-			});
-			n.setOnMouseReleased(mouseEvent -> {
-				n.getScene().setCursor(Cursor.HAND);
-			});
-			n.setOnMouseDragged(mouseEvent -> {
-				n.setCenterX(mouseEvent.getX() + dragDelta.x);
-				n.setCenterY(mouseEvent.getY() + dragDelta.y);
-			});
-			n.setOnMouseEntered(mouseEvent -> {
-				if (!mouseEvent.isPrimaryButtonDown()) {
-					n.getScene().setCursor(Cursor.HAND);
-				}
-			});
-			n.setOnMouseExited(mouseEvent -> {
-				if (!mouseEvent.isPrimaryButtonDown()) {
-					n.getScene().setCursor(Cursor.DEFAULT);
-				}
-			});
-		}
-
-		/**
-		 * Adding and removing nodes on click
-		 * @param e: mouse event, to distinguish from drag-drop
-		 */
-		@Override
-		public void handle(MouseEvent e) {
-			if (e.getEventType() == MouseEvent.MOUSE_PRESSED) {
-				dragging = false;
-			}
-			else if (e.getEventType() == MouseEvent.DRAG_DETECTED) {
-				dragging = true;
-			}
-			else if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
-				if (!dragging) {
-					if (e.getButton() == MouseButton.PRIMARY) {
-						double x = e.getX(); // remove pane's coordinates
-						double y = e.getY(); // remove pane's coordinates
-						Circle c = addNode(x, y);
-
-						view.getPane().getChildren().add(c);
-					}
-					else if (e.getButton() == MouseButton.SECONDARY) {
-						// if circle was clicked, remove it
-						Circle picked = (Circle) e.getPickResult().getIntersectedNode();
-						if (picked instanceof Circle) {
-							view.getPane().getChildren().remove(picked);
-						}
-					}
-				}
-			}
-		}
-	}
 //	private Simulation sim;
 //
 //	public void save(){
