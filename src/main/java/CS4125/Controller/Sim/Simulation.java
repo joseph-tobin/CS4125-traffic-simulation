@@ -40,7 +40,7 @@ public enum Simulation{
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
-		createNodes();
+		defaultNodes();
 
 		for (int i = 1; i < vehicleQuantity; i++) {
 			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
@@ -64,7 +64,15 @@ public enum Simulation{
 
 	}
 
-	public void createNodes(){
+	public void createNode(int x, int y) {
+		ITCM n;
+		// some kind of decorator ass shit idfk but how do we do it dynamically and not like in the lines below in defaultNodes.
+
+		nodeList.add(n);
+	}
+
+
+	public void defaultNodes(){
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
