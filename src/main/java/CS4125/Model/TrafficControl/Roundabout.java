@@ -8,7 +8,7 @@ import java.util.List;
 public class Roundabout extends TCMDecorator {
 
     /**
-     * Comstructor taking in a ITCM object and passing it as a reference to TCM decorator
+     * Constructor taking in a ITCM object and passing it as a reference to TCM decorator
      * @param tcm TCM to decorate
      */
     public Roundabout(ITCM tcm) { super(tcm); }
