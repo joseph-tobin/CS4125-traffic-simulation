@@ -122,10 +122,10 @@ public class SimpleJunction extends Subject implements ITCM {
      * @return estimated cost of getting to this node
      */
     @Override
-    public int getEstimatedCost() {
-        int cost = 0;
+    public float getEstimatedCost() {
+        float cost = 0;
         for(Adjacency a: adjacencyObjs) {
-            cost += a.getQueue().size() / a.getMaxCapacity();
+            cost += (float)a.getQueue().size() / a.getMaxCapacity();
         }
         return cost;
     }

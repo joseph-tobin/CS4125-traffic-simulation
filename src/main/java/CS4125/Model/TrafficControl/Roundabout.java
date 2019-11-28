@@ -5,21 +5,17 @@ import CS4125.Model.Vehicle.Vehicle;
 
 import java.util.List;
 
-/**
- * Concrete TCM class that models an intersection with traffic lights
- */
-public class TrafficLights extends TCMDecorator {
+public class Roundabout extends TCMDecorator {
 
-    public TrafficLights(ITCM tcm) {
-        super(tcm);
-    }
-
-
-    // Override ITCM methods
+    /**
+     * Comstructor taking in a ITCM object and passing it as a reference to TCM decorator
+     * @param tcm TCM to decorate
+     */
+    public Roundabout(ITCM tcm) { super(tcm); }
 
     @Override
     public void updateState(int stateNum) {
-        // TODO: 20-11-19 Update only relevant obserevrs of state change
+        // TODO: 28/11/2019 waiting on Observer patter implementation
     }
 
     @Override
@@ -28,10 +24,14 @@ public class TrafficLights extends TCMDecorator {
     }
 
     @Override
-    public float getY() { return super.getTcm().getY(); }
+    public float getY() {
+        return super.getTcm().getY();
+    }
 
     @Override
-    public List<ITCM> getAdjacent() { return  super.getTcm().getAdjacent(); }
+    public List<ITCM> getAdjacent() {
+        return super.getTcm().getAdjacent();
+    }
 
     @Override
     public void setX(float x) {
@@ -55,7 +55,7 @@ public class TrafficLights extends TCMDecorator {
 
     @Override
     public int getHeuristic() {
-        return 0;
+        return super.getTcm().getHeuristic();
     }
 
     @Override
@@ -65,14 +65,13 @@ public class TrafficLights extends TCMDecorator {
 
     /**
      * Modify the estimated cost of the ITCM that this is decorating
-     * Traffic would decrease the throughput of a route due to the start stop nature, therefore should increase the estimated cost of this decorator's ITCM object
-     * based on the number of adjacent nodes and the length of time spent in state GO
+     * Roundabout would increase to throughput of a route due to the constant flow, therefore should reduce the estimated cost of this decorator's ITCM object
      * @return modified estimated cost of this decorator's ITCM object
      */
     @Override
     public float getEstimatedCost() {
-        float beforeDecorator =  super.getTcm().getEstimatedCost();
-        return beforeDecorator + (float)2 / super.getTcm().getAdjacent().size();
+        float beforeDecorator = super.getTcm().getEstimatedCost();
+        return beforeDecorator / super.getTcm().getAdjacent().size();
     }
 
     @Override
