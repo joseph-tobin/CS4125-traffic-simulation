@@ -12,6 +12,7 @@ public class SimpleJunction extends Subject implements ITCM {
 
     private float x;
     private float y;
+    private String label;
     private List<ITCM> adjacent;
     private List<Adjacency> adjacencyObjs; // Mapping between 2 ITCM objects
 
@@ -29,7 +30,8 @@ public class SimpleJunction extends Subject implements ITCM {
         public int getStateNum() { return this.stateNum; }
     }
 
-    public SimpleJunction(int x, int y, List<ITCM> adj) {
+    public SimpleJunction(String label, int x, int y, List<ITCM> adj) {
+        this.label = label;
         this.x = x;
         this.y = y;
         this.adjacent = adj;
@@ -61,6 +63,9 @@ public class SimpleJunction extends Subject implements ITCM {
     public float getY(){
         return this.y;
     }
+
+    @Override
+    public String getLabel() {return this.label;}
 
     @Override
     public List<ITCM> getAdjacent() {

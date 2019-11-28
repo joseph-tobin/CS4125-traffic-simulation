@@ -29,6 +29,9 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
+    public String getLabel() {return super.getTcm().getLabel();}
+
+    @Override
     public List<ITCM> getAdjacent() {
         return super.getTcm().getAdjacent();
     }

@@ -31,6 +31,9 @@ public class TrafficLights extends TCMDecorator {
     public float getY() { return super.getTcm().getY(); }
 
     @Override
+    public String getLabel() {return super.getTcm().getLabel();}
+
+    @Override
     public List<ITCM> getAdjacent() { return  super.getTcm().getAdjacent(); }
 
     @Override

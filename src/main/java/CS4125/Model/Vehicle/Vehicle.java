@@ -28,9 +28,9 @@ public class Vehicle extends Observer {
 //		this.endNode=end;
 //		this.route=route;
 //	}
-//	public Vehicle copy(){
-//		return new Vehicle(this.currentNode, this.lastNode, this.startNode, this.endNode, this.route);
-//	}
+	public Vehicle copy(){
+		return new Vehicle(this.startNode, this.endNode);
+	}
 	public ITCM getCurrentNode()		{return currentNode;}
 	public ITCM getLastNode()			{return lastNode;}
 	public ITCM getStartNode()			{return startNode;}
