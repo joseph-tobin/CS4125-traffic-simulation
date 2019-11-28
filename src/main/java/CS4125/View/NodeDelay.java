@@ -12,17 +12,56 @@ import javafx.scene.shape.Circle;
  * -> This can be scaled afterwards, being relative is the main thing.
  */
 public class NodeDelay {
-    Circle n;
-    int delay;
+    private String tcmType;
+    private String name;
+    private int x;
+    private int y;
+    private int delay;
 
-    public NodeDelay(Circle n, int delay) {
-        this.n = n;
+    public NodeDelay(String tcmType, String name, int x, int y, int delay) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
         this.delay = delay;
     }
-    public Circle getNode(){
-        return n;
+
+    public String getName() {
+        return name;
     }
-    public int getDelay(){
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getDelay() {
         return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public String getTcmType() {
+        return tcmType;
+    }
+
+    public void setTcmType(String tcmType) {
+        this.tcmType = tcmType;
     }
 }
