@@ -65,7 +65,7 @@ public enum Simulation{
 
 	}
 
-	public void addNode(String type, String name, int x, int y, int delay) {
+	public void addNode(String type, String name, int x, int y) {
 		ITCM n;
 		switch (type) {
 			case "S": n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
@@ -108,11 +108,11 @@ public enum Simulation{
 
 		// adding to nodeList
 		List<ITCM> adj = new ArrayList<ITCM>();
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("yeet",1,20, adj));	nodeList.add(flagpoles); adj.clear();
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("yeet",200,300, adj));	nodeList.add(flagpoles); adj.clear();
 		adj.add(flagpoles);
-		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("us",15,2, adj));	nodeList.add(libRoundabout); adj.clear();
+		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("us",150,50, adj));	nodeList.add(libRoundabout); adj.clear();
 		adj.add(libRoundabout); adj.add(flagpoles);
-		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("deletus",8,23, adj));	nodeList.add(leroRoundabout);
+		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("deletus",100,250, adj));	nodeList.add(leroRoundabout);
 //		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
 //		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
 //
