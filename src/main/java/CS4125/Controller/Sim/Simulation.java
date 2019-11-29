@@ -200,21 +200,17 @@ public enum Simulation{
 	}
 
 	// Use this to start thread to create vehicles use methods below to set things
-	public void createVehicles(ITCM start, ITCM end, int timer) {
-		vc = new VehicleCreator(timer, start, end); // start vehicle creation with defaul timer and start end
-		// use vc.setTimer(
+	public void createVehicles(ArrayList<ITCM> nodes, int timer) {
+		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
+		// use vc.setTimer(int)  to change the timer
 	}
 
 	public void setVCTimer(int timer) {
 		vc.setTimer(timer);
 	}
 
-	public void setVCStart(ITCM start) {
-		vc.setStart(start);
-	}
-
-	public void setVCEnd(ITCM end) {
-		vc.setEnd(end);
+	public void updateNodes(List<ITCM> nodes) {
+		vc.updateNodes(nodes);
 	}
 
 	public void updateGraph(){
