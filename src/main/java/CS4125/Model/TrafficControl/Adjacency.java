@@ -11,9 +11,9 @@ public class Adjacency {
     private int maxCapacity;
 
     /**
-     * Adjacency constructor -
+     * Adjacency constructor - create an Adjacency association between 2 nodes, where adj.x == x AND adj.y == y is NOT true
      * @param adj adjacent node to calling node
-     * @param x X Coord of calling node
+     * @param x X Coord of calling node where
      * @param y Y Coord of calling node
      */
     Adjacency(ITCM adj, float x, float y) {
@@ -28,10 +28,16 @@ public class Adjacency {
      * @param y Y coordinate of owning ITCM
      */
     private void initQueue(float x, float y) {
-        maxCapacity = (int) Math.sqrt((adj.getY() - y) * (adj.getY() - y)
-                                        + (adj.getX() - x) * (adj.getX() - x));
+        try {
+            maxCapacity = (int) Math.sqrt((adj.getY() - y) * (adj.getY() - y)
+                    + (adj.getX() - x) * (adj.getX() - x));
 
-        queue = new ArrayBlockingQueue<>(maxCapacity);
+            queue = new ArrayBlockingQueue<>(maxCapacity);
+        } catch (Exception e) {
+            System.out.println("Check node coordinates");
+            System.out.println(e.getMessage());
+        }
+
     }
 
     ITCM getAdj() { return this.adj; }

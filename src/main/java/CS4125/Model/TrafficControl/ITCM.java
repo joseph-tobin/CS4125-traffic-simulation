@@ -14,12 +14,10 @@ public interface ITCM extends IGraphable {
     // TODO: 17-11-19 See if saving all possible states as an enum here is possible/ worth while
 
     abstract void updateState(int stateNum);
-    abstract String getName();
     abstract float getX();
     abstract float getY();
     abstract String getLabel();
     abstract List<ITCM> getAdjacent();
-    abstract void setName(String name);
     abstract void setX(float x);
     abstract void setY(float y);
     abstract void setAdjacent(List<ITCM> adj);

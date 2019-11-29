@@ -10,7 +10,6 @@ import java.util.Queue;
 
 public class SimpleJunction extends Subject implements ITCM {
 
-    private String name;
     private float x;
     private float y;
     private String label;
@@ -39,7 +38,7 @@ public class SimpleJunction extends Subject implements ITCM {
             this.adjacent = adj;
             initAdjacency(adj);
             for(ITCM n : adjacent) {
-                System.out.println(this.name + " is adjacent to " + n.getName());
+                System.out.println(this.label + " is adjacent to " + n.getLabel());
             }
         }
         // GO is default state of SimpleJunction -> Pass through junction when possible
@@ -80,11 +79,6 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
     public void setX(float x){
         this.x = x;
     }
@@ -106,7 +100,7 @@ public class SimpleJunction extends Subject implements ITCM {
      * @param v Vehicle object that wishes to enter this node's adjacent queue
      * @return Queue.offer();
      */
-    @Override   // TODO: 26-11-19 Ensure that Vehicle does infintely wait if 2 ITCMs are not adjacent
+    @Override
     public boolean enterQueue(ITCM origin, Vehicle v) {
         for(Adjacency a: adjacencyObjs) {
             if(a.getAdj() == origin) {
@@ -123,11 +117,6 @@ public class SimpleJunction extends Subject implements ITCM {
     @Override
     public void updateState(int stateNum) {
         // TODO: 26-11-19 write implementation for observer pattern
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 
     @Override
