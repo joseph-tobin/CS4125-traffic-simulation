@@ -1,6 +1,7 @@
 package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
+import CS4125.Model.Vehicle.Vehicle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +19,9 @@ class SimpleJunctionTest {
 
     @BeforeEach
     void setUp() {
-        simpleJunctionUnderTest = new SimpleJunction(0, 0, null);
-        simpleJunctionUnderTestAdj1 = new SimpleJunction(1, 1, null);
-        simpleJunctionUnderTestAdj2 = new SimpleJunction(2, 2, null);
+        simpleJunctionUnderTest = new SimpleJunction("juncUnderTest", 0, 0, null);
+        simpleJunctionUnderTestAdj1 = new SimpleJunction("juncUnderTestAdj1",1, 1, null);
+        simpleJunctionUnderTestAdj2 = new SimpleJunction("juncUnderTestAdj2",2, 2, null);
         // add adjacent Junctions
         simpleJunctionUnderTest.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
     }
@@ -39,9 +40,9 @@ class SimpleJunctionTest {
 
     @Test
     void testSetAdjacent() {
-        SimpleJunction a = new SimpleJunction(9,9,null);
-        SimpleJunction b = new SimpleJunction(9,9,null);
-        SimpleJunction c = new SimpleJunction(9,9,null);
+        SimpleJunction a = new SimpleJunction("a", 9,9,null);
+        SimpleJunction b = new SimpleJunction("b",9,9,null);
+        SimpleJunction c = new SimpleJunction("c",9,9,null);
         // Setup
         final List<ITCM> adj = Arrays.asList(a,b,c);
 
@@ -50,6 +51,19 @@ class SimpleJunctionTest {
 
         // Verify the results
         assertEquals(adj, simpleJunctionUnderTest.getAdjacent());
+    }
+
+    @Test
+    void testEnterQueue() {
+        // Setup
+        final ITCM origin = null;
+        final Vehicle vehicle = new Vehicle();
+
+        // Run the test
+        final boolean result = simpleJunctionUnderTest.enterQueue(origin, vehicle);
+
+        // Verify the results
+        assertTrue(result);
     }
 
     @Test
@@ -90,7 +104,7 @@ class SimpleJunctionTest {
     void testCompareTo() {
         // Setup
         final int expectedResult = 0;
-        final ITCM sjUnderTestCopy = new SimpleJunction(0, 0, null);
+        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 0, 0, null);
         sjUnderTestCopy.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
 
         // Run the test

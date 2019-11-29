@@ -107,7 +107,7 @@ class RoundaboutTest {
     void testEnterQueue() {
         // Setup
         final ITCM origin = null;
-        final Vehicle vehicle = new Vehicle(null, null);
+        final Vehicle vehicle = new Vehicle();
 
         // Run the test
         final boolean result = roundaboutUnderTest.enterQueue(origin, vehicle);
