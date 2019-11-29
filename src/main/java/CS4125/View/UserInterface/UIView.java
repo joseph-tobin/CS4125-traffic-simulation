@@ -41,6 +41,8 @@ public class UIView extends Application {
 
 	/**
 	 * Initialise UI elements
+	 * Main "sim" pane which displays your nodes, edges, vehicles
+	 * Sidebar pane which contains various options and TCMs to add
 	 * @param stage javafx Stage
 	 */
 	@Override
@@ -66,14 +68,18 @@ public class UIView extends Application {
 		slider.setShowTickMarks(true);
 
 		this.stage = stage;
-		setup(stage);
+		sideMenu(stage);
 	}
 
 	/**
-	 * Build UI, Create Simulation, Controller
+	 * Build the default sidebar menu, Create Simulation, Create Controller
+	 * Menu contains a slider for adjusting the traffic level (rate at which vehicles are added to the sim),
+	 * 	buttons for adding new TCMs to the sim,
+	 * 	buttons for saving/loading from a database (not yet implemented)
+	 * 	buttons to play/pause or refresh the simulation to its default state
 	 * @param stage javafx Stage
 	 */
-	private void setup(Stage stage) {
+	private void sideMenu(Stage stage) {
 		controls.getChildren().add(new Label("Controls"));
 
 		controls.getChildren().add(new Label("Traffic Level:"));
@@ -144,6 +150,7 @@ public class UIView extends Application {
 
 	/**
 	 * Popup dialog for adding a TCM to the UI, via clicking on one of the menu items
+	 * User is prompted to enter a name, x and y coordinates
 	 * @param tcmType simple junction / roundabout / traffic lights...
 	 */
 	private void addTCMPane(String tcmType) {
@@ -167,43 +174,54 @@ public class UIView extends Application {
 			System.out.println(x_input.getText() + "; " + y_input.getText());
 			// grab x & y, add node
 			// prefixing label with tcmType for different representation in UI
-            System.out.println(tcmType + "_" + name_input.getText());
+			String thisTCM = tcmType + "_" + name_input.getText();
 			 Simulation.INSTANCE.addNode(
-			 		tcmType, tcmType + "_" + name_input.getText(),
+			 		tcmType, thisTCM,
 					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()));
+//			 dialog.hide();
+			 connectTCMPane(dialog, thisTCM);
 		});
 
-		Label nodeTitle = new Label("Connect to a node:");
-
-        ObservableList<String> observableList = FXCollections.observableList(controller.getNodesUI());
-		ListView<String> nodeOptions = new ListView<>(observableList);
-        nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        Button connect_btn = new Button("Connect");
-
-        connect_btn.setOnAction(event -> {
-            ObservableList<String> selectedNodes = nodeOptions.getSelectionModel().getSelectedItems();
-            for(String n : selectedNodes){
-                System.out.println("node = " + n);
-            }
-        });
-
-
-//        TextField node_input = new TextField("node");
-//		Button nodeBtn = new Button("Add");
-//		nodeBtn.setOnAction(event -> {
-//		    System.out.println(tcmType + "_" + node_input.getText());
-//            Simulation.INSTANCE.addEdge(tcmType + "_" + name_input.getText(), tcmType + "_" + node_input.getText());
-//			node_input.clear();
-//		});
-
-		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, coordsBtn,
-				nodeTitle, nodeOptions, connect_btn);
+		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, coordsBtn);
 
 		Scene dialogScene = new Scene(dialogItems, 300, 300);
 		dialog.setScene(dialogScene);
 		dialog.show();
 	}
 
+	/**
+	 * Following from the previous dialog, now you may connect your TCMs to others
+	 * Gets the list of labels from UIController and displays them in Multi-Select ListView
+	 * @param dialog use the previous dialog window
+	 * @param tcm the TCM that was just added
+	 */
+	private void connectTCMPane(Stage dialog, String tcm){
+		dialog.setTitle("Connect TCM");
+		Label nodeTitle = new Label("Connect to a node:");
+		VBox dialogItems = new VBox(20);
+
+		ObservableList<String> observableList = FXCollections.observableList(controller.getNodesUI());
+		ListView<String> nodeOptions = new ListView<>(observableList);
+		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		Button connect_btn = new Button("Connect");
+
+		connect_btn.setOnAction(event -> {
+			ObservableList<String> selectedNodes = nodeOptions.getSelectionModel().getSelectedItems();
+			for(String n : selectedNodes){
+				System.out.println("node = " + n);
+				Simulation.INSTANCE.addEdge(tcm, n);
+			}
+		});
+
+		dialogItems.getChildren().addAll(nodeTitle, nodeOptions, connect_btn);
+		Scene dialogScene = new Scene(dialogItems, 300, 300);
+		dialog.setScene(dialogScene);
+	}
+
+	/**
+	 * Getter for the main Sim pane, so the controller may add elements to it
+	 * @return Pane simPane
+	 */
 	public Pane getSimPane() {
 		return simPane;
 	}
