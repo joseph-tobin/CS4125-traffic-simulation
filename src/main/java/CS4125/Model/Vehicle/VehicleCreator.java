@@ -26,6 +26,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator{
             System.out.println("timer is " + timer);
             Vehicle v = new Vehicle(getRandom(nodes), getRandom(nodes));
             Simulation.INSTANCE.addVehicleToVehicleList(v);
+            Simulation.INSTANCE.addVehicleToController(v);
             try {
                 Thread.sleep(timer);
             } catch (InterruptedException e) {
