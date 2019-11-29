@@ -9,34 +9,30 @@ import java.util.*;
 
 public class Vehicle extends Observer {
 	private ITCM currentNode;
-	private ITCM lastNode;
+	private int currentNodeIndex = 0;
 	private ITCM startNode;
 	private ITCM endNode;
 	private List<IGraphable> route;
-	private boolean routeFound=false;
 
 	public Vehicle(ITCM start, ITCM end){
-		startNode=start;
-		currentNode=start;
+		startNode =start;
+		currentNode =start;
 		endNode=end;
 		route= A_Star.findRoute(start, end);
 	}
 
-	public Vehicle copy(){
-		return new Vehicle(this.startNode, this.endNode);
-	}
 	public ITCM getCurrentNode()		{return currentNode;}
-	public ITCM getLastNode()			{return lastNode;}
-	public ITCM getStartNode()			{return startNode;}
+	public ITCM getNextNode() {
+		return (route.get(currentNodeIndex+1) != null) ? (ITCM) route.get(currentNodeIndex+1) : null;
+	}
+	public ITCM getStarNode()			{return startNode;}
 	public ITCM getEndNode()			{return endNode;}
 	public List<IGraphable> getRoute()	{return route;}
 
 	public void move() {
-		for (int i=0; i<this.route.size()-1; i++) {
-			if (route.get(i)==currentNode) {
-				lastNode=currentNode;
-				currentNode= (ITCM) route.get(i+1);
-			}
+		if(getNextNode() != null) {
+			currentNode = getNextNode();
+			currentNodeIndex++;
 		}
 	}
 
