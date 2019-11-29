@@ -107,7 +107,6 @@ public enum Simulation{
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
-		List<ITCM> adj = new ArrayList<ITCM>();
 		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200, null));
 		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, null));
 		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, null));
