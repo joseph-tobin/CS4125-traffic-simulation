@@ -9,15 +9,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UIController{
 
 	private UIView view;
+	private List<String> nodesUI;
 
 	public UIController(UIView view){
 		this.view = view;
+		nodesUI = new ArrayList<>();
 	}
-
-	public UIController getUIC() {return this;}
 
 	/**
 	 * Add a Node to the UI "map"
@@ -27,11 +30,12 @@ public class UIController{
 		Circle c = new Circle(n.getX(), n.getY(), 10);
 		c.setFill(Color.FORESTGREEN);
 		view.getSimPane().getChildren().add(c);
+		nodesUI.add(n.getLabel());
 	}
 
 	/**
 	/**
-	 * Add an edge between two existing nodes, getting their X and Y co-ords
+	 * Add an edge between two existing nodes, getting their X and Y co-ordinates
 	 * @param n1: node 1
 	 * @param n2: node 2
 	 */
@@ -46,10 +50,10 @@ public class UIController{
 	}
 
 	/**
-	 * Add a "car" animated along a path of nodes
+	 * Add a vehicle animated along a path of nodes
 	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
 	 */
-	public void addCar(NodeDelay[] path) {
+	public void addVehicle(NodeDelay[] path) {
 		Circle c = new Circle(path[0].getX(), path[0].getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
@@ -73,7 +77,13 @@ public class UIController{
 		seq.play();
 	}
 
-//	private Simulation sim;
+	public UIController getUIC() {return this;}
+
+	public List<String> getNodesUI() {
+		return nodesUI;
+	}
+
+	//	private Simulation sim;
 //
 //	public void save(){
 //
