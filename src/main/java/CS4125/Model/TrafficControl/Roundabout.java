@@ -8,7 +8,7 @@ import java.util.List;
 public class Roundabout extends TCMDecorator {
 
     /**
-     * Comstructor taking in a ITCM object and passing it as a reference to TCM decorator
+     * Constructor taking in a ITCM object and passing it as a reference to TCM decorator
      * @param tcm TCM to decorate
      */
     public Roundabout(ITCM tcm) { super(tcm); }
@@ -16,6 +16,11 @@ public class Roundabout extends TCMDecorator {
     @Override
     public void updateState(int stateNum) {
         // TODO: 28/11/2019 waiting on Observer patter implementation
+    }
+
+    @Override
+    public String getName() {
+        return super.getTcm().getName();
     }
 
     @Override
@@ -34,6 +39,11 @@ public class Roundabout extends TCMDecorator {
     @Override
     public List<ITCM> getAdjacent() {
         return super.getTcm().getAdjacent();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.getTcm().setName(name);
     }
 
     @Override

@@ -163,8 +163,8 @@ public class UIView extends Application {
 		coordsBtn.setOnAction(event -> {
 			System.out.print(x_input.getText() + "; " + y_input.getText());
 			// grab x & y, add node
-			 Simulation.INSTANCE.addNode(
-			 		tcmType, name, Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), 1000);
+//			 Simulation.INSTANCE.addNode(
+//			 		tcmType, name, Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), 1000);
 		});
 
 		Label nodeTitle = new Label("Connect to a node:");

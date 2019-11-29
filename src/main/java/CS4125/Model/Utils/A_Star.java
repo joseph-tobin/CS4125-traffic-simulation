@@ -6,7 +6,9 @@ package CS4125.Model.Utils;
  * Adam O'Mahony [16187504]
  */
 
+import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.IGraphable;
+import com.sun.org.apache.xpath.internal.objects.XObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,12 @@ public class A_Star {
         static IGraphable destination;
 
         // Private data
-        IGraphable current, prev; // Current and Previous IGraphable objects
+        IGraphable current; // Current IGraphable object
+        State prev;
         int depth; // Depth in the state tree (0 if root)
         int heuristic;
 
-        public State(IGraphable current, IGraphable prev, int depth) {
+        public State(IGraphable current, State prev, int depth) {
             this.current = current;
             this.prev = prev;
             this.depth = depth;
@@ -46,7 +49,7 @@ public class A_Star {
             ArrayList<State> possibleStates = new ArrayList<State>();
             List<IGraphable> graphables = current.getPossibleNext();
             for(IGraphable g : graphables) {
-                possibleStates.add(new State(g, this.current, this.depth+1));
+                possibleStates.add(new State(g, this, this.depth+1));
             }
             return possibleStates;
         }
@@ -55,7 +58,8 @@ public class A_Star {
          * Returns f = g + h.
          */
         public int getEstimatedCost() {
-            return (int)(depth + current.getEstimatedCost() * current.distanceTo(destination));
+            int cost = (int)(depth + current.getEstimatedCost() * current.distanceTo(destination));
+            return cost;
         }
 
 
@@ -68,13 +72,32 @@ public class A_Star {
          */
         @Override
         public int compareTo(State other) {
-            return getEstimatedCost() - other.getEstimatedCost();
+            int cost = this.getEstimatedCost() - other.getEstimatedCost();
+            return cost;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj.getClass() == this.getClass()) {
+              return this.current == ((State) obj).current;
+            }
+            return false;
+        }
+
+        // TODO: 28/11/2019 implement proper hash function
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int hash = current.hashCode();
+
+            return hash;
         }
 
         public List<IGraphable> generateRoute(List<IGraphable> route) {
             if(prev != null) {
-                this.generateRoute(route);
+                prev.generateRoute(route);
             }
+            System.out.println(((ITCM)current).getName() + " add to route");
             route.add(current);
             return route;
         }
@@ -93,14 +116,17 @@ public class A_Star {
         HashSet<State> seen = new HashSet<State>();
         PriorityQueue<State> open = new PriorityQueue<State>();
 
-        seen.add(new State(start, null, 0));
-        open.add(new State(start, null, 0));
+        State.destination = end;
+
+        State startState = new State(start, null, 0);
+        seen.add(startState);
+        open.add(startState);
 
         try {
             State temp = open.poll();
 
             // Ignore warning, open will always init with 1 state (Start state), check if temp becomes null in the loop
-            while(temp.current != end){
+            while(!temp.current.equals(end)){
                 for(State child : temp.getNextStates()){
                     if(!(seen.contains(child))){
                         open.add(child);
