@@ -234,6 +234,10 @@ public enum Simulation{
 	public List<Vehicle> getVehicleList() {return this.vehicles; };
 	public void addVehicleToVehicleList(Vehicle v) {vehicles.add(v);}
 
+	public void addVehicleAnim(Vehicle v, int index) {
+		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+	}
+
 	//public List<Vehicle> getVehicles(){
 		//return this.vehicles;
 		//return this.vehicles;
