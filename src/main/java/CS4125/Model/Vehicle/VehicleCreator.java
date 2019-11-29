@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class VehicleCreator extends Thread implements IVehicleCreator {
+public class VehicleCreator extends Thread implements IVehicleCreator{
 
     int timer;
     List<ITCM> nodes;
@@ -17,9 +17,9 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
-        start();
     }
 
+    @Override
     public void run() {
         while (true && !(Thread.interrupted())) {
             System.out.println("timer is " + timer);
@@ -37,7 +37,8 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
-
+    @Override
     public void setTimer(int t) { this.timer = t;}
+    @Override
     public void updateNodes(List<ITCM> nodes) {this.nodes = nodes;}
 }

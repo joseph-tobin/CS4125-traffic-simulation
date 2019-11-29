@@ -69,7 +69,7 @@ public enum Simulation{
 	}
 
 	public void reset(){
-
+		deleteNode("TrafficLights_a");
 	}
 
 	public void addNode(String type, String name, int x, int y) {
@@ -87,7 +87,7 @@ public enum Simulation{
 	public void deleteNode(String label) {
 		ITCM n = findNode(label);
 		nodeList.remove(n);
-		//controller.removeNode(n);
+		controller.deleteNode(n);
 	}
 
 	public ITCM findNode(String label) {

@@ -30,7 +30,6 @@ public class UIView extends Application {
 	private UIController controller;
 	private Stage stage;
 
-
 	/**
 	 * Start point of the application
 	 * @param args: null
@@ -87,6 +86,8 @@ public class UIView extends Application {
 			System.out.println(slider.getValue());
 			// @Joe
 			// reduce interval for createVehicle thread in simulation
+			Simulation.INSTANCE.setVCTimer((int) slider.getValue()); // yo dawg it is joe here we can change this to double if necessary i just cba rn
+			// also this can only be called when vehicle creation thread has been created, maybe disable slider button if vehicles havent been created?
 		});
 		controls.getChildren().add(slider);
 
@@ -113,7 +114,7 @@ public class UIView extends Application {
 
 		Button saveBtn = new Button("Save");
 		saveBtn.setOnAction(event -> {
-			// save setup to database
+			Simulation.INSTANCE.reset();
 		});
 
 		Button loadBtn = new Button("Load");
@@ -196,11 +197,11 @@ public class UIView extends Application {
 	 * @param tcm the TCM that was just added
 	 */
 	private void connectTCMPane(Stage dialog, String tcm){
-		dialog.setTitle("Connect TCM");
+		dialog.setTitle("Connect " + tcm);
 		Label nodeTitle = new Label("Connect to a node:");
 		VBox dialogItems = new VBox(20);
 
-		ObservableList<String> observableList = FXCollections.observableList(controller.getNodesUI());
+		ObservableList<String> observableList = FXCollections.observableList(controller.getNodeLabels());
 		ListView<String> nodeOptions = new ListView<>(observableList);
 		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		Button connect_btn = new Button("Connect");
