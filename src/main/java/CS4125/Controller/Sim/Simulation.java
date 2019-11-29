@@ -37,6 +37,9 @@ public enum Simulation{
 	}
 
 	public void run(){
+		nodeList.clear();
+		vehicles.clear();
+		routeMap.clear();
 		// HARCODED FOR NOW
 		vehicleQuantity = 10;
 
@@ -76,17 +79,36 @@ public enum Simulation{
 		controller.addNode(n);
 	}
 
+	public void deleteNode(String label) {
+		ITCM n = findNode(label);
+		nodeList.remove(n);
+		controller.removeNode(n);
+	}
+
+	public ITCM findNode(String label) {
+		for (ITCM n: nodeList) {
+			if (n.getLabel().equals(label)) {
+				return n;
+			}
+		}
+		return null;
+	}
+
+	public int findNodeIndex(String label, List<ITCM> list) {
+		for (int i = 0; i < list.size(); i++) { // we need this for loop here so we can return index you cant get index from enhanced
+			if (list.get(i).getLabel().equals(label)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
 	public void addEdge(String l1, String l2) {
 		int l1index = -1;
 		int l2index = -1;
-		for (int i = 0; i < nodeList.size(); i++) {
-			if (nodeList.get(i).getLabel().equals(l1)) { // NOTE!!!! STRING LABELS MUST BE UNIQUE OR THIS WILL NOT WORK
-				l1index = i;
-			}
-			if (nodeList.get(i).getLabel().equals(l2)) {
-				l2index = i;
-			}
-		}
+		l1index = findNodeIndex(l1, nodeList); // NOTE!!!! STRING LABELS MUST BE UNIQUE OR THIS WILL NOT WORK
+		l2index = findNodeIndex(l2, nodeList);
 		if (l1index != -1 && l2index != -1) {
 			addAdjacent(nodeList.get(l1index), nodeList.get(l2index));
 			controller.addEdge(nodeList.get(l1index), nodeList.get(l2index));
@@ -95,12 +117,32 @@ public enum Simulation{
 		}
 	}
 
+	public void deleteEdge(String l1, String l2) {
+        int l1index = -1;
+        int l2index = -1;
+        l1index = findNodeIndex(l1, nodeList); // NOTE!!!! STRING LABELS MUST BE UNIQUE OR THIS WILL NOT WORK
+        l2index = findNodeIndex(l2, nodeList);
+        if (l1index != -1 && l2index != -1) {
+            removeAdjacent(nodeList.get(l1index), nodeList.get(l2index));
+            controller.removeEdge(nodeList.get(l1index), nodeList.get(l2index));
+        } else {
+            System.out.println("Labels not found");
+        }
+    }
+
 	public void addAdjacent(ITCM n1, ITCM n2) {
 		List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
 		List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
 		n1.setAdjacent(n1list);
 		n2.setAdjacent(n2list);
 	}
+
+	public void removeAdjacent(ITCM n1, ITCM n2) {
+        List<ITCM> n1list = n1.getAdjacent(); n1list.remove(n2); // add n2 to adjacency list of n1
+        List<ITCM> n2list = n2.getAdjacent(); n2list.remove(n1); // add n1 to adjacency list of n2
+        n1.setAdjacent(n1list);
+        n2.setAdjacent(n2list);
+    }
 
 
 	public void defaultNodes(){
