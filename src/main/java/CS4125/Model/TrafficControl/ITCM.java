@@ -17,6 +17,7 @@ public interface ITCM extends IGraphable {
     abstract String getName();
     abstract float getX();
     abstract float getY();
+    abstract String getLabel();
     abstract List<ITCM> getAdjacent();
     abstract void setName(String name);
     abstract void setX(float x);

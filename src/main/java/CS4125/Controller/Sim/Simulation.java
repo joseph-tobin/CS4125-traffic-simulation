@@ -7,6 +7,7 @@ import CS4125.Model.TrafficControl.*;
 import CS4125.View.EventHandlers.UIController;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.util.*;
 
@@ -40,7 +41,7 @@ public enum Simulation{
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
-		createNodes();
+		defaultNodes();
 
 		for (int i = 1; i < vehicleQuantity; i++) {
 			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
@@ -64,16 +65,54 @@ public enum Simulation{
 
 	}
 
-	public void createNodes(){
+	public void addNode(String type, String name, int x, int y) {
+		ITCM n;
+		switch (type) {
+			case "S": n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
+			case "T": n = new TrafficLights(new SimpleJunction(name,x,y,new ArrayList<ITCM>())); break;
+			//case "R": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
+			default: n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
+		}
+		nodeList.add(n);
+		controller.addNode(n);
+	}
+
+	public void addEdge(String l1, String l2) {
+		int l1index = 0;
+		int l2index = 0;
+		for (int i = 0; i < nodeList.size(); i++) {
+			if (nodeList.get(i).getLabel().equals(l1)) { // NOTE!!!! STRING LABELS MUST BE UNIQUE OR THIS WILL NOT WORK
+				l1index = i;
+			}
+			if (nodeList.get(i).getLabel().equals(l2)) {
+				l2index = i;
+			}
+		}
+		if (l1index != 0 && l2index != 0) {
+			addAdjacent(nodeList.get(l1index), nodeList.get(l2index));
+		} else {
+			System.out.println("Labels not found");
+		}
+	}
+
+	public void addAdjacent(ITCM n1, ITCM n2) {
+		List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
+		List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
+		n1.setAdjacent(n1list);
+		n2.setAdjacent(n2list);
+	}
+
+
+	public void defaultNodes(){
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
 		List<ITCM> adj = new ArrayList<ITCM>();
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction(1,20, adj));	nodeList.add(flagpoles); adj.clear();
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("yeet",200,300, adj));	nodeList.add(flagpoles); adj.clear();
 		adj.add(flagpoles);
-		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction(15,2, adj));	nodeList.add(libRoundabout); adj.clear();
+		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("us",150,50, adj));	nodeList.add(libRoundabout); adj.clear();
 		adj.add(libRoundabout); adj.add(flagpoles);
-		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction(8,23, adj));	nodeList.add(leroRoundabout);
+		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("deletus",100,250, adj));	nodeList.add(leroRoundabout);
 //		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
 //		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
 //
