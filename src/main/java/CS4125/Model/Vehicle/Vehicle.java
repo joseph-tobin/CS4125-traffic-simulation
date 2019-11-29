@@ -21,13 +21,7 @@ public class Vehicle extends Observer {
 		endNode=end;
 		route= A_Star.findRoute(start, end);
 	}
-//	public Vehicle(ITCM curr, ITCM last, ITCM start, ITCM end, ArrayList<ITCM> route){
-//		this.currentNode=curr;
-//		this.lastNode=last;
-//		this.startNode=start;
-//		this.endNode=end;
-//		this.route=route;
-//	}
+
 	public Vehicle copy(){
 		return new Vehicle(this.startNode, this.endNode);
 	}
@@ -36,41 +30,6 @@ public class Vehicle extends Observer {
 	public ITCM getStartNode()			{return startNode;}
 	public ITCM getEndNode()			{return endNode;}
 	public List<IGraphable> getRoute()	{return route;}
-
-//	private void routeFind(ArrayList<ITCM> in){
-//		ITCM lastIn=in.get(in.size()-1);
-//		//System.out.println("Vehicle.routeFind - lastIn: "+lastIn);
-//		//System.out.println("Vehicle.routeFind - endNode: "+endNode);
-//		//System.out.println("I am "+lastIn+". Looking at "+lastIn.getAdjacent().get(0));
-//		if (lastIn==endNode) {
-//			routeFound=true;
-//			route=in;
-//		}
-//		ArrayList<ITCM> temp=in;
-//		if(lastIn.getAdjacent().size()==1){
-//			//System.out.println("Vehicle.routeFind - lastIn: "+lastIn+" has 1 adjacent");
-//			temp.add((ITCM) lastIn.getAdjacent().get(0));
-//			routeFind(temp);
-//		} else if(lastIn.getAdjacent().size()==2) {
-//			//System.out.println("Vehicle.routeFind - lastIn: "+lastIn+" has 2 adjacent");
-//			if(lastIn.getAdjacent().get(0)!=in.get(in.size()-2))
-//				temp.add((ITCM) lastIn.getAdjacent().get(0));
-//			else
-//				temp.add((ITCM) lastIn.getAdjacent().get(1));
-//			routeFind(temp);
-//		} else if(lastIn.getAdjacent().size()>2) {
-//			for (int i=0; i<lastIn.getAdjacent().size(); i++) {
-//				if (lastIn.getAdjacent().get(i)!=in.get(in.size()-2)) {
-//					temp.add((ITCM) lastIn.getAdjacent().get(i));
-//					routeFind(temp);
-//					if(!routeFound) {
-//						temp.remove(temp.size()-1);
-//					}
-//				}
-//			}
-//		}
-//	}
-
 
 	public void move() {
 		for (int i=0; i<this.route.size()-1; i++) {

@@ -30,17 +30,11 @@ public class SimpleJunction extends Subject implements ITCM {
         public int getStateNum() { return this.stateNum; }
     }
 
-    public SimpleJunction(String label, int x, int y, List<ITCM> adj) {
+    public SimpleJunction(String label, int x, int y) {
         this.label = label;
         this.x = x;
         this.y = y;
-        if(adj != null) {
-            this.adjacent = adj;
-            initAdjacency(adj);
-            for(ITCM n : adjacent) {
-                System.out.println(this.label + " is adjacent to " + n.getLabel());
-            }
-        }
+
         // GO is default state of SimpleJunction -> Pass through junction when possible
         currentState = State.GO;
         currentStateNum = currentState.getStateNum();
