@@ -113,7 +113,7 @@ public class UIView extends Application {
 
 		Button saveBtn = new Button("Save");
 		saveBtn.setOnAction(event -> {
-			// save setup to database
+			Simulation.INSTANCE.reset();
 		});
 
 		Button loadBtn = new Button("Load");
@@ -196,11 +196,11 @@ public class UIView extends Application {
 	 * @param tcm the TCM that was just added
 	 */
 	private void connectTCMPane(Stage dialog, String tcm){
-		dialog.setTitle("Connect TCM");
+		dialog.setTitle("Connect " + tcm);
 		Label nodeTitle = new Label("Connect to a node:");
 		VBox dialogItems = new VBox(20);
 
-		ObservableList<String> observableList = FXCollections.observableList(controller.getNodesUI());
+		ObservableList<String> observableList = FXCollections.observableList(controller.getNodeLabels());
 		ListView<String> nodeOptions = new ListView<>(observableList);
 		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		Button connect_btn = new Button("Connect");

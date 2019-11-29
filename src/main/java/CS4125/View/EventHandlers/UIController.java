@@ -10,17 +10,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UIController{
 
+    // For adding to the view
 	private UIView view;
-	private List<String> nodesUI;
+	// For adding/deleting/referencing nodes/edges on the UI
+	private Map<String, Circle> nodeLabelCircles;
+	private Map<Line, List<String> > nodeEdges;
 
 	public UIController(UIView view){
 		this.view = view;
-		nodesUI = new ArrayList<>();
+		nodeLabelCircles = new HashMap<>();
+		nodeEdges = new HashMap<>();
 	}
 
 	/**
@@ -28,11 +31,35 @@ public class UIController{
 	 * @param n Node to be added
 	 */
 	public void addNode(ITCM n) {
+	    String name = n.getLabel();
 		Circle c = new Circle(n.getX(), n.getY(), 10);
-		Tooltip.install(c, new Tooltip(n.getLabel()));
+		Tooltip.install(c, new Tooltip(name));
 		c.setFill(Color.FORESTGREEN);
 		view.getSimPane().getChildren().add(c);
-		nodesUI.add(n.getLabel());
+
+		nodeLabelCircles.put(name, c);
+	}
+
+	public void deleteNode(ITCM n){
+		String name = n.getLabel();
+	    Circle toRemove = nodeLabelCircles.get(name);
+	    view.getSimPane().getChildren().remove(toRemove);
+
+		// find all edges connected to this node
+		// delete edges which are mapped to that node
+		Iterator<Map.Entry<Line, List<String> > > iter = nodeEdges.entrySet().iterator();
+		Line curr = iter.next().getKey();
+		while (iter.hasNext()) {
+			// iterate through list of linked nodes (pair)
+			Map.Entry<Line, List<String> > pair = iter.next();
+			for (String node : pair.getValue()) {
+				if (node.equals(name)) {
+					view.getSimPane().getChildren().remove(curr);
+					iter.remove();
+				}
+			}
+			curr = iter.next().getKey();
+		}
 	}
 
 	/**
@@ -49,6 +76,9 @@ public class UIController{
 		edge.setEndY(n2.getY());
 		view.getSimPane().getChildren().add(edge);
 		edge.toBack();
+
+		// Add a new edge mapped to two nodes
+        nodeEdges.put(edge, new ArrayList<String>(Arrays.asList(n1.getLabel(), n2.getLabel())));
 	}
 
 	/**
@@ -84,8 +114,9 @@ public class UIController{
 
 	public UIController getUIC() {return this;}
 
-	public List<String> getNodesUI() {
-		return nodesUI;
+	public List<String> getNodeLabels() {
+		String[] strOut = nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()]);
+		return Arrays.asList(strOut);
 	}
 
 	//	private Simulation sim;
