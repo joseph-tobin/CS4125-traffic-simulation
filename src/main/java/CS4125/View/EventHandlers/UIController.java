@@ -1,6 +1,7 @@
 package CS4125.View.EventHandlers;
 
 import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.Vehicle.Vehicle;
 import CS4125.View.NodeDelay;
 import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
@@ -40,6 +41,12 @@ public class UIController{
 		nodeLabelCircles.put(name, c);
 	}
 
+	/**
+	 * For deleting a node and the edges associated with it
+	 * Cycle through the map of edges to the list of nodes (pair) it links
+	 * Find instances of this node in that pair and remove the associated node
+	 * @param n the node to be removed
+	 */
 	public void deleteNode(ITCM n){
 		String name = n.getLabel();
 	    Circle toRemove = nodeLabelCircles.get(name);
@@ -53,6 +60,7 @@ public class UIController{
 			Map.Entry<Line, List<String> > pair = iter.next();
 			for (String node : pair.getValue()) {
 				if (node.equals(name)) {
+					// if found, remove from UI and the map of edges
 					view.getSimPane().getChildren().remove(pair.getKey());
 					iter.remove();
 				}
@@ -81,33 +89,28 @@ public class UIController{
 
 	/**
 	 * Add a vehicle animated along a path of nodes
-	 * Each entry contains a node and the time it will take to reach that node from the previous one
+	 * This will be called for each portion of the journey, until they reach the end
 	 *  (Calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
 	 * First element is start element, naturally with no delay
-	 * @param path: array of NodeDelay objects: 2D array of node and the estimated time to reach it from prev. node
+	 * @param a node from
+	 * @param b node to
+	 * @param cost time taken for journey
 	 */
-	public void addVehicle(NodeDelay[] path) {
-		Circle c = new Circle(path[0].getX(), path[0].getY(), 5);
+	public void addAnimation(Vehicle v, int i) {
+		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
 		c.toFront();
 
-		SequentialTransition seq = new SequentialTransition();
-		for(int i = 0; i < path.length - 1; i++){
-			Path p = new Path();
-			p.getElements().add(new MoveTo(path[i].getX(), path[i].getY()));
-			p.getElements().add(new LineTo(path[i+1].getX(), path[i+1].getY()));
+		Path p = new Path();
+		p.getElements().add(new MoveTo(v.getCurrentNode().getX(), v.getCurrentNode().getY()));
+		p.getElements().add(new LineTo(v.getNextNode().getX(), v.getNextNode().getY()));
 
-			PathTransition t = new PathTransition();
-			t.setNode(c);
-			t.setDuration(Duration.millis(path[i+1].getDelay()));
-			t.setPath(p);
-
-			seq.getChildren().add(t);
-		}
-		seq.setCycleCount(SequentialTransition.INDEFINITE);
-		seq.setCycleCount(SequentialTransition.INDEFINITE);
-		seq.play();
+		PathTransition t = new PathTransition();
+		t.setNode(c);
+		t.setDuration(Duration.millis(cost));
+		t.setPath(p);
+		t.play();
 	}
 
 	public UIController getUIC() {return this;}
@@ -117,25 +120,4 @@ public class UIController{
 		return Arrays.asList(strOut);
 	}
 
-	//	private Simulation sim;
-//
-//	public void save(){
-//
-//	}
-//
-//	public void load(){
-//
-//	}
-//
-//	public void display(){
-//
-//	}
-//
-//	public void updateSim(){
-//
-//	}
-//
-//	public void getMetrics(){
-//		sim.getMetrics();
-//	}
 }

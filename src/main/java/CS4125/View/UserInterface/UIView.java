@@ -131,8 +131,7 @@ public class UIView extends Application {
 
 		Button playPauseBtn = new Button("Play");
 		playPauseBtn.setOnAction(event -> {
-			// if play, set to pause and stop animations
-			// if pause, set to play and restart animations
+			Simulation.INSTANCE.pause();
 		});
 
 		ioButtons.getChildren().addAll(playPauseBtn, refreshBtn, saveBtn, loadBtn);
