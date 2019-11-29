@@ -140,17 +140,6 @@ class RoundaboutTest {
         assertEquals(expectedResult, result);
     }
 
-    @Test
-    void testGetEstimatedCost() {
-        // Setup
-        final float expectedResult = 0.0f;
-
-        // Run the test
-        final float result = roundaboutUnderTest.getEstimatedCost();
-
-        // Verify the results
-        assertEquals(expectedResult, result, 0.0001);
-    }
 
     @Test
     void testDistanceTo() {
