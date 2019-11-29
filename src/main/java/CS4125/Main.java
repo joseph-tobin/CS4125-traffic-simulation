@@ -1,19 +1,20 @@
 package CS4125;
 
 import CS4125.Controller.Sim.Simulation;
+import CS4125.View.EventHandlers.UIController;
+import CS4125.View.UserInterface.UIView;
+import javafx.application.Application;
 
 public class Main {
 
     public static void main(String[] args) {
-        //Simulation sim = new Simulation();
+        Application.launch(UIView.class);
+        UIController uic = new UIController(new UIView());
+        Simulation.INSTANCE.init(uic);
         Simulation.INSTANCE.run();
-        //sim.run();
-        Simulation.INSTANCE.getVehicles().get(0).move();
-
-        System.out.println(Simulation.INSTANCE.getNodeList().get(0).getAdjacent());
-        System.out.println(Simulation.INSTANCE.getNodeList().get(1).getAdjacent());
-        //System.out.println(sim.getNodeList().get(2).getAdjacent());
-        //System.out.println(sim.getVehicles().get(0).getStartNode());
-        //System.out.println(sim.getVehicles().get(0).getEndNode());
+//
+//
+//        System.out.println(Simulation.INSTANCE.getNodeList().get(0).getAdjacent());
+//        System.out.println(Simulation.INSTANCE.getNodeList().get(1).getAdjacent());
     }
 }
