@@ -22,4 +22,5 @@ public interface ITCM extends IGraphable {
     abstract void setY(float y);
     abstract void setAdjacent(List<ITCM> adj);
     abstract boolean enterQueue(ITCM origin, Vehicle vehicle);
+    abstract int getCurrentQueue(ITCM dest);
 }

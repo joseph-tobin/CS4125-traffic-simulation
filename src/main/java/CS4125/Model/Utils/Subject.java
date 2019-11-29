@@ -27,7 +27,7 @@ public class Subject {
     }
 
     /**
-     * Update specific observers of a given subject 
+     * Update specific observers of a given subject
      * @param observerList list of observers to update
      */ // TODO: 20-11-19 Possibly remove due to not fitting with Observer pattern properly
     public void notifyObservers(List<Observer> observerList) {

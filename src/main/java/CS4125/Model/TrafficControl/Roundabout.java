@@ -57,6 +57,11 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
+    public int getCurrentQueue(ITCM dest) {
+        return super.getTcm().getCurrentQueue(dest);
+    }
+
+    @Override
     public int getHeuristic() {
         return super.getTcm().getHeuristic();
     }

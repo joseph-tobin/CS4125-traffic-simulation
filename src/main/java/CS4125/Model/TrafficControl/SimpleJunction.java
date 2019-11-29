@@ -111,6 +111,20 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     /**
+     * Get current queue size between this and an adjacent ITCM
+     * @param dest Adjacent ITCM object
+      * @return current queue, else -1 if dest not adjacent to this
+     */
+    @Override
+    public int getCurrentQueue(ITCM dest) {
+        for(Adjacency a: adjacencyObjs) {
+            if(a.getAdj().equals(dest))
+                return a.getQueue().size();
+        }
+        return -1;
+    }
+
+    /**
      * Update state of TCM and inform all Observers of the change in state
      * If stateNum = current state, don't update observers
      */
