@@ -19,6 +19,11 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
+    public String getName() {
+        return super.getTcm().getName();
+    }
+
+    @Override
     public float getX() {
         return super.getTcm().getX();
     }
@@ -31,6 +36,11 @@ public class Roundabout extends TCMDecorator {
     @Override
     public List<ITCM> getAdjacent() {
         return super.getTcm().getAdjacent();
+    }
+
+    @Override
+    public void setName(String name) {
+        super.getTcm().setName(name);
     }
 
     @Override

@@ -10,6 +10,7 @@ import java.util.Queue;
 
 public class SimpleJunction extends Subject implements ITCM {
 
+    private String name;
     private float x;
     private float y;
     private List<ITCM> adjacent;
@@ -32,9 +33,13 @@ public class SimpleJunction extends Subject implements ITCM {
     public SimpleJunction(int x, int y, List<ITCM> adj) {
         this.x = x;
         this.y = y;
-        this.adjacent = adj;
-        initAdjacency(adj);
-
+        if(adj != null) {
+            this.adjacent = adj;
+            initAdjacency(adj);
+            for(ITCM n : adjacent) {
+                System.out.println(this.name + " is adjacent to " + n.getName());
+            }
+        }
         // GO is default state of SimpleJunction -> Pass through junction when possible
         currentState = State.GO;
         currentStateNum = currentState.getStateNum();
@@ -52,6 +57,8 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     /* ---- Override Methods ---- */
+
+
     @Override
     public float getX(){
         return this.x;
@@ -68,6 +75,11 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
     public void setX(float x){
         this.x = x;
     }
@@ -80,6 +92,7 @@ public class SimpleJunction extends Subject implements ITCM {
     @Override
     public void setAdjacent(List<ITCM> adj) {
         this.adjacent = adj;
+        initAdjacency(adj);
     }
 
     /**
@@ -108,6 +121,11 @@ public class SimpleJunction extends Subject implements ITCM {
     }
 
     @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
     public int getHeuristic() {
         return 0;
     }
@@ -132,8 +150,9 @@ public class SimpleJunction extends Subject implements ITCM {
 
     @Override
     public float distanceTo(IGraphable node) {
-        return (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)
+        float dist = (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)
                 + (((ITCM)node).getX() - x) * (((ITCM)node).getX() - x));
+        return dist;
     }
 
     /**
