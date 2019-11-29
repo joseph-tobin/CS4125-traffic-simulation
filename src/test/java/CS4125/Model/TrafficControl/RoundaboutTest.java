@@ -103,18 +103,18 @@ class RoundaboutTest {
         // Verify the results
     }
 
-    @Test
-    void testEnterQueue() {
-        // Setup
-        final ITCM origin = null;
-        final Vehicle vehicle = new Vehicle();
-
-        // Run the test
-        final boolean result = roundaboutUnderTest.enterQueue(origin, vehicle);
-
-        // Verify the results
-        assertTrue(result);
-    }
+//    @Test
+//    void testEnterQueue() {
+//        // Setup
+//        final ITCM origin = null;
+//        final Vehicle vehicle = new Vehicle();
+//
+//        // Run the test
+//        final boolean result = roundaboutUnderTest.enterQueue(origin, vehicle);
+//
+//        // Verify the results
+//        assertTrue(result);
+//    }
 
     @Test
     void testGetHeuristic() {

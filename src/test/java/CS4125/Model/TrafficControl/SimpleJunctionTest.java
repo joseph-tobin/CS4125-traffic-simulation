@@ -53,18 +53,18 @@ class SimpleJunctionTest {
         assertEquals(adj, simpleJunctionUnderTest.getAdjacent());
     }
 
-    @Test
-    void testEnterQueue() {
-        // Setup
-        final ITCM origin = null;
-        final Vehicle vehicle = new Vehicle();
-
-        // Run the test
-        final boolean result = simpleJunctionUnderTest.enterQueue(origin, vehicle);
-
-        // Verify the results
-        assertTrue(result);
-    }
+//    @Test
+//    void testEnterQueue() {
+//        // Setup
+//        final ITCM origin = null;
+//        final Vehicle vehicle = new Vehicle();
+//
+//        // Run the test
+//        final boolean result = simpleJunctionUnderTest.enterQueue(origin, vehicle);
+//
+//        // Verify the results
+//        assertTrue(result);
+//    }
 
     @Test
     void testUpdateState() {
