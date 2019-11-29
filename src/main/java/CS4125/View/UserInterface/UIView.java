@@ -5,15 +5,14 @@ import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
 //import CS4125.View.UISim;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.*;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,7 +29,6 @@ public class UIView extends Application {
 
 	private UIController controller;
 	private Stage stage;
-//	private UIController.ClickHandler clickController;
 
 
 	/**
@@ -43,6 +41,7 @@ public class UIView extends Application {
 
 	/**
 	 * Initialise UI elements
+	 * @param stage javafx Stage
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -80,7 +79,8 @@ public class UIView extends Application {
 		controls.getChildren().add(new Label("Traffic Level:"));
 		slider.valueProperty().addListener(event-> {
 			System.out.println(slider.getValue());
-			// reduce interval for createVehicle thread
+			// @Joe
+			// reduce interval for createVehicle thread in simulation
 		});
 		controls.getChildren().add(slider);
 
@@ -89,12 +89,12 @@ public class UIView extends Application {
 			double r = 15;
 			Button btn = new Button();
 			switch(i) {
-				case 0: btn.setText("S"); btn.setTooltip(new Tooltip("Simple Junction")); break;
-				case 1: btn.setText("T"); btn.setTooltip(new Tooltip("Traffic Lights")); break;
+				case 0: btn.setText("S"); btn.setTooltip(new Tooltip("SimpleJunction")); break;
+				case 1: btn.setText("T"); btn.setTooltip(new Tooltip("TrafficLights")); break;
 				case 2: btn.setText("R"); btn.setTooltip(new Tooltip("Roundabout")); break;
 			}
 			btn.setOnAction(event -> {
-				addTCMPane(btn.getTooltip().getText(), "A"); // prompt user to enter co-ords and nodes connected to it
+				addTCMPane(btn.getTooltip().getText()); // prompt user to enter co-ords and nodes connected to it
 			});
 			btn.setShape(new Circle(r));
 			btn.setMinSize(2 * r, 2 * r);
@@ -143,42 +143,63 @@ public class UIView extends Application {
 	}
 
 	/**
-	 * For adding a TCM to the UI, via clicking on one of the menu items
-	 * @param tcmType
-	 * @param name
+	 * Popup dialog for adding a TCM to the UI, via clicking on one of the menu items
+	 * @param tcmType simple junction / roundabout / traffic lights...
 	 */
-	private void addTCMPane(String tcmType, String name) {
+	private void addTCMPane(String tcmType) {
 		final Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
 		dialog.initOwner(stage);
 		dialog.setTitle("Add a " + tcmType);
-		VBox dialogVbox = new VBox(20);
+		VBox dialogItems = new VBox(20);
 
+		Label nameTitle = new Label("Name:");
+		TextField name_input = new TextField();
+		name_input.setPromptText("Name");
 		Label coordTitle = new Label("Co-ordinates:");
 		TextField x_input = new TextField();
 		x_input.setPromptText("x co-ord");
 		TextField y_input = new TextField();
 		y_input.setPromptText("y co-ord");
+
 		Button coordsBtn = new Button("Save");
 		coordsBtn.setOnAction(event -> {
-			System.out.print(x_input.getText() + "; " + y_input.getText());
+			System.out.println(x_input.getText() + "; " + y_input.getText());
 			// grab x & y, add node
-//			 Simulation.INSTANCE.addNode(
-//			 		tcmType, name, Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), 1000);
+			// prefixing label with tcmType for different representation in UI
+            System.out.println(tcmType + "_" + name_input.getText());
+			 Simulation.INSTANCE.addNode(
+			 		tcmType, tcmType + "_" + name_input.getText(),
+					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()));
 		});
 
 		Label nodeTitle = new Label("Connect to a node:");
-		TextField node_input = new TextField("node");
-		Button nodeBtn = new Button("Add");
-		nodeBtn.setOnAction(event -> {
-			System.out.println(node_input.getText());
-			node_input.clear();
-//			sim.addEdge();
-		});
 
-		dialogVbox.getChildren().addAll(coordTitle, x_input, y_input, coordsBtn, nodeTitle, node_input, nodeBtn);
+        ObservableList<String> observableList = FXCollections.observableList(controller.getNodesUI());
+		ListView<String> nodeOptions = new ListView<>(observableList);
+        nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        Button connect_btn = new Button("Connect");
 
-		Scene dialogScene = new Scene(dialogVbox, 300, 300);
+        connect_btn.setOnAction(event -> {
+            ObservableList<String> selectedNodes = nodeOptions.getSelectionModel().getSelectedItems();
+            for(String n : selectedNodes){
+                System.out.println("node = " + n);
+            }
+        });
+
+
+//        TextField node_input = new TextField("node");
+//		Button nodeBtn = new Button("Add");
+//		nodeBtn.setOnAction(event -> {
+//		    System.out.println(tcmType + "_" + node_input.getText());
+//            Simulation.INSTANCE.addEdge(tcmType + "_" + name_input.getText(), tcmType + "_" + node_input.getText());
+//			node_input.clear();
+//		});
+
+		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, coordsBtn,
+				nodeTitle, nodeOptions, connect_btn);
+
+		Scene dialogScene = new Scene(dialogItems, 300, 300);
 		dialog.setScene(dialogScene);
 		dialog.show();
 	}

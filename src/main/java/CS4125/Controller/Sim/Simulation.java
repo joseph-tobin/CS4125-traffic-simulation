@@ -68,9 +68,9 @@ public enum Simulation{
 	public void addNode(String type, String name, int x, int y) {
 		ITCM n;
 		switch (type) {
-			case "S": n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
-			case "T": n = new TrafficLights(new SimpleJunction(name,x,y,new ArrayList<ITCM>())); break;
-			//case "R": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
+			case "SimpleJunction": n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
+			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y,new ArrayList<ITCM>())); break;
+			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
 			default: n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
 		}
 		nodeList.add(n);
@@ -90,6 +90,7 @@ public enum Simulation{
 		}
 		if (l1index != 0 && l2index != 0) {
 			addAdjacent(nodeList.get(l1index), nodeList.get(l2index));
+			controller.addEdge(nodeList.get(l1index), nodeList.get(l2index));
 		} else {
 			System.out.println("Labels not found");
 		}
@@ -108,11 +109,11 @@ public enum Simulation{
 
 		// adding to nodeList
 		List<ITCM> adj = new ArrayList<ITCM>();
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("yeet",200,300, adj));	nodeList.add(flagpoles); adj.clear();
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_A",200,300, adj));	nodeList.add(flagpoles); adj.clear();
 		adj.add(flagpoles);
-		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("us",150,50, adj));	nodeList.add(libRoundabout); adj.clear();
+		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("TrafficLights_B",150,50, adj));	nodeList.add(libRoundabout); adj.clear();
 		adj.add(libRoundabout); adj.add(flagpoles);
-		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("deletus",100,250, adj));	nodeList.add(leroRoundabout);
+		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("TrafficLights_C",100,250, adj));	nodeList.add(leroRoundabout);
 //		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
 //		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
 //
