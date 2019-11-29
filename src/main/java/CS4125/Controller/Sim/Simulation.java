@@ -24,6 +24,7 @@ public enum Simulation{
 	private int vehicleQuantity;
 	//private List<Vehicle> vehicles;
 	private static UIController controller;
+	private IVehicleCreator vc;
 
 
 	public void init(UIController controller) {
@@ -47,7 +48,7 @@ public enum Simulation{
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
-		createVehicles();
+		//createVehicle(1000, start, end);
 		defaultNodes();
 
 //		for (int i = 1; i < vehicleQuantity; i++) {
@@ -183,6 +184,7 @@ public enum Simulation{
 
 	}
 
+	// Don't use
 	public void createVehicle(ITCM start, ITCM end){
 
 		float xCoord = 1; // TODO: start.getX + start.getY
@@ -197,8 +199,22 @@ public enum Simulation{
 		}
 	}
 
-	public void createVehicles() {
-		//IVehicleCreator vc = new VehicleCreator();
+	// Use this to start thread to create vehicles use methods below to set things
+	public void createVehicles(ITCM start, ITCM end, int timer) {
+		vc = new VehicleCreator(timer, start, end); // start vehicle creation with defaul timer and start end
+		// use vc.setTimer(
+	}
+
+	public void setVCTimer(int timer) {
+		vc.setTimer(timer);
+	}
+
+	public void setVCStart(ITCM start) {
+		vc.setStart(start);
+	}
+
+	public void setVCEnd(ITCM end) {
+		vc.setEnd(end);
 	}
 
 	public void updateGraph(){
