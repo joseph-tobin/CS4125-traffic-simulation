@@ -2,8 +2,10 @@ package CS4125.Controller.Sim;
 
 
 import CS4125.Model.Metrics.Metric;
+import CS4125.Model.Utils.IVehicleCreator;
 import CS4125.Model.Vehicle.Vehicle;
 import CS4125.Model.TrafficControl.*;
+import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
@@ -20,14 +22,14 @@ public enum Simulation{
 	private HashMap<String, Vehicle> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
-	private List<Vehicle> vehicles = new ArrayList<>();
+	//private List<Vehicle> vehicles;
 	private static UIController controller;
 
 
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
 		this.routeMap = new HashMap<String, Vehicle>();
-		this.vehicles = new ArrayList<>();
+		//this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
 		this.circles = new ArrayList<>();
@@ -38,13 +40,14 @@ public enum Simulation{
 
 	public void run(){
 		nodeList.clear();
-		vehicles.clear();
+		//vehicles.clear();
 		routeMap.clear();
 		// HARCODED FOR NOW
-		vehicleQuantity = 10;
+		//vehicleQuantity = 10;
 
 		// HARDCODED FOR NOW
 		// TODO: instantiate nodeList and routeMap
+		createVehicles();
 		defaultNodes();
 
 //		for (int i = 1; i < vehicleQuantity; i++) {
@@ -82,7 +85,7 @@ public enum Simulation{
 	public void deleteNode(String label) {
 		ITCM n = findNode(label);
 		nodeList.remove(n);
-		controller.removeNode(n);
+		//controller.removeNode(n);
 	}
 
 	public ITCM findNode(String label) {
@@ -124,7 +127,7 @@ public enum Simulation{
         l2index = findNodeIndex(l2, nodeList);
         if (l1index != -1 && l2index != -1) {
             removeAdjacent(nodeList.get(l1index), nodeList.get(l2index));
-            controller.removeEdge(nodeList.get(l1index), nodeList.get(l2index));
+            //controller.removeEdge(nodeList.get(l1index), nodeList.get(l2index));
         } else {
             System.out.println("Labels not found");
         }
@@ -181,16 +184,21 @@ public enum Simulation{
 	}
 
 	public void createVehicle(ITCM start, ITCM end){
-		float xCoord = 1; // TODO:start.getX + start.getY
+
+		float xCoord = 1; // TODO: start.getX + start.getY
 		float yCoord = 2; // TODO: end.getX + end.getY
 		String xyCoords = String.valueOf(xCoord) + String.valueOf(yCoord);
 		if (routeMap.containsKey(xyCoords)) {
-			vehicles.add(routeMap.get(xyCoords).copy());
+			//vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
 			Vehicle newVehicle = new Vehicle(start, end);
-			vehicles.add(newVehicle);
+			//vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
+	}
+
+	public void createVehicles() {
+		//IVehicleCreator vc = new VehicleCreator();
 	}
 
 	public void updateGraph(){
@@ -206,9 +214,9 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
-	public List<Vehicle> getVehicles(){
-		return this.vehicles;
-	}
+	//public List<Vehicle> getVehicles(){
+		//return this.vehicles;
+	//}
 
 	public HashMap<String, Vehicle> getRouteMap(){
 		return this.routeMap;
