@@ -48,17 +48,15 @@ public class UIController{
 		// find all edges connected to this node
 		// delete edges which are mapped to that node
 		Iterator<Map.Entry<Line, List<String> > > iter = nodeEdges.entrySet().iterator();
-		Line curr = iter.next().getKey();
 		while (iter.hasNext()) {
 			// iterate through list of linked nodes (pair)
 			Map.Entry<Line, List<String> > pair = iter.next();
 			for (String node : pair.getValue()) {
 				if (node.equals(name)) {
-					view.getSimPane().getChildren().remove(curr);
+					view.getSimPane().getChildren().remove(pair.getKey());
 					iter.remove();
 				}
 			}
-			curr = iter.next().getKey();
 		}
 	}
 
