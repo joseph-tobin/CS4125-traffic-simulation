@@ -10,6 +10,12 @@ public class Adjacency {
     private Queue<Vehicle> queue;
     private int maxCapacity;
 
+    /**
+     * Adjacency constructor -
+     * @param adj adjacent node to calling node
+     * @param x X Coord of calling node
+     * @param y Y Coord of calling node
+     */
     Adjacency(ITCM adj, float x, float y) {
         this.adj = adj;
         initQueue(x, y);
