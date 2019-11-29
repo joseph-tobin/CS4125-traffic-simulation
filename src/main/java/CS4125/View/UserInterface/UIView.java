@@ -30,7 +30,6 @@ public class UIView extends Application {
 	private UIController controller;
 	private Stage stage;
 
-
 	/**
 	 * Start point of the application
 	 * @param args: null
@@ -87,6 +86,8 @@ public class UIView extends Application {
 			System.out.println(slider.getValue());
 			// @Joe
 			// reduce interval for createVehicle thread in simulation
+			Simulation.INSTANCE.setVCTimer((int) slider.getValue()); // yo dawg it is joe here we can change this to double if necessary i just cba rn
+			// also this can only be called when vehicle creation thread has been created, maybe disable slider button if vehicles havent been created?
 		});
 		controls.getChildren().add(slider);
 
