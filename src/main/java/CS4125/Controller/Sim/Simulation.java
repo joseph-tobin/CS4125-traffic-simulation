@@ -22,7 +22,7 @@ public enum Simulation{
 	private HashMap<String, Vehicle> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
-	//private List<Vehicle> vehicles;
+	private List<Vehicle> vehicles;
 	private static UIController controller;
 	private IVehicleCreator vc;
 
@@ -30,7 +30,7 @@ public enum Simulation{
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
 		this.routeMap = new HashMap<String, Vehicle>();
-		//this.vehicles = new ArrayList<>();
+		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
 		this.circles = new ArrayList<>();
@@ -62,6 +62,8 @@ public enum Simulation{
 				controller.addEdge(itcm, value);
 			}
 		}
+
+		createVehicles((ArrayList<ITCM>) nodeList, 1200); // this might be problem
 	}
 
 	public void pause(){
@@ -225,8 +227,11 @@ public enum Simulation{
 	public List<ITCM> getNodeList(){
 		return this.nodeList;
 	}
+	public List<Vehicle> getVehicleList() {return this.vehicles; };
+	public void addVehicleToVehicleList(Vehicle v) {vehicles.add(v);}
 
 	//public List<Vehicle> getVehicles(){
+		//return this.vehicles;
 		//return this.vehicles;
 	//}
 
