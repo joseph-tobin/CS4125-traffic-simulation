@@ -54,9 +54,10 @@ public enum Simulation{
 //		for (int i = 1; i < vehicleQuantity; i++) {
 //			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
 //		}
+		for (ITCM itcm : nodeList)
+			controller.addNode(itcm);
 
 		for (ITCM itcm : nodeList) {
-			controller.addNode(itcm);
 			for (ITCM value : itcm.getAdjacent()) {
 				controller.addEdge(itcm, value);
 			}
