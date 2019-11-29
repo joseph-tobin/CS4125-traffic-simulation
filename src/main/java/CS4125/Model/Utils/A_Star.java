@@ -97,7 +97,7 @@ public class A_Star {
             if(prev != null) {
                 prev.generateRoute(route);
             }
-            System.out.println(((ITCM)current).getName() + " add to route");
+            System.out.println(((ITCM)current).getLabel() + " add to route");
             route.add(current);
             return route;
         }
