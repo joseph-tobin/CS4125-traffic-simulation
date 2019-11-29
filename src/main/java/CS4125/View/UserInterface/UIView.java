@@ -3,7 +3,7 @@ package CS4125.View.UserInterface;
 //import CS4125.Controller.Sim.Simulation;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
-import CS4125.View.UISim;
+//import CS4125.View.UISim;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -163,8 +163,8 @@ public class UIView extends Application {
 		coordsBtn.setOnAction(event -> {
 			System.out.print(x_input.getText() + "; " + y_input.getText());
 			// grab x & y, add node
-			 Simulation.INSTANCE.addNode(
-			 		tcmType, name, Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), 1000);
+//			 Simulation.INSTANCE.addNode(
+//			 		tcmType, name, Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), 1000);
 		});
 
 		Label nodeTitle = new Label("Connect to a node:");
