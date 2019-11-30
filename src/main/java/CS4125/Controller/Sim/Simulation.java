@@ -39,7 +39,6 @@ public enum Simulation{
 		this.controller = controller;
 		this.circles = new ArrayList<Circle>();
 		moveQueue = new ArrayBlockingQueue<Move>(10000);
-//		new MoveConsumer(moveQueue).start();
 	}
 
 	Simulation() {
@@ -64,6 +63,7 @@ public enum Simulation{
 			}
 		}
 		createVehicles(getEndpoints(), 1200); // this might be problem
+		new MoveConsumer(moveQueue).start();
 	}
 
 	public void pause(){
@@ -264,7 +264,7 @@ public enum Simulation{
 	 * Use vc.setTimer(int) to change the timer
 	 */
 	public void createVehicles(List<ITCM> nodes, int timer) {
-		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
+		vc = new VehicleCreator(nodes, 10); // start vehicle creation with default timer and start end
 	}
 
 	/**
@@ -272,7 +272,7 @@ public enum Simulation{
 	 * @param timer how often you want a vehicle created
 	 */
 	public void setVCTimer(int timer) {
-		vc.setTimer(1200 - (timer * 8));
+		vc.setTimer(1300 - (timer * 13));
 	}
 
 	/**

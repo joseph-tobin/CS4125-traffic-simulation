@@ -16,8 +16,7 @@ public class MoveConsumer extends Thread {
     }
 
     @Override
-    public void start() {
-        super.start();
+    public void run() {
         consume();
     }
 
