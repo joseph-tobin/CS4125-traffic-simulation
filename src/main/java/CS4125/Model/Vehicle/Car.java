@@ -15,10 +15,10 @@ public class Car implements IVehicle {
 	private List<IGraphable> route;
 
 	public Car(ITCM start, ITCM end){
-		startNode =start;
-		currentNode =start;
-		endNode=end;
-		route= A_Star.findRoute(start, end);
+		startNode = start;
+		currentNode = start;
+		endNode = end;
+		route = A_Star.findRoute(start, end);
 	}
 
 	public ITCM getCurrentNode()		{return currentNode;}

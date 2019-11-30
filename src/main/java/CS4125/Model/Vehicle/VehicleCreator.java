@@ -1,49 +1,59 @@
 package CS4125.Model.Vehicle;
 
 import CS4125.Controller.Sim.Simulation;
+import CS4125.Model.TrafficControl.IEndpoint;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.IVehicleCreator;
+import CS4125.Model.Utils.RandomCollection;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class VehicleCreator extends Thread implements IVehicleCreator{
+public class VehicleCreator extends Thread implements IVehicleCreator {
 
     int timer;
-    List<ITCM> nodes;
+    RandomCollection<IEndpoint> nodes;
 
-    public VehicleCreator(ArrayList<ITCM> nodes, int timer) {
+    public VehicleCreator(RandomCollection<IEndpoint> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
-        start();
     }
 
     @Override
     public void run() {
-        while (true && !(Thread.interrupted())) {
-            System.out.println("timer is " + timer);
-            Car v = new Car(getRandom(nodes), getRandom(nodes));
-            //Simulation.INSTANCE.addVehicleToVehicleList(v);
-            //Simulation.INSTANCE.addVehicleToController(v);
+        while (!(Thread.interrupted())) {
+            ITCM[] routeStartEnd = getRandom();
+            Car v = new Car(routeStartEnd[0], routeStartEnd[1]);
+
+            // causing null pointer- v.getNextNode == null
             Simulation.INSTANCE.addVehicleAnim(v,0);
             try {
                 Thread.sleep(timer);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            nodes = Simulation.INSTANCE.getNodeList(); // i dont like doing this line :(, ensures we have latest list
         }
     }
 
-    public ITCM getRandom(List<ITCM> list) { // possibility of start and end node being equal
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+    /**
+     * Get random ITCM objects from a weighted collection
+     * @return ITCM[2] where first elm = start, and second elm = end
+     */
+    public ITCM[] getRandom() { // possibility of start and end node being equal
+        ITCM[] startEnd = new ITCM[2];
+        startEnd[0] = nodes.next();
+
+        while(startEnd[1] == null) {
+            ITCM tempNode = nodes.next();
+            if(tempNode != startEnd[0]) {
+                startEnd[1] = tempNode;
+            }
+        }
+        return startEnd;
     }
 
     @Override
     public void setTimer(int t) { this.timer = t;}
-    @Override
-    public void updateNodes(List<ITCM> nodes) {this.nodes = nodes;}
 }
