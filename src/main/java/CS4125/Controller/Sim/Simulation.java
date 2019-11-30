@@ -77,10 +77,10 @@ public enum Simulation{
 	public void addNode(String type, String name, int x, int y) {
 		ITCM n;
 		switch (type) {
-			case "SimpleJunction": n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
-			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y,new ArrayList<ITCM>())); break;
+			case "SimpleJunction": n = new SimpleJunction(name,x,y); break;
+			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y)); break;
 			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
-			default: n = new SimpleJunction(name,x,y,new ArrayList<ITCM>()); break;
+			default: n = new SimpleJunction(name,x,y); break;
 		}
 		nodeList.add(n);
 		controller.addNode(n);
@@ -156,9 +156,9 @@ public enum Simulation{
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200, null));
-		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, null));
-		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, null));
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200));
+		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300));
+		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400));
 		flagpoles.setAdjacent(new ArrayList<>(Arrays.asList(a,b)));
 		a.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,b)));
 		b.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,a)));
