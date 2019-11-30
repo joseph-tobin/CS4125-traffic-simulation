@@ -206,14 +206,20 @@ public enum Simulation{
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200, true));
-		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, false));
-		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, true));
-		flagpoles.setAdjacent(new ArrayList<>(Arrays.asList(a,b)));
-		a.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,b)));
-		b.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,a)));
+		TrafficLights f = new TrafficLights(new SimpleJunction("TrafficLights_f",300,200, true));
+		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_x",100,200, false));
+		TrafficLights d = new TrafficLights(new SimpleJunction("TrafficLights_y",55,300, false));
+		TrafficLights c = new TrafficLights(new SimpleJunction("TrafficLights_z",300,125, true));
+		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, false));
+		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, true));
+		f.setAdjacent(new ArrayList<>(Arrays.asList(e)));
+		e.setAdjacent(new ArrayList<>(Arrays.asList(c,d,f)));
+		d.setAdjacent(new ArrayList<>(Arrays.asList(a,c,b,e)));
+		c.setAdjacent(new ArrayList<>(Arrays.asList(a,d,e)));
+		b.setAdjacent(new ArrayList<>(Arrays.asList(d)));
+		a.setAdjacent(new ArrayList<>(Arrays.asList(c,d)));
 
-		nodeList.addAll(Arrays.asList(flagpoles, a, b));
+		nodeList.addAll(Arrays.asList(a, b, c, d, e, f));
 	}
 
 	// Don't use
