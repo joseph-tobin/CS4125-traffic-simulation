@@ -116,7 +116,7 @@ public class UIController{
 			t.stop();
 			view.getSimPane().getChildren().remove(c);
 			v.move();
-			if(v.getNextNode()!=null)
+			if(v.getNextNode() != null)
 				addAnimation(v, Simulation.INSTANCE.getJourneyTime(v));
 		});
         System.out.println("car finished journey");

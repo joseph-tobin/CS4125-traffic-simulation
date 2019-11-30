@@ -40,12 +40,14 @@ public class Car implements IVehicle, Observer {
 			while (!(this.getNextNode().enterQueue(currentNode,this)))
 				System.out.println("Waiting"); // wait until the node is available to enter#
 			// leave previous queue
-			if(prevNode != null)
-				currentNode.exitQueue(prevNode);
 
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
+			System.out.println("Moving to " + currentNode.getLabel());
+
+			if(currentNode != startNode)
+				currentNode.exitQueue(prevNode);
 		}
 	}
 	@Override
