@@ -2,12 +2,14 @@ package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Utils.Subject;
-import CS4125.Model.Vehicle.Car;
 import CS4125.Model.Vehicle.IVehicle;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Most basic ITCM time, passed as inner most ITCM for TCM Decorators
+ */
 public class SimpleJunction extends Subject implements IEndpoint {
 
     private float x;
@@ -20,6 +22,10 @@ public class SimpleJunction extends Subject implements IEndpoint {
     private State currentState;
     private int currentStateNum;
 
+    /**
+     * State enum, observers watch this state and respond appropriately
+     * Used in future version.
+     */
     public enum State {
         GO(1),
         STOP(0);
@@ -107,17 +113,14 @@ public class SimpleJunction extends Subject implements IEndpoint {
     }
 
     /**
-     * exit an adjacency queue todo refactor to adjacency to increase code quality
+     * Exit an adjacency queue when moving from one ITCM to another
      * @param prevNode next node in a route
      */
     @Override
     public void exitQueue(ITCM prevNode) {
-        System.out.println("trying to exit: " + prevNode.getLabel());
         for(Adjacency a: adjacencyObjs) {
-            System.out.println("comparing " + prevNode.getLabel() + " with " + a.getAdj().getLabel());
             if(a.getAdj().equals(prevNode)) {
                 a.getQueue().poll();
-                System.out.println("exited " + this.getLabel() + " from " + prevNode.getLabel());
             }
         }
     }
@@ -149,6 +152,7 @@ public class SimpleJunction extends Subject implements IEndpoint {
     /**
      * Update state of TCM and inform all Observers of the change in state
      * If stateNum = current state, don't update observers
+     * @param stateNum State changed to
      */
     @Override
     public void updateState(int stateNum) {
@@ -160,6 +164,10 @@ public class SimpleJunction extends Subject implements IEndpoint {
         return 0;
     }
 
+    /**
+     * returns a list of IGraphable objects to be used by the A* search algorithm
+     * @return
+     */
     @Override
     public List<IGraphable> getPossibleNext() {
         return new ArrayList<IGraphable>(this.adjacent);
@@ -178,6 +186,11 @@ public class SimpleJunction extends Subject implements IEndpoint {
         return cost;
     }
 
+    /**
+     * Get Euclidean distance between 2 points
+     * @param node Node to get distance to
+     * @return float result of distance between 2 nodes
+     */
     @Override
     public float distanceTo(IGraphable node) {
         float dist = (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)

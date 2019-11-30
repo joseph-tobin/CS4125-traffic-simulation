@@ -9,6 +9,10 @@ import CS4125.Model.Vehicle.Car;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Thread that creates Vehicles objects with a random start and end points and a given interval.
+ * Creation interval set in UI by changing the flow slider
+ */
 public class VehicleCreator extends Thread implements IVehicleCreator {
 
     private int timer;
@@ -46,18 +50,13 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
      * @return ITCM[2] where first elm = start, and second elm = end
      */
     public ITCM[] getRandom() { // possibility of start and end node being equal
-        System.out.println("getRandom called");
         ITCM[] startEnd = new ITCM[2];
         startEnd[0] = nodes.get(rand.nextInt(nodes.size()));
 
-        System.out.println("start " +startEnd[0].getLabel());
-
         while(startEnd[1] == null) {
             ITCM tempNode = nodes.get(rand.nextInt(nodes.size()));
-            System.out.println("temp " + tempNode.getLabel());
             if(tempNode != startEnd[0]) {
                 startEnd[1] = tempNode;
-                System.out.println("end" + startEnd[1].getLabel());
             }
         }
         return startEnd;
