@@ -26,7 +26,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
             Car v = new Car(routeStartEnd[0], routeStartEnd[1]);
 
             // causing null pointer- v.getNextNode == null
-            Simulation.INSTANCE.addVehicleAnim(v,0);
+            Simulation.INSTANCE.addVehicleAnim(v);
             try {
                 Thread.sleep(timer);
             } catch (InterruptedException e) {

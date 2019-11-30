@@ -93,10 +93,9 @@ public class UIController{
 	 *  (Calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
 	 * First element is start element, naturally with no delay
 	 * @param v Vehicle being moved
-	 * @param i Position of v in its route
 	 * @param cost time taken for this part of the journey
 	 */
-	public void addAnimation(IVehicle v, int i, int cost) {
+	public void addAnimation(IVehicle v, int cost) {
 		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
@@ -113,12 +112,11 @@ public class UIController{
 		t.setPath(p);
 		t.play();
 
-		int finalI = i + 1;
 		t.setOnFinished(event -> {
 			t.stop();
 			v.move();
 			if(v.getNextNode()!=null)
-				addAnimation(v, finalI, 1000);
+				addAnimation(v, 1000);
 			System.out.println("car reached journey");
 		});
 	}
