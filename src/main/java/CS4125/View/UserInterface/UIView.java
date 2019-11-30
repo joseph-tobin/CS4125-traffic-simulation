@@ -178,7 +178,6 @@ public class UIView extends Application {
 			 Simulation.INSTANCE.addNode(
 			 		tcmType, thisTCM,
 					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()));
-//			 dialog.hide();
 			 connectTCMPane(dialog, thisTCM);
 		});
 
@@ -200,15 +199,16 @@ public class UIView extends Application {
 		Label nodeTitle = new Label("Connect to a node:");
 		VBox dialogItems = new VBox(20);
 
-		ObservableList<String> observableList = FXCollections.observableList(controller.getNodeLabels());
+		ObservableList<String> observableList = FXCollections.observableList(controller.getNodeLabels(tcm));
 		ListView<String> nodeOptions = new ListView<>(observableList);
 		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		Button connect_btn = new Button("Connect");
 
 		connect_btn.setOnAction(event -> {
+			dialog.close();
 			ObservableList<String> selectedNodes = nodeOptions.getSelectionModel().getSelectedItems();
 			for(String n : selectedNodes){
-				System.out.println("node = " + n);
+				System.out.println("You = " + tcm + ",  node = " + n);
 				Simulation.INSTANCE.addEdge(tcm, n);
 			}
 		});

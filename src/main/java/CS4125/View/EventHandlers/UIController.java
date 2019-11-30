@@ -1,5 +1,6 @@
 package CS4125.View.EventHandlers;
 
+import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Vehicle.Vehicle;
 import CS4125.View.NodeDelay;
@@ -92,11 +93,11 @@ public class UIController{
 	 * This will be called for each portion of the journey, until they reach the end
 	 *  (Calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
 	 * First element is start element, naturally with no delay
-	 * @param a node from
-	 * @param b node to
-	 * @param cost time taken for journey
+	 * @param v Vehicle being moved
+	 * @param i Position of v in its route
+	 * @param cost time taken for this part of the journey
 	 */
-	public void addAnimation(Vehicle v, int i) {
+	public void addAnimation(Vehicle v, int i, int cost) {
 		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
@@ -111,13 +112,25 @@ public class UIController{
 		t.setDuration(Duration.millis(cost));
 		t.setPath(p);
 		t.play();
+
+		int finalI = i++;
+		t.setOnFinished(event -> {
+//			Simulation.INSTANCE.addVehicleToController(v, finalI);
+			System.out.println("car created");
+		});
 	}
 
 	public UIController getUIC() {return this;}
 
-	public List<String> getNodeLabels() {
-		String[] strOut = nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()]);
-		return Arrays.asList(strOut);
+	/**
+	 * Get the list of other nodes (apart from the one just created)
+	 * @param selected the selected node that was just created
+	 * @return list of nodes
+	 */
+	public List<String> getNodeLabels(String selected) {
+		List<String> strOut = new ArrayList<>(Arrays.asList(nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()])));
+		strOut.removeIf(node -> node.equals(selected));
+		return strOut;
 	}
 
 }
