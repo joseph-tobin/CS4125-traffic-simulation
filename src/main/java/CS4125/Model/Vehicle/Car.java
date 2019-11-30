@@ -31,7 +31,8 @@ public class Car implements IVehicle {
 
 	public void move() {
 		if(getNextNode() != null) {
-			boolean check= this.getNextNode().enterQueue(currentNode,this);
+			while (!(this.getNextNode().enterQueue(currentNode,this)))
+				System.out.println("Waiting"); // wait until the node is available to enter
 			currentNode = getNextNode();
 			currentNodeIndex++;
 		}

@@ -108,13 +108,17 @@ public class UIController{
 		PathTransition t = new PathTransition();
 		t.setNode(c);
 		t.setDuration(Duration.millis(cost));
+		t.setCycleCount(1);
 		t.setPath(p);
 		t.play();
 
-		int finalI = i++;
+		int finalI = i + 1;
 		t.setOnFinished(event -> {
-			Simulation.INSTANCE.addVehicleAnim(v, finalI);
-			System.out.println("car created");
+			t.stop();
+			v.move();
+			if(v.getNextNode()!=null)
+				addAnimation(v, finalI, 1000);
+			System.out.println("car reached journey");
 		});
 	}
 
