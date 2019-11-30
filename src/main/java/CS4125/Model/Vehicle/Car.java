@@ -3,18 +3,18 @@ package CS4125.Model.Vehicle;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
-import CS4125.Model.Utils.Observer;
+//import CS4125.Model.Utils.Observer;
 
 import java.util.*;
 
-public class Vehicle extends Observer implements IVehicle {
+public class Car implements IVehicle {
 	private ITCM currentNode;
 	private int currentNodeIndex = 0;
 	private ITCM startNode;
 	private ITCM endNode;
 	private List<IGraphable> route;
 
-	public Vehicle(ITCM start, ITCM end){
+	public Car(ITCM start, ITCM end){
 		startNode =start;
 		currentNode =start;
 		endNode=end;
@@ -37,12 +37,12 @@ public class Vehicle extends Observer implements IVehicle {
 		}
 	}
 
-	@Override
-	public void update(Subject s, int state) {
-		if (state==0) {
-			this.move();
-			s.detach(this);
-			currentNode.attach(this);
-		}
-	}
+//	@Override
+//	public void update(Subject s, int state) {
+//		if (state==0) {
+//			this.move();
+//			s.detach(this);
+//			currentNode.attach(this);
+//		}
+//	}
 }

@@ -3,15 +3,14 @@ package CS4125.Controller.Sim;
 
 import CS4125.Model.Metrics.Metric;
 import CS4125.Model.Utils.IVehicleCreator;
-import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
+import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public enum Simulation{
@@ -19,17 +18,17 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
-	private HashMap<String, Vehicle> routeMap;
+	private HashMap<String, Car> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
-	private List<Vehicle> vehicles;
+	private List<IVehicle> vehicles;
 	private static UIController controller;
 	private IVehicleCreator vc;
 
 
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
-		this.routeMap = new HashMap<String, Vehicle>();
+		this.routeMap = new HashMap<String, Car>();
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
@@ -129,10 +128,26 @@ public enum Simulation{
     }
 
 	public void addAdjacent(ITCM n1, ITCM n2) {
-		List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
-		List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
-		n1.setAdjacent(n1list);
-		n2.setAdjacent(n2list);
+		//List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
+		//List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
+		//n1.setAdjacent(n1list);
+		//n2.setAdjacent(n2list);
+		if (n1.getAdjacent().isEmpty()) {
+			n1.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
+		} else {
+			// i feel like this wont work as it didnt work when i tried it in the 4 lines commented above, but we cant test this atm
+			List<ITCM> test = n1.getAdjacent();
+			test.add(n2);
+			n1.setAdjacent(test);
+		}
+		if (n2.getAdjacent().isEmpty()) {
+			n2.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
+		} else { // asme with this
+			List<ITCM> test = n2.getAdjacent();
+			test.add(n1);
+			n2.setAdjacent(test);
+		}
+
 	}
 
 	public void removeAdjacent(ITCM n1, ITCM n2) {
@@ -166,7 +181,7 @@ public enum Simulation{
 		if (routeMap.containsKey(xyCoords)) {
 			//vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
-			Vehicle newVehicle = new Vehicle(start, end);
+			Car newVehicle = new Car(start, end);
 			//vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
@@ -190,8 +205,8 @@ public enum Simulation{
 
 	}
 
-	public void addVehicleToController(Vehicle v){
-//		controller.addAnimation(v);
+	public void addVehicleToController(Car v){
+		//controller.addAnimation(v);
 	}
 
 	public Metric getMetrics(){
@@ -202,11 +217,11 @@ public enum Simulation{
 	public List<ITCM> getNodeList(){
 		return this.nodeList;
 	}
-	public List<Vehicle> getVehicleList() {return this.vehicles; };
-	public void addVehicleToVehicleList(Vehicle v) {vehicles.add(v);}
+	public List<IVehicle> getVehicleList() {return this.vehicles; };
+	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
-	public void addVehicleAnim(Vehicle v, int index) {
-//		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+	public void addVehicleAnim(Car v, int index) {
+		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
 	}
 
 	//public List<Vehicle> getVehicles(){
@@ -214,7 +229,7 @@ public enum Simulation{
 		//return this.vehicles;
 	//}
 
-	public HashMap<String, Vehicle> getRouteMap(){
+	public HashMap<String, Car> getRouteMap(){
 		return this.routeMap;
 	}
 }
