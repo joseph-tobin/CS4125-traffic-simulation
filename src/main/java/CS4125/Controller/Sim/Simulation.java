@@ -191,7 +191,7 @@ public enum Simulation{
 	}
 
 	public void addVehicleToController(Vehicle v){
-		controller.addAnimation(v);
+		//controller.addAnimation(v);
 	}
 
 	public Metric getMetrics(){
