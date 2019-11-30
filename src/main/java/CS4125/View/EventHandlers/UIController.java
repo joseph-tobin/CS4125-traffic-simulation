@@ -90,24 +90,24 @@ public class UIController{
 	/**
 	 * Add a vehicle animated along a path of nodes
 	 * This will be called for each portion of the journey, until they reach the end
-	 *  (Calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
-	 * First element is start element, naturally with no delay
-	 * @param v Vehicle being moved
-	 * @param cost time taken for this part of the journey
+	 *  (Time calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
+	 * @param start beginning of the animation
+     * @param end end of the animation
+	 * @param time time taken for this part of the journey
 	 */
-	public void addAnimation(IVehicle v, int cost) {
-		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
+	public void addAnimation(ITCM start, ITCM end, int time) {
+		Circle c = new Circle(start.getX(), start.getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
 		c.toFront();
 
 		Path p = new Path();
-		p.getElements().add(new MoveTo(v.getCurrentNode().getX(), v.getCurrentNode().getY()));
-		p.getElements().add(new LineTo(v.getNextNode().getX(), v.getNextNode().getY()));
+		p.getElements().add(new MoveTo(start.getX(), start.getY()));
+		p.getElements().add(new LineTo(end.getX(), end.getY()));
 
 		PathTransition t = new PathTransition();
 		t.setNode(c);
-		t.setDuration(Duration.millis(cost));
+		t.setDuration(Duration.millis(time));
 		t.setCycleCount(1);
 		t.setPath(p);
 		t.play();
@@ -115,9 +115,6 @@ public class UIController{
 		t.setOnFinished(event -> {
 			t.stop();
 			view.getSimPane().getChildren().remove(c);
-			v.move();
-			if(v.getNextNode() != null)
-				addAnimation(v, Simulation.INSTANCE.getJourneyTime(v));
 		});
         System.out.println("car finished journey");
 	}
