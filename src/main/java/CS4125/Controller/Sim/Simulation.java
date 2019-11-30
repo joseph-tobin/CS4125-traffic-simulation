@@ -68,7 +68,6 @@ public enum Simulation{
 		deleteNode("TrafficLights_a");
 	}
 
-	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 	/**
 	 * Add a node
 	 * @param type Node type
@@ -76,7 +75,7 @@ public enum Simulation{
 	 * @param x xcoord
 	 * @param y ycoord
 	 */
-	public void addNode(String type, String name, int x, int y) {
+	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 		ITCM n;
 		switch (type) {
 			case "SimpleJunction": n = new SimpleJunction(name,x,y); break;
@@ -285,16 +284,15 @@ public enum Simulation{
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
 	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}
 
-	public void addVehicleAnim(IVehicle v, int index) {
 	/**
 	 * Adds the vehicle animation to UI Controller with the current index
 	 * @param v
 	 * @param index
 	 */
-	public void addVehicleAnim(Car v, int index) {
+	public void addVehicleAnim(IVehicle v, int index) {
 		Platform.runLater(
 				() -> {
-					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+					controller.addAnimation(v, index, v.getCurrentNode().getCurrentQueue((v.getNextNode())));
 				}
 		);
 	}
