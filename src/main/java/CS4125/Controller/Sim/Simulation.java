@@ -43,17 +43,9 @@ public enum Simulation{
 		nodeList.clear();
 		//vehicles.clear();
 		routeMap.clear();
-		// HARCODED FOR NOW
-		//vehicleQuantity = 10;
 
-		// HARDCODED FOR NOW
-		// TODO: instantiate nodeList and routeMap
-		//createVehicle(1000, start, end);
 		defaultNodes();
 
-//		for (int i = 1; i < vehicleQuantity; i++) {
-//			createVehicle(nodeList.get(new Random().nextInt(nodeList.size() - 1)), nodeList.get(new Random().nextInt(nodeList.size() - 1)));
-//		}
 		for (ITCM itcm : nodeList)
 			controller.addNode(itcm);
 
@@ -62,7 +54,6 @@ public enum Simulation{
 				controller.addEdge(itcm, value);
 			}
 		}
-
 		createVehicles((ArrayList<ITCM>) nodeList, 1200); // this might be problem
 	}
 
@@ -164,26 +155,6 @@ public enum Simulation{
 		b.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,a)));
 
 		nodeList.addAll(Arrays.asList(flagpoles, a, b));
-
-
-//		adj.add(flagpoles);
-//		TrafficLights libRoundabout = new TrafficLights(new SimpleJunction("TrafficLights_B",150,50, adj));	nodeList.add(libRoundabout); adj.clear();
-//		adj.add(libRoundabout); adj.add(flagpoles);
-//		TrafficLights leroRoundabout = new TrafficLights(new SimpleJunction("TrafficLights_C",100,250, adj));	nodeList.add(leroRoundabout);
-//
-
-
-
-//		TrafficLights stables = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(stables);
-//		TrafficLights eastGate = new TrafficLights(new SimpleJunction(1,2));	nodeList.add(eastGate);
-//
-//		// Setup adjacency lists for each of the original nodes
-//		flagpoles.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 3)));
-//		libRoundabout.setAdjacent(Arrays.asList(new NodePair(flagpoles, 3), new NodePair(leroRoundabout, 1), new NodePair(stables, 2)));
-//		leroRoundabout.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 1)));
-//		stables.setAdjacent(Arrays.asList(new NodePair(libRoundabout, 2), new NodePair(eastGate, 4)));
-//		eastGate.setAdjacent(Arrays.asList(new NodePair(stables, 4)));
-
 	}
 
 	// Don't use
