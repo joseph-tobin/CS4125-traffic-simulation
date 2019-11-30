@@ -286,6 +286,14 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
+	public int getJourneyTime(IVehicle v) {
+		ITCM current = v.getCurrentNode();
+		ITCM next = v.getNextNode();
+		float dist = current.distanceTo(next);
+		float queue = current.getCurrentQueue(next);
+		float time = (queue / 10 ) + dist / 10;
+		return (int) time;
+	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
 	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}

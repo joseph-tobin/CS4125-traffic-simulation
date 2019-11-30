@@ -9,6 +9,7 @@
 
 # Generated files
 .idea/**/contentModelxml
+.codemr/*
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
