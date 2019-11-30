@@ -5,7 +5,11 @@ import CS4125.Model.TrafficControl.ITCM;
 public class Move {
     private ITCM start;
     private ITCM end;
-    private int cost;
+
+    Move(ITCM s, ITCM e) {
+        this.start = s;
+        this.end = e;
+    }
 
     public ITCM getStart() {
         return start;
@@ -21,13 +25,5 @@ public class Move {
 
     public void setEnd(ITCM end) {
         this.end = end;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
     }
 }

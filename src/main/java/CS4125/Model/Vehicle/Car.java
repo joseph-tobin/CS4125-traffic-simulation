@@ -1,5 +1,6 @@
 package CS4125.Model.Vehicle;
 
+import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
@@ -44,12 +45,21 @@ public class Car implements IVehicle, Observer {
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
+			addToMoveQueue();
 			System.out.println("Moving to " + currentNode.getLabel());
 
 			if(currentNode != startNode)
 				currentNode.exitQueue(prevNode);
 		}
 	}
+
+	/**
+	 * Add Move object to moveQueue in Simulation
+	 */
+	private void addToMoveQueue() {
+		Simulation.INSTANCE.getMoveQueue().offer(new Move(prevNode, currentNode));
+	}
+
 	@Override
 	public void update(int state) {
 		if(state==0) {

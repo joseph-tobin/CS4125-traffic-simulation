@@ -23,7 +23,7 @@ public class MoveConsumer extends Thread {
         while (true) {
             m = moveQueue.poll();
             if(m != null)
-                Simulation.INSTANCE.addVehicleAnim(m);
+                Simulation.INSTANCE.addMoveAnimimation(m);
         }
     }
 }
