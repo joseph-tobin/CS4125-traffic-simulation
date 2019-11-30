@@ -1,5 +1,6 @@
 package CS4125.View.EventHandlers;
 
+import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Vehicle.Car;
 import CS4125.View.UserInterface.UIView;
@@ -112,7 +113,7 @@ public class UIController{
 
 		int finalI = i++;
 		t.setOnFinished(event -> {
-//			Simulation.INSTANCE.addVehicleToController(v, finalI);
+			Simulation.INSTANCE.addVehicleAnim(v, finalI);
 			System.out.println("car created");
 		});
 	}

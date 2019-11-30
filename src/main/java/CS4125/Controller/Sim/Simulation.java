@@ -8,6 +8,7 @@ import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
+import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
 
@@ -221,7 +222,11 @@ public enum Simulation{
 	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
 	public void addVehicleAnim(Car v, int index) {
-		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+		Platform.runLater(
+				() -> {
+					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+				}
+		);
 	}
 
 	//public List<Vehicle> getVehicles(){
