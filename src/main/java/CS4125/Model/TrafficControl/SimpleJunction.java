@@ -34,7 +34,7 @@ public class SimpleJunction extends Subject implements ITCM {
         this.label = label;
         this.x = x;
         this.y = y;
-
+        this.adjacent = new ArrayList<ITCM>();
         // GO is default state of SimpleJunction -> Pass through junction when possible
         currentState = State.GO;
         currentStateNum = currentState.getStateNum();
