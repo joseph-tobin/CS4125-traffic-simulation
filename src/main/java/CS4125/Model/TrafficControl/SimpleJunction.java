@@ -7,7 +7,7 @@ import CS4125.Model.Vehicle.Car;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleJunction implements ITCM {
+public class SimpleJunction implements IEndpoint {
 
     private float x;
     private float y;
