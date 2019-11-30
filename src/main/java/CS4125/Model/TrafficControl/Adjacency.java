@@ -32,8 +32,8 @@ public class Adjacency {
         try {
             maxCapacity = (int) Math.sqrt((adj.getY() - y) * (adj.getY() - y)
                     + (adj.getX() - x) * (adj.getX() - x));
-
-            queue = new ArrayBlockingQueue<>((int) Math.ceil(maxCapacity / 10));
+            maxCapacity = (int) Math.ceil(maxCapacity / 10); // make sure the max queue is at least 1
+            queue = new ArrayBlockingQueue<>(maxCapacity);
         } catch (Exception e) {
             System.out.println("Check node coordinates");
             System.out.println(e.getMessage());
