@@ -4,6 +4,11 @@ import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
 
+/**
+ * Taken from stackoverflow (https://stackoverflow.com/questions/6409652/random-weighted-selection-in-java)
+ * Random collection object where each item in the collection has an associated weight which influences how often it is picked from the collection
+ * @param <E> Tye of item in collection
+ */
 public class RandomCollection<E> {
     private final NavigableMap<Double, E> map = new TreeMap<Double, E>();
     private final Random random;
