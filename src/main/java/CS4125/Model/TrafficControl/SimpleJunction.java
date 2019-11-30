@@ -112,9 +112,12 @@ public class SimpleJunction extends Subject implements IEndpoint {
      */
     @Override
     public void exitQueue(ITCM prevNode) {
+        System.out.println("trying to exit: " + prevNode.getLabel());
         for(Adjacency a: adjacencyObjs) {
+            System.out.println("comparing " + prevNode.getLabel() + " with " + a.getAdj().getLabel());
             if(a.getAdj().equals(prevNode)) {
                 a.getQueue().poll();
+                System.out.println("exited " + this.getLabel() + " from " + prevNode.getLabel());
             }
         }
     }
