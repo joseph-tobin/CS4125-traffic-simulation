@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface IVehicleCreator {
     public abstract void setTimer(int timer);
-    public abstract void updateNodes(List<ITCM> nodes);
 }
