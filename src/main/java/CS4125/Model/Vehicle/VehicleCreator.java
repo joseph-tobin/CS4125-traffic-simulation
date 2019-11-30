@@ -4,18 +4,16 @@ import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.IEndpoint;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.IVehicleCreator;
-import CS4125.Model.Utils.RandomCollection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class VehicleCreator extends Thread implements IVehicleCreator {
 
     int timer;
-    RandomCollection<IEndpoint> nodes;
+    List<IEndpoint> nodes;
 
-    public VehicleCreator(RandomCollection<IEndpoint> nodes, int timer) {
+    public VehicleCreator(List<IEndpoint> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
@@ -42,11 +40,12 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
      * @return ITCM[2] where first elm = start, and second elm = end
      */
     public ITCM[] getRandom() { // possibility of start and end node being equal
+        Random rand = new Random(42);
         ITCM[] startEnd = new ITCM[2];
-        startEnd[0] = nodes.next();
+        startEnd[0] = nodes.get(rand.nextInt(nodes.size()));
 
         while(startEnd[1] == null) {
-            ITCM tempNode = nodes.next();
+            ITCM tempNode = nodes.get(rand.nextInt(nodes.size()));
             if(tempNode != startEnd[0]) {
                 startEnd[1] = tempNode;
             }
