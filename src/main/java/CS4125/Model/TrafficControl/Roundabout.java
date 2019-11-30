@@ -1,6 +1,7 @@
 package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
+import CS4125.Model.Utils.Subject;
 import CS4125.Model.Vehicle.Car;
 import CS4125.Model.Vehicle.IVehicle;
 

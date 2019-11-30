@@ -3,11 +3,11 @@ package CS4125.Model.Vehicle;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
-//import CS4125.Model.Utils.Observer;
+import CS4125.Model.Utils.Observer;
 
 import java.util.*;
 
-public class Car implements IVehicle {
+public class Car implements IVehicle, Observer {
 	private ITCM currentNode;
 	private ITCM prevNode = null;
 	private int currentNodeIndex = 0;
@@ -30,8 +30,9 @@ public class Car implements IVehicle {
 	public ITCM getEndNode()			{return endNode;}
 	public List<IGraphable> getRoute()	{return route;}
 
-	public void move() {
-		if(getNextNode() != null) {
+	@Override
+	public void update(int state) {
+		if(getNextNode() != null && state==0) {
 			while (!(this.getNextNode().enterQueue(currentNode,this)))
 				System.out.println("Waiting"); // wait until the node is available to enter#
 			// leave previous queue
@@ -41,15 +42,8 @@ public class Car implements IVehicle {
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
+			subject.detach(this);
+			subject.attach(this);
 		}
 	}
-
-//	@Override
-//	public void update(Subject s, int state) {
-//		if (state==0) {
-//			this.move();
-//			s.detach(this);
-//			currentNode.attach(this);
-//		}
-//	}
 }

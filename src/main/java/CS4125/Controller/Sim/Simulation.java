@@ -2,17 +2,22 @@ package CS4125.Controller.Sim;
 
 
 import CS4125.Model.Metrics.Metric;
+import CS4125.Model.TrafficControl.IEndpoint;
+import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.TrafficControl.TrafficLights;
+import CS4125.Model.TrafficControl.SimpleJunction;
 import CS4125.Model.Utils.IVehicleCreator;
 import CS4125.Model.Vehicle.Car;
-import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
-import CS4125.Model.TrafficControl.SimpleJunction;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public enum Simulation{
 

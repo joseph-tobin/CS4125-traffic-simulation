@@ -1,6 +1,6 @@
 package CS4125.Model.Utils;
 
-public abstract class Observer {
-    protected Subject subject;
-    public abstract void update(Subject subject, int state);
+public interface Observer {
+    Subject subject = new Subject();
+    void update(int state);
 }

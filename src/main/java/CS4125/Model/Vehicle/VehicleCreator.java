@@ -4,6 +4,7 @@ import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.IEndpoint;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.IVehicleCreator;
+import CS4125.Model.Vehicle.Car;
 
 import java.util.List;
 import java.util.Random;
