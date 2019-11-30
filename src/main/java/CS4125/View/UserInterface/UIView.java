@@ -183,7 +183,7 @@ public class UIView extends Application {
 			 connectTCMPane(dialog, thisTCM);
 		});
 
-		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, coordsBtn);
+		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, endpoint_cb, coordsBtn);
 
 		Scene dialogScene = new Scene(dialogItems, 300, 300);
 		dialog.setScene(dialogScene);
