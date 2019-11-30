@@ -9,6 +9,7 @@ import java.util.*;
 
 public class Car implements IVehicle {
 	private ITCM currentNode;
+	private ITCM prevNode = null;
 	private int currentNodeIndex = 0;
 	private ITCM startNode;
 	private ITCM endNode;
@@ -32,7 +33,12 @@ public class Car implements IVehicle {
 	public void move() {
 		if(getNextNode() != null) {
 			while (!(this.getNextNode().enterQueue(currentNode,this)))
-				System.out.println("Waiting"); // wait until the node is available to enter
+				System.out.println("Waiting"); // wait until the node is available to enter#
+			// leave previous queue
+			if(prevNode != null)
+				currentNode.exitQueue(prevNode);
+
+			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
 		}

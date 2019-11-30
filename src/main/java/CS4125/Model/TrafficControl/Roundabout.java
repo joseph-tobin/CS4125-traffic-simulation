@@ -2,6 +2,7 @@ package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Vehicle.Car;
+import CS4125.Model.Vehicle.IVehicle;
 
 import java.util.List;
 
@@ -52,8 +53,13 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
-    public boolean enterQueue(ITCM origin, Car vehicle) {
+    public boolean enterQueue(ITCM origin, IVehicle vehicle) {
         return super.getTcm().enterQueue(origin, vehicle);
+    }
+
+    @Override
+    public void exitQueue(ITCM prevNode) {
+        super.getTcm().exitQueue(prevNode);
     }
 
     @Override

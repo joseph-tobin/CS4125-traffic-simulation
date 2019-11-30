@@ -3,6 +3,7 @@ package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Vehicle.Car;
+import CS4125.Model.Vehicle.IVehicle;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public interface ITCM extends IGraphable {
     abstract void setX(float x);
     abstract void setY(float y);
     abstract void setAdjacent(List<ITCM> adj);
-    abstract boolean enterQueue(ITCM origin, Car vehicle);
+    abstract boolean enterQueue(ITCM origin, IVehicle vehicle);
+    abstract void exitQueue(ITCM prevNode);
     abstract int getCurrentQueue(ITCM dest);
     abstract void setEndpoint(boolean bool);
     abstract boolean isEndpoint();

@@ -3,6 +3,7 @@ package CS4125.Model.TrafficControl;
 //import CS4125.Model.Utils.Subject;
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Vehicle.Car;
+import CS4125.Model.Vehicle.IVehicle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,13 +97,25 @@ public class SimpleJunction implements IEndpoint {
      * @return Queue.offer();
      */
     @Override
-    public boolean enterQueue(ITCM origin, Car v) {
+    public boolean enterQueue(ITCM origin, IVehicle v) {
         for(Adjacency a: adjacencyObjs) {
             if(a.getAdj() == origin) {
                 return a.getQueue().offer(v);
             }
         }
         return false;
+    }
+
+    /**
+     * exit an adjacency queue todo refactor to adjacency to increase code quality
+     * @param prevNode next node in a route
+     */
+    @Override
+    public void exitQueue(ITCM prevNode) {
+        for(Adjacency a: adjacencyObjs) {
+            if(a.getAdj().equals(prevNode))
+                a.getQueue().poll();
+        }
     }
 
     /**
