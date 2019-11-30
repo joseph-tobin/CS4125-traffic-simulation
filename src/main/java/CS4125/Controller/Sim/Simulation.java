@@ -3,15 +3,14 @@ package CS4125.Controller.Sim;
 
 import CS4125.Model.Metrics.Metric;
 import CS4125.Model.Utils.IVehicleCreator;
-import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
+import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
-import sun.java2d.pipe.SpanShapeRenderer;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public enum Simulation{
@@ -19,17 +18,17 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
-	private HashMap<String, Vehicle> routeMap;
+	private HashMap<String, Car> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
-	private List<Vehicle> vehicles;
+	private List<IVehicle> vehicles;
 	private static UIController controller;
 	private IVehicleCreator vc;
 
 
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
-		this.routeMap = new HashMap<String, Vehicle>();
+		this.routeMap = new HashMap<String, Car>();
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
@@ -166,7 +165,7 @@ public enum Simulation{
 		if (routeMap.containsKey(xyCoords)) {
 			//vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
-			Vehicle newVehicle = new Vehicle(start, end);
+			Car newVehicle = new Car(start, end);
 			//vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
@@ -190,7 +189,7 @@ public enum Simulation{
 
 	}
 
-	public void addVehicleToController(Vehicle v){
+	public void addVehicleToController(Car v){
 		//controller.addAnimation(v);
 	}
 
@@ -202,10 +201,10 @@ public enum Simulation{
 	public List<ITCM> getNodeList(){
 		return this.nodeList;
 	}
-	public List<Vehicle> getVehicleList() {return this.vehicles; };
-	public void addVehicleToVehicleList(Vehicle v) {vehicles.add(v);}
+	public List<IVehicle> getVehicleList() {return this.vehicles; };
+	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
-	public void addVehicleAnim(Vehicle v, int index) {
+	public void addVehicleAnim(Car v, int index) {
 		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
 	}
 
@@ -214,7 +213,7 @@ public enum Simulation{
 		//return this.vehicles;
 	//}
 
-	public HashMap<String, Vehicle> getRouteMap(){
+	public HashMap<String, Car> getRouteMap(){
 		return this.routeMap;
 	}
 }

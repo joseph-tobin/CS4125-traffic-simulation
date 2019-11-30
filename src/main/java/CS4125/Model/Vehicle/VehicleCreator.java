@@ -24,7 +24,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator{
     public void run() {
         while (true && !(Thread.interrupted())) {
             System.out.println("timer is " + timer);
-            Vehicle v = new Vehicle(getRandom(nodes), getRandom(nodes));
+            Car v = new Car(getRandom(nodes), getRandom(nodes));
             //Simulation.INSTANCE.addVehicleToVehicleList(v);
             //Simulation.INSTANCE.addVehicleToController(v);
             Simulation.INSTANCE.addVehicleAnim(v,0);
@@ -41,6 +41,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator{
         Random rand = new Random();
         return list.get(rand.nextInt(list.size()));
     }
+
     @Override
     public void setTimer(int t) { this.timer = t;}
     @Override

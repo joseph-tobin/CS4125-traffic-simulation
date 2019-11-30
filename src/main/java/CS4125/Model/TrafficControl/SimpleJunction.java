@@ -1,14 +1,13 @@
 package CS4125.Model.TrafficControl;
 
-import CS4125.Model.Utils.Subject;
+//import CS4125.Model.Utils.Subject;
 import CS4125.Model.Utils.IGraphable;
-import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.Vehicle.Car;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
-public class SimpleJunction extends Subject implements ITCM {
+public class SimpleJunction implements ITCM {
 
     private float x;
     private float y;
@@ -95,7 +94,7 @@ public class SimpleJunction extends Subject implements ITCM {
      * @return Queue.offer();
      */
     @Override
-    public boolean enterQueue(ITCM origin, Vehicle v) {
+    public boolean enterQueue(ITCM origin, Car v) {
         for(Adjacency a: adjacencyObjs) {
             if(a.getAdj() == origin) {
                 return a.getQueue().offer(v);
