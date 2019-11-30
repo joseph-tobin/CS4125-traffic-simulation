@@ -1,7 +1,7 @@
 package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Utils.IGraphable;
-import CS4125.Model.Vehicle.Vehicle;
+import CS4125.Model.Vehicle.Car;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class TrafficLights extends TCMDecorator {
     }
 
     @Override
-    public boolean enterQueue(ITCM origin, Vehicle vehicle) {
+    public boolean enterQueue(ITCM origin, Car vehicle) {
         return super.getTcm().enterQueue(origin, vehicle);
     }
 
