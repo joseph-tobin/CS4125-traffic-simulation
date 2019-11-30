@@ -8,6 +8,7 @@ import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
+import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
 
@@ -128,10 +129,26 @@ public enum Simulation{
     }
 
 	public void addAdjacent(ITCM n1, ITCM n2) {
-		List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
-		List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
-		n1.setAdjacent(n1list);
-		n2.setAdjacent(n2list);
+		//List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
+		//List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
+		//n1.setAdjacent(n1list);
+		//n2.setAdjacent(n2list);
+		if (n1.getAdjacent().isEmpty()) {
+			n1.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
+		} else {
+			// i feel like this wont work as it didnt work when i tried it in the 4 lines commented above, but we cant test this atm
+			List<ITCM> test = n1.getAdjacent();
+			test.add(n2);
+			n1.setAdjacent(test);
+		}
+		if (n2.getAdjacent().isEmpty()) {
+			n2.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
+		} else { // asme with this
+			List<ITCM> test = n2.getAdjacent();
+			test.add(n1);
+			n2.setAdjacent(test);
+		}
+
 	}
 
 	public void removeAdjacent(ITCM n1, ITCM n2) {
@@ -205,7 +222,11 @@ public enum Simulation{
 	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
 	public void addVehicleAnim(Car v, int index) {
-		controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+		Platform.runLater(
+				() -> {
+					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+				}
+		);
 	}
 
 	//public List<Vehicle> getVehicles(){
