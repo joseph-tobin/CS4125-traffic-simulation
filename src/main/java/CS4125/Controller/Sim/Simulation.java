@@ -3,6 +3,7 @@ package CS4125.Controller.Sim;
 
 import CS4125.Model.Metrics.Metric;
 import CS4125.Model.Utils.IVehicleCreator;
+import CS4125.Model.Utils.RandomCollection;
 import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
@@ -19,7 +20,7 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
-	private HashMap<String, Car> routeMap;
+	private HashMap<String, IVehicle> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
 	private List<IVehicle> vehicles;
@@ -29,7 +30,7 @@ public enum Simulation{
 
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
-		this.routeMap = new HashMap<String, Car>();
+		this.routeMap = new HashMap<String, IVehicle>();
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
@@ -54,7 +55,7 @@ public enum Simulation{
 				controller.addEdge(itcm, value);
 			}
 		}
-		createVehicles((ArrayList<ITCM>) nodeList, 1200); // this might be problem
+		createVehicles(getEndpoints(), 1200); // this might be problem
 	}
 
 	public void pause(){
@@ -65,7 +66,7 @@ public enum Simulation{
 		deleteNode("TrafficLights_a");
 	}
 
-	public void addNode(String type, String name, int x, int y) {
+	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 		ITCM n;
 		switch (type) {
 			case "SimpleJunction": n = new SimpleJunction(name,x,y); break;
@@ -73,6 +74,8 @@ public enum Simulation{
 			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
 			default: n = new SimpleJunction(name,x,y); break;
 		}
+		if(endpoint) // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
+			n = (IEndpoint) n;
 		nodeList.add(n);
 		controller.addNode(n);
 	}
@@ -182,24 +185,34 @@ public enum Simulation{
 		if (routeMap.containsKey(xyCoords)) {
 			//vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
-			Car newVehicle = new Car(start, end);
+			IVehicle newVehicle = new Car(start, end);
 			//vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
 	}
 
+	/**
+	 * Get nodes of type IEndpoint from the nodeList
+	 * @return subset of Node list where node instanceof IEndpoint
+	 */
+	public List<IEndpoint> getEndpoints() {
+		List<IEndpoint> endpoints = new ArrayList<>();
+		for(int i = 0; i < nodeList.size(); i++) {
+			if(nodeList.get(i) instanceof IEndpoint) {
+				endpoints.add((IEndpoint) nodeList.get(i));
+			}
+		}
+		return endpoints;
+	}
+
 	// Use this to start thread to create vehicles use methods below to set things
-	public void createVehicles(ArrayList<ITCM> nodes, int timer) {
+	public void createVehicles(List<IEndpoint> nodes, int timer) {
 		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
 		// use vc.setTimer(int)  to change the timer
 	}
 
 	public void setVCTimer(int timer) {
 		vc.setTimer(timer);
-	}
-
-	public void updateNodes(List<ITCM> nodes) {
-		vc.updateNodes(nodes);
 	}
 
 	public void updateGraph(){
@@ -218,13 +231,14 @@ public enum Simulation{
 	public List<ITCM> getNodeList(){
 		return this.nodeList;
 	}
-	public List<IVehicle> getVehicleList() {return this.vehicles; };
-	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
-	public void addVehicleAnim(Car v, int index) {
+	public List<IVehicle> getVehicleList() {return this.vehicles; };
+	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}
+
+	public void addVehicleAnim(IVehicle v, int index) {
 		Platform.runLater(
 				() -> {
-					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+//					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
 				}
 		);
 	}
@@ -234,7 +248,7 @@ public enum Simulation{
 		//return this.vehicles;
 	//}
 
-	public HashMap<String, Car> getRouteMap(){
+	public HashMap<String, IVehicle> getRouteMap(){
 		return this.routeMap;
 	}
 }
