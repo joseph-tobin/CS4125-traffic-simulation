@@ -19,6 +19,7 @@ public class Subject {
     public void attach(Observer observer){
         observers.add(observer);
     }
+    public void detach(Observer observer) {observers.indexOf(observer);}
 
     public void notifyAllObservers(){
         for (Observer observer : observers) {
@@ -34,7 +35,5 @@ public class Subject {
         for(Observer o : observerList) {
             o.update();
         }
-
     }
-
 }

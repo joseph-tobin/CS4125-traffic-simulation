@@ -7,7 +7,7 @@ import CS4125.Model.Utils.Observer;
 
 import java.util.*;
 
-public class Vehicle extends Observer {
+public class Vehicle extends Observer implements IVehicle {
 	private ITCM currentNode;
 	private int currentNodeIndex = 0;
 	private ITCM startNode;
@@ -31,13 +31,18 @@ public class Vehicle extends Observer {
 
 	public void move() {
 		if(getNextNode() != null) {
+			boolean check= this.getNextNode().enterQueue(currentNode,this);
 			currentNode = getNextNode();
 			currentNodeIndex++;
 		}
 	}
 
 	@Override
-	public void update() {
-		// TODO: 08-11-19 add implementation
+	public void update(Subject s, int state) {
+		if (state==0) {
+			this.move();
+			s.detach(this);
+			currentNode.attach(this);
+		}
 	}
 }
