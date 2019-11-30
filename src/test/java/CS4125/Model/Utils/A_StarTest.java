@@ -17,11 +17,11 @@ class A_StarTest {
 
     @BeforeEach
     void setUp() {
-        start = new SimpleJunction("start", 1, 1, null);
-        end = new SimpleJunction("end",6, 3, null);
-        B = new SimpleJunction("B",5,1,null);
-        C = new SimpleJunction("C",3,4,null);
-        D = new SimpleJunction("D",5,4,null);
+        start = new SimpleJunction("start", 1, 1);
+        end = new SimpleJunction("end",6, 3);
+        B = new SimpleJunction("B",5,1);
+        C = new SimpleJunction("C",3,4);
+        D = new SimpleJunction("D",5,4);
     }
 
     @Test
