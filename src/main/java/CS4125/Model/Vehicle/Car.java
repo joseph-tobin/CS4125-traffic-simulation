@@ -6,6 +6,7 @@ import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Utils.Observer;
 
 import java.util.*;
+import java.sql.Timestamp;
 
 public class Car implements IVehicle, Observer {
 	private ITCM currentNode;
@@ -14,12 +15,14 @@ public class Car implements IVehicle, Observer {
 	private ITCM startNode;
 	private ITCM endNode;
 	private List<IGraphable> route;
+	private Timestamp initialTime;
 
 	public Car(ITCM start, ITCM end){
 		startNode = start;
 		currentNode = start;
 		endNode = end;
 		route = A_Star.findRoute(start, end);
+		initialTime = new Timestamp(System.currentTimeMillis());
 	}
 
 	public ITCM getCurrentNode()		{return currentNode;}
@@ -29,6 +32,8 @@ public class Car implements IVehicle, Observer {
 	public ITCM getStarNode()			{return startNode;}
 	public ITCM getEndNode()			{return endNode;}
 	public List<IGraphable> getRoute()	{return route;}
+	@Override
+	public Timestamp getInitialTime() {return initialTime;}
 
 	@Override
 	public void update(int state) {
