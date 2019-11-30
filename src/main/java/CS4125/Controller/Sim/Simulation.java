@@ -291,13 +291,12 @@ public enum Simulation{
 	/**
 	 * Adds the vehicle animation to UI Controller with the current index
 	 * @param v
-	 * @param index
 	 */
-	public void addVehicleAnim(IVehicle v, int index) {
+	public void addVehicleAnim(IVehicle v) {
 		Platform.runLater(
-				() -> {
-					controller.addAnimation(v, index, v.getCurrentNode().getCurrentQueue((v.getNextNode())));
-				}
+            () -> {
+                controller.addAnimation(v, 1000);
+            }
 		);
 	}
 
