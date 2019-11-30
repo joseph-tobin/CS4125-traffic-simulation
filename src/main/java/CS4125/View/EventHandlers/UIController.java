@@ -115,7 +115,7 @@ public class UIController{
 		t.setOnFinished(event -> {
 			t.stop();
 			view.getSimPane().getChildren().remove(c);
-			v.update(0);
+			v.move();
 			if(v.getNextNode()!=null)
 				addAnimation(v, Simulation.INSTANCE.getJourneyTime(v));
 		});

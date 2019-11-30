@@ -13,5 +13,6 @@ public interface IVehicle extends Observer {
     public abstract ITCM getStarNode();
     public abstract Timestamp getInitialTime();
     abstract List<IGraphable> getRoute();
+    public abstract void move();
     public abstract void update(int state);
 }

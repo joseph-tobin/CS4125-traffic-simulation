@@ -35,9 +35,8 @@ public class Car implements IVehicle, Observer {
 	@Override
 	public Timestamp getInitialTime() {return initialTime;}
 
-	@Override
-	public void update(int state) {
-		if(getNextNode() != null && state==0) {
+	public void move() {
+		if(getNextNode() != null) {
 			while (!(this.getNextNode().enterQueue(currentNode,this)))
 				System.out.println("Waiting"); // wait until the node is available to enter#
 			// leave previous queue
@@ -47,6 +46,12 @@ public class Car implements IVehicle, Observer {
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
+		}
+	}
+	@Override
+	public void update(int state) {
+		if(state==0) {
+			this.move();
 			subject.detach(this);
 			subject.attach(this);
 		}

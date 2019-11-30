@@ -28,14 +28,4 @@ public class Subject {
             observer.update(state);
         }
     }
-
-    /**
-     * Update specific observers of a given subject
-     * @param observerList list of observers to update
-     */ // TODO: 20-11-19 Possibly remove due to not fitting with Observer pattern properly
-    public void notifyObservers(List<Observer> observerList) {
-        for(Observer o : observerList) {
-            o.update(state);
-        }
-    }
 }
