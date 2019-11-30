@@ -62,6 +62,16 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
+    public void setEndpoint(boolean bool) {
+        super.getTcm().setEndpoint(bool);
+    }
+
+    @Override
+    public boolean isEndpoint() {
+        return super.getTcm().isEndpoint();
+    }
+
+    @Override
     public int getHeuristic() {
         return super.getTcm().getHeuristic();
     }

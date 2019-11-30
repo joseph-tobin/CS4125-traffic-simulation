@@ -11,6 +11,7 @@ public class SimpleJunction implements IEndpoint {
 
     private float x;
     private float y;
+    private boolean endpoint;
     private String label;
     private List<ITCM> adjacent;
     private List<Adjacency> adjacencyObjs; // Mapping between 2 ITCM objects
@@ -29,11 +30,12 @@ public class SimpleJunction implements IEndpoint {
         public int getStateNum() { return this.stateNum; }
     }
 
-    public SimpleJunction(String label, int x, int y) {
+    public SimpleJunction(String label, int x, int y, boolean endpoint) {
         this.label = label;
         this.x = x;
         this.y = y;
         this.adjacent = new ArrayList<ITCM>();
+        this.endpoint = endpoint;
         // GO is default state of SimpleJunction -> Pass through junction when possible
         currentState = State.GO;
         currentStateNum = currentState.getStateNum();
@@ -115,6 +117,16 @@ public class SimpleJunction implements IEndpoint {
                 return a.getQueue().size();
         }
         return -1;
+    }
+
+    @Override
+    public void setEndpoint(boolean bool) {
+        this.endpoint = bool;
+    }
+
+    @Override
+    public boolean isEndpoint() {
+        return this.endpoint;
     }
 
     /**
