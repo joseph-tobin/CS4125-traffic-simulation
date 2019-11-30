@@ -1,0 +1,5 @@
+anifest-Version: 1.0
+Built-By: Team Azure
+Build-Jdk: 1.8
+Created-By: Apache Maven
+Main-Class: CS4125.Main

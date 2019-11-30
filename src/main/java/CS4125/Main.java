@@ -10,7 +10,7 @@ import javafx.application.Application;
 public class Main {
 
     public static void main(String[] args) {
-//        Application.launch(UIView.class);
+        Application.launch(UIView.class);
 //        UIController uic = new UIController(new UIView());
 //        Simulation.INSTANCE.init(uic);
 //        Simulation.INSTANCE.run();

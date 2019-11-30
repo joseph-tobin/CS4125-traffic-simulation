@@ -26,13 +26,11 @@ class A_StarTest {
     @Test
     void testFindRouteSimple() {
         // Setup
-        start.setAdjacent((Arrays.asList(B, C)));
-        B.setAdjacent((Arrays.asList(start,C)));
-        C.setAdjacent((Arrays.asList(start,B,D)));
-        D.setAdjacent((Arrays.asList(C, end)));
-        end.setAdjacent((Arrays.asList(D)));
+        start.setAdjacent((Arrays.asList(B)));
+        B.setAdjacent((Arrays.asList(start,end)));
+        end.setAdjacent((Arrays.asList(B)));
 
-        final List<IGraphable> expectedResult = Arrays.asList(start, C, D, end);
+        final List<IGraphable> expectedResult = Arrays.asList(start, B, end);
 
         // Run the test
         final List<IGraphable> result = A_Star.findRoute(start, end);
