@@ -71,7 +71,6 @@ public enum Simulation{
 	}
 
 	public void reset(){
-		deleteNode("TrafficLights_a");
 	}
 
 	/**
@@ -164,7 +163,7 @@ public enum Simulation{
         l2index = findNodeIndex(l2, nodeList);
         if (l1index != -1 && l2index != -1) {
             removeAdjacent(nodeList.get(l1index), nodeList.get(l2index));
-            //controller.removeEdge(nodeList.get(l1index), nodeList.get(l2index));
+            controller.deleteEdge(nodeList.get(l1index), nodeList.get(l2index));
         } else {
             System.out.println("Labels not found");
         }
