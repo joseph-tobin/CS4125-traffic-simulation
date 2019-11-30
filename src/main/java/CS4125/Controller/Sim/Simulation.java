@@ -238,6 +238,7 @@ public enum Simulation{
 	public List<IEndpoint> getEndpoints() {
 		List<IEndpoint> endpoints = new ArrayList<>();
 		for(int i = 0; i < nodeList.size(); i++) {
+			System.out.println("Node: " + nodeList.get(i) + ", type = " + nodeList.get(i).getClass());
 			if(nodeList.get(i) instanceof IEndpoint) {
 				endpoints.add((IEndpoint) nodeList.get(i));
 			}
@@ -252,6 +253,9 @@ public enum Simulation{
 	 * Use vc.setTimer(int) to change the timer
 	 */
 	public void createVehicles(List<IEndpoint> nodes, int timer) {
+		for(IEndpoint e: nodes) {
+			System.out.println(e.getLabel());
+		}
 		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
 	}
 
