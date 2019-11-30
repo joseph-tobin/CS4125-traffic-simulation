@@ -3,6 +3,7 @@ package CS4125.View.EventHandlers;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Vehicle.Car;
+import CS4125.Model.Vehicle.IVehicle;
 import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
 import javafx.scene.control.Tooltip;
@@ -95,7 +96,7 @@ public class UIController{
 	 * @param i Position of v in its route
 	 * @param cost time taken for this part of the journey
 	 */
-	public void addAnimation(Car v, int i, int cost) {
+	public void addAnimation(IVehicle v, int i, int cost) {
 		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
@@ -108,13 +109,17 @@ public class UIController{
 		PathTransition t = new PathTransition();
 		t.setNode(c);
 		t.setDuration(Duration.millis(cost));
+		t.setCycleCount(1);
 		t.setPath(p);
 		t.play();
 
-		int finalI = i++;
+		int finalI = i + 1;
 		t.setOnFinished(event -> {
-			Simulation.INSTANCE.addVehicleAnim(v, finalI);
-			System.out.println("car created");
+			t.stop();
+			v.move();
+			if(v.getNextNode()!=null)
+				addAnimation(v, finalI, 1000);
+			System.out.println("car reached journey");
 		});
 	}
 

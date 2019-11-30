@@ -15,10 +15,10 @@ public class Car implements IVehicle {
 	private List<IGraphable> route;
 
 	public Car(ITCM start, ITCM end){
-		startNode =start;
-		currentNode =start;
-		endNode=end;
-		route= A_Star.findRoute(start, end);
+		startNode = start;
+		currentNode = start;
+		endNode = end;
+		route = A_Star.findRoute(start, end);
 	}
 
 	public ITCM getCurrentNode()		{return currentNode;}
@@ -31,7 +31,8 @@ public class Car implements IVehicle {
 
 	public void move() {
 		if(getNextNode() != null) {
-			boolean check= this.getNextNode().enterQueue(currentNode,this);
+			while (!(this.getNextNode().enterQueue(currentNode,this)))
+				System.out.println("Waiting"); // wait until the node is available to enter
 			currentNode = getNextNode();
 			currentNodeIndex++;
 		}

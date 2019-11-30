@@ -168,20 +168,22 @@ public class UIView extends Application {
 		x_input.setPromptText("x co-ord");
 		TextField y_input = new TextField();
 		y_input.setPromptText("y co-ord");
+		CheckBox endpoint_cb = new CheckBox("Endpoint");
 
 		Button coordsBtn = new Button("Save");
 		coordsBtn.setOnAction(event -> {
+			Boolean endpoint = endpoint_cb.isSelected();
 			System.out.println(x_input.getText() + "; " + y_input.getText());
 			// grab x & y, add node
 			// prefixing label with tcmType for different representation in UI
 			String thisTCM = tcmType + "_" + name_input.getText();
 			 Simulation.INSTANCE.addNode(
 			 		tcmType, thisTCM,
-					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()));
+					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), endpoint);
 			 connectTCMPane(dialog, thisTCM);
 		});
 
-		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, coordsBtn);
+		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, endpoint_cb, coordsBtn);
 
 		Scene dialogScene = new Scene(dialogItems, 300, 300);
 		dialog.setScene(dialogScene);

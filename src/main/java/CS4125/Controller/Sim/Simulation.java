@@ -19,7 +19,7 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
-	private HashMap<String, Car> routeMap;
+	private HashMap<String, IVehicle> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
 	private List<IVehicle> vehicles;
@@ -29,7 +29,7 @@ public enum Simulation{
 
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
-		this.routeMap = new HashMap<String, Car>();
+		this.routeMap = new HashMap<String, IVehicle>();
 		this.vehicles = new ArrayList<>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
@@ -57,7 +57,7 @@ public enum Simulation{
 				controller.addEdge(itcm, value);
 			}
 		}
-		createVehicles((ArrayList<ITCM>) nodeList, 1200); // this might be problem
+		createVehicles(getEndpoints(), 1200); // this might be problem
 	}
 
 	public void pause(){
@@ -75,7 +75,7 @@ public enum Simulation{
 	 * @param x xcoord
 	 * @param y ycoord
 	 */
-	public void addNode(String type, String name, int x, int y) {
+	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 		ITCM n;
 		switch (type) {
 			case "SimpleJunction": n = new SimpleJunction(name,x,y); break;
@@ -83,6 +83,8 @@ public enum Simulation{
 			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
 			default: n = new SimpleJunction(name,x,y); break;
 		}
+		if(endpoint) // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
+			n = (IEndpoint) n;
 		nodeList.add(n);
 		controller.addNode(n);
 	}
@@ -223,12 +225,26 @@ public enum Simulation{
 		if (routeMap.containsKey(xyCoords)) {
 			//vehicles.add(routeMap.get(xyCoords).copy());
 		} else {
-			Car newVehicle = new Car(start, end);
+			IVehicle newVehicle = new Car(start, end);
 			//vehicles.add(newVehicle);
 			routeMap.put(xyCoords, newVehicle);
 		}
 	}
 
+	/**
+	 * Get nodes of type IEndpoint from the nodeList
+	 * @return subset of Node list where node instanceof IEndpoint
+	 */
+	public List<IEndpoint> getEndpoints() {
+		List<IEndpoint> endpoints = new ArrayList<>();
+		for(int i = 0; i < nodeList.size(); i++) {
+			System.out.println("Node: " + nodeList.get(i) + ", type = " + nodeList.get(i).getClass());
+			if(nodeList.get(i) instanceof IEndpoint) {
+				endpoints.add((IEndpoint) nodeList.get(i));
+			}
+		}
+		return endpoints;
+	}
 
 	/**
 	 * Creates vehicle creator thread
@@ -236,8 +252,11 @@ public enum Simulation{
 	 * @param timer how often you want a vehicle created
 	 * Use vc.setTimer(int) to change the timer
 	 */
-	public void createVehicles(ArrayList<ITCM> nodes, int timer) {
-		vc = new VehicleCreator(nodes, timer);
+	public void createVehicles(List<IEndpoint> nodes, int timer) {
+		for(IEndpoint e: nodes) {
+			System.out.println(e.getLabel());
+		}
+		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
 	}
 
 	/**
@@ -267,22 +286,22 @@ public enum Simulation{
 
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
-	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
+	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}
 
 	/**
 	 * Adds the vehicle animation to UI Controller with the current index
 	 * @param v
 	 * @param index
 	 */
-	public void addVehicleAnim(Car v, int index) {
+	public void addVehicleAnim(IVehicle v, int index) {
 		Platform.runLater(
 				() -> {
-					controller.addAnimation(v,index,v.getCurrentNode().getCurrentQueue((v.getNextNode())));
+					controller.addAnimation(v, index, v.getCurrentNode().getCurrentQueue((v.getNextNode())));
 				}
 		);
 	}
 
-	public HashMap<String, Car> getRouteMap(){
+	public HashMap<String, IVehicle> getRouteMap(){
 		return this.routeMap;
 	}
 }
