@@ -1,13 +1,14 @@
 package CS4125.Model.TrafficControl;
 
 import CS4125.Model.Vehicle.Car;
+import CS4125.Model.Vehicle.IVehicle;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Adjacency {
     private ITCM adj;
-    private Queue<Car> queue;
+    private Queue<IVehicle> queue;
     private int maxCapacity;
 
     /**
@@ -41,6 +42,6 @@ public class Adjacency {
     }
 
     ITCM getAdj() { return this.adj; }
-    Queue<Car> getQueue() { return this.queue; }
+    Queue<IVehicle> getQueue() { return this.queue; }
     int  getMaxCapacity() { return this.maxCapacity; }
 }
