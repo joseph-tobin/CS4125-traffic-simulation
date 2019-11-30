@@ -11,9 +11,9 @@ import java.util.Random;
 public class VehicleCreator extends Thread implements IVehicleCreator {
 
     int timer;
-    List<IEndpoint> nodes;
+    List<ITCM> nodes;
 
-    public VehicleCreator(List<IEndpoint> nodes, int timer) {
+    public VehicleCreator(List<ITCM> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;

@@ -78,13 +78,13 @@ public enum Simulation{
 	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 		ITCM n;
 		switch (type) {
-			case "SimpleJunction": n = new SimpleJunction(name,x,y); break;
-			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y)); break;
+			case "SimpleJunction": n = new SimpleJunction(name,x,y, false); break;
+			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y, false)); break;
 			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
-			default: n = new SimpleJunction(name,x,y); break;
+			default: n = new SimpleJunction(name,x,y, false); break;
 		}
 		if(endpoint) // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
-			n = (IEndpoint) n;
+			n.setEndpoint(true);
 		nodeList.add(n);
 		controller.addNode(n);
 	}
@@ -206,9 +206,9 @@ public enum Simulation{
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
 		// adding to nodeList
-		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200));
-		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300));
-		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400));
+		TrafficLights flagpoles = new TrafficLights(new SimpleJunction("TrafficLights_flag",300,200, true));
+		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, false));
+		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, true));
 		flagpoles.setAdjacent(new ArrayList<>(Arrays.asList(a,b)));
 		a.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,b)));
 		b.setAdjacent(new ArrayList<>(Arrays.asList(flagpoles,a)));
@@ -235,12 +235,11 @@ public enum Simulation{
 	 * Get nodes of type IEndpoint from the nodeList
 	 * @return subset of Node list where node instanceof IEndpoint
 	 */
-	public List<IEndpoint> getEndpoints() {
-		List<IEndpoint> endpoints = new ArrayList<>();
+	public List<ITCM> getEndpoints() {
+		List<ITCM> endpoints = new ArrayList<>();
 		for(int i = 0; i < nodeList.size(); i++) {
-			System.out.println("Node: " + nodeList.get(i) + ", type = " + nodeList.get(i).getClass());
-			if(nodeList.get(i) instanceof IEndpoint) {
-				endpoints.add((IEndpoint) nodeList.get(i));
+			if(nodeList.get(i).isEndpoint()) {
+				endpoints.add(nodeList.get(i));
 			}
 		}
 		return endpoints;
@@ -252,10 +251,7 @@ public enum Simulation{
 	 * @param timer how often you want a vehicle created
 	 * Use vc.setTimer(int) to change the timer
 	 */
-	public void createVehicles(List<IEndpoint> nodes, int timer) {
-		for(IEndpoint e: nodes) {
-			System.out.println(e.getLabel());
-		}
+	public void createVehicles(List<ITCM> nodes, int timer) {
 		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
 	}
 
