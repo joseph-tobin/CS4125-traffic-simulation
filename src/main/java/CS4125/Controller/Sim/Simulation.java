@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 public enum Simulation{
@@ -273,9 +274,10 @@ public enum Simulation{
 	 * Returns metric, not complete
 	 * @return
 	 */
-	public Metric getMetrics(){
-		Metric newMetric = new Metric();
-		return newMetric.generateMetrics();
+	public int getMetrics(IVehicle v){
+		Timestamp initial = v.getInitialTime();
+		Timestamp current = new Timestamp(System.currentTimeMillis());
+		return initial.compareTo(current);
 	}
 
 	/**
@@ -309,6 +311,7 @@ public enum Simulation{
             }
 		);
 		vehicles.remove(v);
+		System.out.println("METRICS ========================== " + getMetrics(v));
 	}
 
 	public HashMap<String, IVehicle> getRouteMap(){
