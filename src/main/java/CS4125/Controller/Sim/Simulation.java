@@ -266,7 +266,7 @@ public enum Simulation{
 	 * @param timer how often you want a vehicle created
 	 */
 	public void setVCTimer(int timer) {
-		vc.setTimer(timer);
+		vc.setTimer(1200 - (timer * 8));
 	}
 
 	/**
@@ -291,8 +291,8 @@ public enum Simulation{
 		ITCM next = v.getNextNode();
 		float dist = current.distanceTo(next);
 		float queue = current.getCurrentQueue(next);
-		float time = (queue / 10 ) + dist / 10;
-		return (int) time;
+		float time = (queue) + dist / 10;
+		return (int) time * 100;
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
@@ -305,9 +305,10 @@ public enum Simulation{
 	public void addVehicleAnim(IVehicle v) {
 		Platform.runLater(
             () -> {
-                controller.addAnimation(v, 1000);
+                controller.addAnimation(v, getJourneyTime(v));
             }
 		);
+		vehicles.remove(v);
 	}
 
 	public HashMap<String, IVehicle> getRouteMap(){
