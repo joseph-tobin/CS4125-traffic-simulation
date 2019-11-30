@@ -97,6 +97,8 @@ public class UIController{
 	 * @param cost time taken for journey
 	 */
 	public void addAnimation(Vehicle v, int i) {
+		int cost = v.getCurrentNode().getCurrentQueue(v.getNextNode());
+
 		Circle c = new Circle(v.getCurrentNode().getX(), v.getCurrentNode().getY(), 5);
 		c.setFill(Color.INDIANRED);
 		view.getSimPane().getChildren().add(c);
