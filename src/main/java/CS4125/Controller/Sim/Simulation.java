@@ -39,9 +39,12 @@ public enum Simulation{
 	Simulation() {
 	}
 
+	/**
+	 * Called when UI starts, is the 'main' method of sim
+	 */
 	public void run(){
 		nodeList.clear();
-		//vehicles.clear();
+		vehicles.clear();
 		routeMap.clear();
 
 		defaultNodes();
@@ -65,6 +68,13 @@ public enum Simulation{
 		deleteNode("TrafficLights_a");
 	}
 
+	/**
+	 * Add a node
+	 * @param type Node type
+	 * @param name Label
+	 * @param x xcoord
+	 * @param y ycoord
+	 */
 	public void addNode(String type, String name, int x, int y) {
 		ITCM n;
 		switch (type) {
@@ -77,12 +87,21 @@ public enum Simulation{
 		controller.addNode(n);
 	}
 
+	/**
+	 * Remove node from node list given label
+	 * @param label
+	 */
 	public void deleteNode(String label) {
 		ITCM n = findNode(label);
 		nodeList.remove(n);
 		controller.deleteNode(n);
 	}
 
+	/**
+	 * Finds node in nodeList given label
+	 * @param label
+	 * @return ITCM
+	 */
 	public ITCM findNode(String label) {
 		for (ITCM n: nodeList) {
 			if (n.getLabel().equals(label)) {
@@ -92,6 +111,12 @@ public enum Simulation{
 		return null;
 	}
 
+	/**
+	 * Finds the index of a node in a list given a label
+	 * @param label
+	 * @param list
+	 * @return int
+	 */
 	public int findNodeIndex(String label, List<ITCM> list) {
 		for (int i = 0; i < list.size(); i++) { // we need this for loop here so we can return index you cant get index from enhanced
 			if (list.get(i).getLabel().equals(label)) {
@@ -101,7 +126,11 @@ public enum Simulation{
 		return -1;
 	}
 
-
+	/**
+	 * Adds an edge between two node labels
+	 * @param l1 node label 1
+	 * @param l2 node label 2
+	 */
 	public void addEdge(String l1, String l2) {
 		int l1index = -1;
 		int l2index = -1;
@@ -115,6 +144,11 @@ public enum Simulation{
 		}
 	}
 
+	/**
+	 * Removes edge between two node labels, not implemented yet hence the commented line
+	 * @param l1 label of node 1
+	 * @param l2 label of node 2
+	 */
 	public void deleteEdge(String l1, String l2) {
         int l1index = -1;
         int l2index = -1;
@@ -128,29 +162,34 @@ public enum Simulation{
         }
     }
 
+	/**
+	 * Adds adjacency between n1 and n2
+	 * @param n1 node 1
+	 * @param n2 node 2
+	 */
 	public void addAdjacent(ITCM n1, ITCM n2) {
-		//List<ITCM> n1list = n1.getAdjacent(); n1list.add(n2); // add n2 to adjacency list of n1
-		//List<ITCM> n2list = n2.getAdjacent(); n2list.add(n1); // add n1 to adjacency list of n2
-		//n1.setAdjacent(n1list);
-		//n2.setAdjacent(n2list);
 		if (n1.getAdjacent().isEmpty()) {
 			n1.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
-		} else {
-			// i feel like this wont work as it didnt work when i tried it in the 4 lines commented above, but we cant test this atm
-			List<ITCM> test = n1.getAdjacent();
-			test.add(n2);
-			n1.setAdjacent(test);
+		} else { // apparently we dont need this else statement but if things start breaking maybe we do lol
+			//List<ITCM> test = n1.getAdjacent();
+			//test.add(n2);
+			//n1.setAdjacent(test);
 		}
 		if (n2.getAdjacent().isEmpty()) {
 			n2.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
-		} else { // asme with this
-			List<ITCM> test = n2.getAdjacent();
-			test.add(n1);
-			n2.setAdjacent(test);
+		} else { // apparently we dont need this
+//			List<ITCM> test = n2.getAdjacent();
+//			test.add(n1);
+//			n2.setAdjacent(test);
 		}
 
 	}
 
+	/**
+	 * Remove the adjacent nodes
+	 * @param n1 first node
+	 * @param n2 second node
+	 */
 	public void removeAdjacent(ITCM n1, ITCM n2) {
         List<ITCM> n1list = n1.getAdjacent(); n1list.remove(n2); // add n2 to adjacency list of n1
         List<ITCM> n2list = n2.getAdjacent(); n2list.remove(n1); // add n1 to adjacency list of n2
@@ -158,7 +197,9 @@ public enum Simulation{
         n2.setAdjacent(n2list);
     }
 
-
+	/**
+	 * Create default nodes
+	 */
 	public void defaultNodes(){
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
@@ -188,39 +229,51 @@ public enum Simulation{
 		}
 	}
 
-	// Use this to start thread to create vehicles use methods below to set things
+
+	/**
+	 * Creates vehicle creator thread
+	 * @param nodes list of nodes
+	 * @param timer how often you want a vehicle created
+	 * Use vc.setTimer(int) to change the timer
+	 */
 	public void createVehicles(ArrayList<ITCM> nodes, int timer) {
-		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
-		// use vc.setTimer(int)  to change the timer
+		vc = new VehicleCreator(nodes, timer);
 	}
 
+	/**
+	 * Used to set the timer of the VehicleCreator thread to have vehicles created at different timings
+	 * @param timer how often you want a vehicle created
+	 */
 	public void setVCTimer(int timer) {
 		vc.setTimer(timer);
 	}
 
-	public void updateNodes(List<ITCM> nodes) {
-		vc.updateNodes(nodes);
-	}
-
-	public void updateGraph(){
-
-	}
-
-	public void addVehicleToController(Car v){
-		//controller.addAnimation(v);
-	}
-
+	/**
+	 * Returns metric, not complete
+	 * @return
+	 */
 	public Metric getMetrics(){
 		Metric newMetric = new Metric();
 		return newMetric.generateMetrics();
 	}
 
+	/**
+	 * Returns the list of nodes
+	 * @return
+	 */
 	public List<ITCM> getNodeList(){
 		return this.nodeList;
 	}
+
+
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
 	public void addVehicleToVehicleList(Car v) {vehicles.add(v);}
 
+	/**
+	 * Adds the vehicle animation to UI Controller with the current index
+	 * @param v
+	 * @param index
+	 */
 	public void addVehicleAnim(Car v, int index) {
 		Platform.runLater(
 				() -> {
@@ -228,11 +281,6 @@ public enum Simulation{
 				}
 		);
 	}
-
-	//public List<Vehicle> getVehicles(){
-		//return this.vehicles;
-		//return this.vehicles;
-	//}
 
 	public HashMap<String, Car> getRouteMap(){
 		return this.routeMap;
