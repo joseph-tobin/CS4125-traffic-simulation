@@ -19,9 +19,9 @@ class SimpleJunctionTest {
 
     @BeforeEach
     void setUp() {
-        simpleJunctionUnderTest = new SimpleJunction("juncUnderTest", 0, 0, null);
-        simpleJunctionUnderTestAdj1 = new SimpleJunction("juncUnderTestAdj1",1, 1, null);
-        simpleJunctionUnderTestAdj2 = new SimpleJunction("juncUnderTestAdj2",2, 2, null);
+        simpleJunctionUnderTest = new SimpleJunction("juncUnderTest", 0, 0);
+        simpleJunctionUnderTestAdj1 = new SimpleJunction("juncUnderTestAdj1",1, 1);
+        simpleJunctionUnderTestAdj2 = new SimpleJunction("juncUnderTestAdj2",2, 2);
         // add adjacent Junctions
         simpleJunctionUnderTest.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
     }
@@ -40,9 +40,9 @@ class SimpleJunctionTest {
 
     @Test
     void testSetAdjacent() {
-        SimpleJunction a = new SimpleJunction("a", 9,9,null);
-        SimpleJunction b = new SimpleJunction("b",9,9,null);
-        SimpleJunction c = new SimpleJunction("c",9,9,null);
+        SimpleJunction a = new SimpleJunction("a", 9,9);
+        SimpleJunction b = new SimpleJunction("b",9,9);
+        SimpleJunction c = new SimpleJunction("c",9,9);
         // Setup
         final List<ITCM> adj = Arrays.asList(a,b,c);
 
@@ -104,7 +104,7 @@ class SimpleJunctionTest {
     void testCompareTo() {
         // Setup
         final int expectedResult = 0;
-        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 0, 0, null);
+        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 0, 0);
         sjUnderTestCopy.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
 
         // Run the test
