@@ -293,11 +293,15 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
-	public int getJourneyTime(ITCM start, ITCM end) {
-//		ITCM current = v.getCurrentNode();
-//		ITCM next = v.getNextNode();
-		float dist = start.distanceTo(end);
-		float queue = start.getCurrentQueue(end);
+	public int getVehicleJourneyTime(IVehicle v) {
+		return v.getInitialTime().compareTo(v.getEndTime());
+	}
+
+	public int getJourneyTime(ITCM current, ITCM next) {
+		//ITCM current = v.getCurrentNode();
+		//ITCM next = v.getNextNode();
+		float dist = current.distanceTo(next);
+		float queue = next.getCurrentQueue(next);
 		float time = (queue) + dist / 10;
 		return (int) time * 100;
 	}
@@ -312,13 +316,11 @@ public enum Simulation{
 	 */
 	public void addMoveAnimimation(Move m) {
 
-
 		Platform.runLater(
             () -> {
                 controller.addAnimation(m.getStart(), m.getEnd(), getJourneyTime(m.getStart(), m.getEnd()));
             }
 		);
-//		System.out.println("METRICS ========================== " + getMetrics(v));
 	}
 
 	public HashMap<String, IVehicle> getRouteMap(){

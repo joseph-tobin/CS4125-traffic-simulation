@@ -17,6 +17,7 @@ public class Car implements IVehicle, Observer {
 	private ITCM endNode;
 	private List<IGraphable> route;
 	private Timestamp initialTime;
+	private Timestamp endTime;
 
 	public Car(ITCM start, ITCM end){
 		startNode = start;
@@ -35,6 +36,8 @@ public class Car implements IVehicle, Observer {
 	public List<IGraphable> getRoute()	{return route;}
 	@Override
 	public Timestamp getInitialTime() {return initialTime;}
+	@Override
+	public Timestamp getEndTime() {return endTime;}
 
 	public void move() {
 		if(getNextNode() != null) {
@@ -50,6 +53,10 @@ public class Car implements IVehicle, Observer {
 
 			if(currentNode != startNode)
 				currentNode.exitQueue(prevNode);
+
+			if (currentNode.equals(endNode)) {
+				this.endTime = new Timestamp(System.currentTimeMillis());
+			}
 		}
 	}
 
