@@ -6,6 +6,7 @@ import CS4125.Model.Utils.IVehicleCreator;
 import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
+import CS4125.Model.Vehicle.Move;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
 import javafx.application.Platform;
@@ -24,6 +25,7 @@ public enum Simulation{
 	private List<Circle> circles;
 	private int vehicleQuantity;
 	private List<IVehicle> vehicles;
+	private Queue<Move> moveQueue;
 	private static UIController controller;
 	private IVehicleCreator vc;
 
@@ -288,11 +290,11 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
-	public int getJourneyTime(IVehicle v) {
-		ITCM current = v.getCurrentNode();
-		ITCM next = v.getNextNode();
-		float dist = current.distanceTo(next);
-		float queue = current.getCurrentQueue(next);
+	public int getJourneyTime(ITCM start, ITCM end) {
+//		ITCM current = v.getCurrentNode();
+//		ITCM next = v.getNextNode();
+		float dist = start.distanceTo(end);
+		float queue = start.getCurrentQueue(end);
 		float time = (queue) + dist / 10;
 		return (int) time * 100;
 	}
@@ -302,16 +304,17 @@ public enum Simulation{
 
 	/**
 	 * Adds the vehicle animation to UI Controller with the current index
-	 * @param v
+	 * @param m Move animation
 	 */
-	public void addVehicleAnim(IVehicle v) {
+	public void addMoveAnimimation(Move m) {
+
+
 		Platform.runLater(
             () -> {
-                controller.addAnimation(v, getJourneyTime(v));
+                controller.addAnimation(m.getStart(), m.getEnd(), getJourneyTime(m.getStart(), m.getEnd()));
             }
 		);
-		vehicles.remove(v);
-		System.out.println("METRICS ========================== " + getMetrics(v));
+//		System.out.println("METRICS ========================== " + getMetrics(v));
 	}
 
 	public HashMap<String, IVehicle> getRouteMap(){

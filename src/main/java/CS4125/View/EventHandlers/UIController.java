@@ -134,5 +134,4 @@ public class UIController{
 		strOut.removeIf(node -> node.equals(selected));
 		return strOut;
 	}
-
 }

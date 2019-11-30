@@ -1,5 +1,7 @@
 package CS4125.Controller.Sim;
 
+import CS4125.Model.Vehicle.Move;
+
 import java.util.Queue;
 
 /***
