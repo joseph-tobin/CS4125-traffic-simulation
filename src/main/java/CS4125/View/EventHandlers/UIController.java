@@ -6,6 +6,7 @@ import CS4125.Model.Vehicle.Car;
 import CS4125.Model.Vehicle.IVehicle;
 import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
+import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -38,6 +39,12 @@ public class UIController{
 		c.setFill(Color.FORESTGREEN);
 		view.getSimPane().getChildren().add(c);
 
+		// delete node on click
+		c.setOnMouseClicked(event -> {
+			Simulation.INSTANCE.deleteNode(name);
+		});
+		c.setCursor(Cursor.HAND);
+
 		nodeLabelCircles.put(name, c);
 	}
 
@@ -61,9 +68,8 @@ public class UIController{
 			for (String node : pair.getValue()) {
 				if (node.equals(name)) {
 					// if found, remove from UI and the map of edges
-					view.getSimPane().getChildren().remove(pair.getKey());
-					iter.remove();
-				}
+                    removeEdgeFromUI(iter, pair);
+                }
 			}
 		}
 	}
@@ -83,11 +89,55 @@ public class UIController{
 		view.getSimPane().getChildren().add(edge);
 		edge.toBack();
 
+		// delete node on click
+		edge.setOnMouseClicked(event -> {
+			Simulation.INSTANCE.deleteEdge(n1.getLabel(), n2.getLabel());
+		});
+		edge.setCursor(Cursor.HAND);
+
 		// Add a new edge mapped to two nodes
         nodeEdges.put(edge, new ArrayList<String>(Arrays.asList(n1.getLabel(), n2.getLabel())));
 	}
 
 	/**
+	 * For deleting an edge
+     * @param node1 one of two nodes connected by the edge
+     * @param node2 the second node
+	 */
+	public void deleteEdge (ITCM node1, ITCM node2) {
+		String n1 = node1.getLabel();
+		String n2 = node2.getLabel();
+
+		// find and delete all edges connected by these nodes
+		Iterator<Map.Entry<Line, List<String> > > iter = nodeEdges.entrySet().iterator();
+		while (iter.hasNext()) {
+			// iterate through list of linked nodes (pair)
+			Map.Entry<Line, List<String> > pair = iter.next();
+			String brother = pair.getValue().get(0);
+			String sister = pair.getValue().get(1);
+
+			if (n1.equals(brother) && n2.equals(sister)) {
+                // if found, remove from UI and the map of edges
+                removeEdgeFromUI(iter, pair);
+            }
+			else if (n2.equals(brother) && n1.equals(sister)) {
+                // if found, remove from UI and the map of edges
+                removeEdgeFromUI(iter, pair);
+            }
+		}
+	}
+
+    /**
+     * Removes an edge connected by two nodes – to avoid code replication
+     * @param iter iterator from the loop which called this
+     * @param pair the pair of nodes connected by this edge
+     */
+    private void removeEdgeFromUI(Iterator<Map.Entry<Line, List<String>>> iter, Map.Entry<Line, List<String>> pair) {
+        view.getSimPane().getChildren().remove(pair.getKey());
+        iter.remove();
+    }
+
+    /**
 	 * Add a vehicle animated along a path of nodes
 	 * This will be called for each portion of the journey, until they reach the end
 	 *  (Time calculated by A_Star: a function of TCM type, number of connected nodes, and their congestion levels)
@@ -116,10 +166,7 @@ public class UIController{
 			t.stop();
 			view.getSimPane().getChildren().remove(c);
 		});
-        System.out.println("car finished journey");
 	}
-
-	public UIController getUIC() {return this;}
 
 	/**
 	 * Get the list of other nodes (apart from the one just created)

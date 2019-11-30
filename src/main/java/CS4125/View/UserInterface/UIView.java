@@ -5,6 +5,7 @@ import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
 //import CS4125.View.UISim;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -46,6 +47,14 @@ public class UIView extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
+
+		// shut down all threads when closing the application
+		stage.setOnCloseRequest(event ->  {
+				Platform.exit();
+				System.exit(0);
+			}
+		);
+
 		split = new SplitPane();
 		split.setDividerPositions(0.75);
 		simPane = new Pane(new Label("Sim"));
@@ -114,7 +123,7 @@ public class UIView extends Application {
 
 		Button saveBtn = new Button("Save");
 		saveBtn.setOnAction(event -> {
-			Simulation.INSTANCE.reset();
+			// save to database
 		});
 
 		Button loadBtn = new Button("Load");
