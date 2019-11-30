@@ -108,7 +108,7 @@ public class SimpleJunction implements IEndpoint {
     /**
      * Get current queue size between this and an adjacent ITCM
      * @param dest Adjacent ITCM object
-      * @return current queue, else -1 if dest not adjacent to this
+     * @return current queue, else -1 if dest not adjacent to this
      */
     @Override
     public int getCurrentQueue(ITCM dest) {

@@ -10,13 +10,15 @@ import java.util.Random;
 
 public class VehicleCreator extends Thread implements IVehicleCreator {
 
-    int timer;
-    List<ITCM> nodes;
+    private int timer;
+    private List<ITCM> nodes;
+    private Random rand;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
+        rand = new Random(42);
         this.start();
     }
 
@@ -42,17 +44,17 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
      */
     public ITCM[] getRandom() { // possibility of start and end node being equal
         System.out.println("getRandom called");
-        Random rand = new Random(42);
         ITCM[] startEnd = new ITCM[2];
         startEnd[0] = nodes.get(rand.nextInt(nodes.size()));
-        System.out.println(startEnd[0].getLabel());
+
+        System.out.println("start " +startEnd[0].getLabel());
 
         while(startEnd[1] == null) {
             ITCM tempNode = nodes.get(rand.nextInt(nodes.size()));
-            System.out.println(tempNode.getLabel());
+            System.out.println("temp " + tempNode.getLabel());
             if(tempNode != startEnd[0]) {
                 startEnd[1] = tempNode;
-                System.out.println(startEnd[0].getLabel());
+                System.out.println("end" + startEnd[1].getLabel());
             }
         }
         return startEnd;

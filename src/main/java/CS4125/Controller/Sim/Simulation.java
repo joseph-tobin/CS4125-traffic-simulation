@@ -30,10 +30,10 @@ public enum Simulation{
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
 		this.routeMap = new HashMap<String, IVehicle>();
-		this.vehicles = new ArrayList<>();
+		this.vehicles = new ArrayList<IVehicle>();
 		this.vehicleQuantity = 0;
 		this.controller = controller;
-		this.circles = new ArrayList<>();
+		this.circles = new ArrayList<Circle>();
 	}
 
 	Simulation() {
@@ -207,17 +207,17 @@ public enum Simulation{
 
 		// adding to nodeList
 		TrafficLights f = new TrafficLights(new SimpleJunction("TrafficLights_f",300,200, true));
-		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_x",100,200, false));
-		TrafficLights d = new TrafficLights(new SimpleJunction("TrafficLights_y",55,300, false));
-		TrafficLights c = new TrafficLights(new SimpleJunction("TrafficLights_z",300,125, true));
-		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_a",400,300, false));
-		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_b",200,400, true));
-		f.setAdjacent(new ArrayList<>(Arrays.asList(e)));
-		e.setAdjacent(new ArrayList<>(Arrays.asList(c,d,f)));
-		d.setAdjacent(new ArrayList<>(Arrays.asList(a,c,b,e)));
-		c.setAdjacent(new ArrayList<>(Arrays.asList(a,d,e)));
-		b.setAdjacent(new ArrayList<>(Arrays.asList(d)));
-		a.setAdjacent(new ArrayList<>(Arrays.asList(c,d)));
+		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_e",100,200, true));
+		TrafficLights d = new TrafficLights(new SimpleJunction("TrafficLights_d",55,300, false));
+		TrafficLights c = new TrafficLights(new SimpleJunction("TrafficLights_c",300,125, true));
+		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",400,300, false));
+		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",200,400, true));
+		f.setAdjacent(new ArrayList<ITCM>(Arrays.asList(e)));
+		e.setAdjacent(new ArrayList<ITCM>(Arrays.asList(c,d,f)));
+		d.setAdjacent(new ArrayList<ITCM>(Arrays.asList(a,c,b,e)));
+		c.setAdjacent(new ArrayList<ITCM>(Arrays.asList(a,d,e)));
+		b.setAdjacent(new ArrayList<ITCM>(Arrays.asList(d)));
+		a.setAdjacent(new ArrayList<ITCM>(Arrays.asList(c,d)));
 
 		nodeList.addAll(Arrays.asList(a, b, c, d, e, f));
 	}
@@ -266,7 +266,7 @@ public enum Simulation{
 	 * @param timer how often you want a vehicle created
 	 */
 	public void setVCTimer(int timer) {
-		vc.setTimer(timer);
+		vc.setTimer(1200 - (timer * 8));
 	}
 
 	/**
@@ -291,8 +291,8 @@ public enum Simulation{
 		ITCM next = v.getNextNode();
 		float dist = current.distanceTo(next);
 		float queue = current.getCurrentQueue(next);
-		float time = (queue / 10 ) + dist / 10;
-		return (int) time;
+		float time = (queue) + dist / 10;
+		return (int) time * 100;
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
@@ -305,9 +305,10 @@ public enum Simulation{
 	public void addVehicleAnim(IVehicle v) {
 		Platform.runLater(
             () -> {
-                controller.addAnimation(v, 1000);
+                controller.addAnimation(v, getJourneyTime(v));
             }
 		);
+		vehicles.remove(v);
 	}
 
 	public HashMap<String, IVehicle> getRouteMap(){
