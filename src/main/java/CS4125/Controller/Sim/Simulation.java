@@ -264,7 +264,7 @@ public enum Simulation{
 	 * Use vc.setTimer(int) to change the timer
 	 */
 	public void createVehicles(List<ITCM> nodes, int timer) {
-		vc = new VehicleCreator(nodes, 10); // start vehicle creation with default timer and start end
+		vc = new VehicleCreator(nodes, timer); // start vehicle creation with default timer and start end
 	}
 
 	/**
