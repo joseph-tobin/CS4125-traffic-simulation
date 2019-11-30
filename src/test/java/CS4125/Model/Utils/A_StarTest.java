@@ -5,7 +5,6 @@ import CS4125.Model.TrafficControl.SimpleJunction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,11 +16,11 @@ class A_StarTest {
 
     @BeforeEach
     void setUp() {
-        start = new SimpleJunction("start", 1, 1);
-        end = new SimpleJunction("end",6, 3);
-        B = new SimpleJunction("B",5,1);
-        C = new SimpleJunction("C",3,4);
-        D = new SimpleJunction("D",5,4);
+        start = new SimpleJunction("start", 1, 1, false);
+        end = new SimpleJunction("end",6, 3, false);
+        B = new SimpleJunction("B",5,1, false);
+        C = new SimpleJunction("C",3,4, false);
+        D = new SimpleJunction("D",5,4, false);
     }
 
     @Test
