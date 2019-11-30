@@ -15,6 +15,12 @@ public class MoveConsumer extends Thread {
         this.moveQueue = moveQueue;
     }
 
+    @Override
+    public void start() {
+        super.start();
+        consume();
+    }
+
     /**
      * Method to constantly take Move object out of a queue and pass it to Simulation to UIController to be animated
      */

@@ -15,6 +15,7 @@ import CS4125.Model.TrafficControl.SimpleJunction;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public enum Simulation{
 
@@ -37,6 +38,8 @@ public enum Simulation{
 		this.vehicleQuantity = 0;
 		this.controller = controller;
 		this.circles = new ArrayList<Circle>();
+		moveQueue = new ArrayBlockingQueue<Move>(10000);
+//		new MoveConsumer(moveQueue).start();
 	}
 
 	Simulation() {
