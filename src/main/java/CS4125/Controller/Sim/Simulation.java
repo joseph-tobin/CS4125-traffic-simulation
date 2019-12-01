@@ -84,9 +84,8 @@ public enum Simulation{
 	public void addNode(String type, String name, int x, int y, boolean endpoint) {
 		ITCM n;
 		switch (type) {
-			case "SimpleJunction": n = new SimpleJunction(name,x,y, false); break;
-			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name,x,y, false)); break;
-			//case "Roundabout": n = new SimpleJunction(new Roundabout(x,y,new ArrayList<ITCM>())); break;
+			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name, x, y, false)); break;
+			case "Roundabout": n = new Roundabout(new SimpleJunction(name, x, y, false)); break;
 			default: n = new SimpleJunction(name,x,y, false); break;
 		}
 		if(endpoint) // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
@@ -306,9 +305,9 @@ public enum Simulation{
 		float queue = next.getCurrentQueue(current);
 		int maxQueue = next.getMaxQueue(current) / 10;
 		float percentQueue = queue / maxQueue;
-//		System.out.println("Queue size: " + queue);
-//		System.out.println("Queue max: " + maxQueue);
-//		System.out.println("Queue full: " + percentQueue);
+		System.out.println("Queue size: " + queue);
+		System.out.println("Queue max: " + maxQueue);
+		System.out.println("Queue full: " + percentQueue);
 		float time = (percentQueue + 1) * (dist / 5);
 		return (int) time * 100;
 	}

@@ -87,7 +87,7 @@ public class Car implements Runnable, IVehicle, Observer {
 			move();
 			try {
 				long time = Simulation.INSTANCE.getJourneyTime(prevNode, currentNode);
-				Thread.sleep(10);
+				Thread.sleep(time);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
