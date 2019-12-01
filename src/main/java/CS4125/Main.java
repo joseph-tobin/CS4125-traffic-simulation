@@ -1,9 +1,5 @@
 package CS4125;
 
-import CS4125.Controller.Sim.Simulation;
-import CS4125.Model.Utils.IVehicleCreator;
-import CS4125.Model.Vehicle.VehicleCreator;
-import CS4125.View.EventHandlers.UIController;
 import CS4125.View.UserInterface.UIView;
 import javafx.application.Application;
 

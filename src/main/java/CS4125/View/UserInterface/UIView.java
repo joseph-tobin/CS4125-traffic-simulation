@@ -185,10 +185,10 @@ public class UIView extends Application {
 			// grab x & y, add node
 			// prefixing label with tcmType for different representation in UI
 			String thisTCM = tcmType + "_" + name_input.getText();
-			 Simulation.INSTANCE.addNode(
-			 		tcmType, thisTCM,
-					 Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), endpoint);
-			 connectTCMPane(dialog, thisTCM);
+			Simulation.INSTANCE.addNode(
+					tcmType, thisTCM,
+					Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), endpoint);
+			connectTCMPane(dialog, thisTCM);
 		});
 
 		dialogItems.getChildren().addAll(nameTitle, name_input, coordTitle,  x_input, y_input, endpoint_cb, coordsBtn);
