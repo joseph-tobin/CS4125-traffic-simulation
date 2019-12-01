@@ -227,21 +227,21 @@ public enum Simulation{
 
 		nodeList.addAll(Arrays.asList(a, b, c, d, e, f));
 	}
-
-	// Don't use
-	public void createVehicle(ITCM start, ITCM end){
-
-		float xCoord = 1; // TODO: start.getX + start.getY
-		float yCoord = 2; // TODO: end.getX + end.getY
-		String xyCoords = String.valueOf(xCoord) + String.valueOf(yCoord);
-		if (routeMap.containsKey(xyCoords)) {
-			//vehicles.add(routeMap.get(xyCoords).copy());
-		} else {
-			IVehicle newVehicle = new Car(start, end);
-			//vehicles.add(newVehicle);
-			routeMap.put(xyCoords, newVehicle);
-		}
-	}
+//
+//	// Don't use
+//	public void createVehicle(ITCM start, ITCM end){
+//
+//		float xCoord = 1; // TODO: start.getX + start.getY
+//		float yCoord = 2; // TODO: end.getX + end.getY
+//		String xyCoords = String.valueOf(xCoord) + String.valueOf(yCoord);
+//		if (routeMap.containsKey(xyCoords)) {
+//			//vehicles.add(routeMap.get(xyCoords).copy());
+//		} else {
+//			IVehicle newVehicle = new Car(start, end);
+//			//vehicles.add(newVehicle);
+//			routeMap.put(xyCoords, newVehicle);
+//		}
+//	}
 
 	/**
 	 * Get nodes of type IEndpoint from the nodeList
@@ -304,7 +304,7 @@ public enum Simulation{
 	public int getJourneyTime(ITCM current, ITCM next) {
 		float dist = current.distanceTo(next);
 		float queue = next.getCurrentQueue(current);
-		int maxQueue = next.getMaxQueue(current) / 100;
+		int maxQueue = next.getMaxQueue(current) / 10;
 		float percentQueue = queue / maxQueue;
 		System.out.println("Queue size: " + queue);
 		System.out.println("Queue max: " + maxQueue);

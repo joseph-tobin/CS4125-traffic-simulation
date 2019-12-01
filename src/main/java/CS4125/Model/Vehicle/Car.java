@@ -45,8 +45,10 @@ public class Car implements Runnable, IVehicle, Observer {
 				System.out.println("Waiting"); // wait until the node is available to enter#
 			// leave previous queue
 
-			if(currentNode != startNode)
+			if(currentNode != startNode) {
+				System.out.println("exiting curing");
 				currentNode.exitQueue(prevNode);
+			}
 
 
 			prevNode = currentNode;

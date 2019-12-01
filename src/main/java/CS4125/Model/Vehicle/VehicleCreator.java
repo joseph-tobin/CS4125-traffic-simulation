@@ -18,6 +18,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
     private int timer;
     private List<ITCM> nodes;
     private Random rand;
+    int ctr = 0;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
@@ -29,17 +30,19 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
 
     @Override
     public void run() {
-        while (true && !(Thread.interrupted())) {
+        while (ctr < 5 && !(Thread.interrupted())) {
             ITCM[] routeStartEnd = getRandom();
             IVehicle v = new Car(routeStartEnd[0], routeStartEnd[1]);
 
-            v.move();
+            new Thread(v).start();
+
             try {
                 Thread.sleep(timer);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             nodes = Simulation.INSTANCE.getEndpoints();
+            ctr++;
         }
     }
 
