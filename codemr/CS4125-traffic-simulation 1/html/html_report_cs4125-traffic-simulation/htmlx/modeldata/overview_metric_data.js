@@ -1,1 +1,0 @@
-var CodeMR_ProjectMetrics = {"Project Name":"CS4125-traffic-simulation working set: {CS4125-traffic-simulation}", "Number of Highly Problematic Classes":0, "Number of Entities":25, "Number of Problematic Classes":3, "Class Lines of Code":666, "Number of External Packages":16, "Number of Packages":9, "Number of External Entities":54}
