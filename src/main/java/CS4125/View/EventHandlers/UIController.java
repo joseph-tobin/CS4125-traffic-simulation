@@ -2,8 +2,6 @@ package CS4125.View.EventHandlers;
 
 import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
-import CS4125.Model.Vehicle.Car;
-import CS4125.Model.Vehicle.IVehicle;
 import CS4125.View.UserInterface.UIView;
 import javafx.animation.PathTransition;
 import javafx.scene.Cursor;
