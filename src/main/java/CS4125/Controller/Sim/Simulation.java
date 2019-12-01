@@ -81,7 +81,9 @@ public enum Simulation{
 	 * @param x xcoord
 	 * @param y ycoord
 	 */
-	public void addNode(String type, String name, int x, int y, boolean endpoint) {
+	public void addNode(String type, String name, int x, int y, boolean endpoint)  {
+		// Block the Vehicle creator thread while node and it's adjacent list are being updated
+
 		ITCM n;
 		switch (type) {
 			case "TrafficLights": n = new TrafficLights(new SimpleJunction(name, x, y, false)); break;
@@ -177,19 +179,10 @@ public enum Simulation{
 	public void addAdjacent(ITCM n1, ITCM n2) {
 		if (n1.getAdjacent().isEmpty()) {
 			n1.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
-		} else { // apparently we dont need this else statement but if things start breaking maybe we do lol
-			//List<ITCM> test = n1.getAdjacent();
-			//test.add(n2);
-			//n1.setAdjacent(test);
 		}
 		if (n2.getAdjacent().isEmpty()) {
 			n2.setAdjacent(new ArrayList<>(Arrays.asList(n2)));
-		} else { // apparently we dont need this
-//			List<ITCM> test = n2.getAdjacent();
-//			test.add(n1);
-//			n2.setAdjacent(test);
 		}
-
 	}
 
 	/**
@@ -210,7 +203,6 @@ public enum Simulation{
 	public void defaultNodes(){
 		//Existing Nodes & Adjacency lists - In future change to allow passing in a graph topology (e.g. CSV adjacency matrix)
 
-		// adding to nodeList
 		TrafficLights f = new TrafficLights(new SimpleJunction("TrafficLights_f",300,200, true));
 		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_e",100,200, false));
 		TrafficLights d = new TrafficLights(new SimpleJunction("TrafficLights_d",55,300, false));
@@ -226,21 +218,6 @@ public enum Simulation{
 
 		nodeList.addAll(Arrays.asList(a, b, c, d, e, f));
 	}
-//
-//	// Don't use
-//	public void createVehicle(ITCM start, ITCM end){
-//
-//		float xCoord = 1; // TODO: start.getX + start.getY
-//		float yCoord = 2; // TODO: end.getX + end.getY
-//		String xyCoords = String.valueOf(xCoord) + String.valueOf(yCoord);
-//		if (routeMap.containsKey(xyCoords)) {
-//			//vehicles.add(routeMap.get(xyCoords).copy());
-//		} else {
-//			IVehicle newVehicle = new Car(start, end);
-//			//vehicles.add(newVehicle);
-//			routeMap.put(xyCoords, newVehicle);
-//		}
-//	}
 
 	/**
 	 * Get nodes of type IEndpoint from the nodeList
@@ -254,10 +231,6 @@ public enum Simulation{
 			}
 		}
 		return endpoints;
-	}
-
-	public Queue<IVehicle> getWaitingQueue() {
-		return this.waitingQueue;
 	}
 
 	/**

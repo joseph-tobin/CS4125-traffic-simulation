@@ -19,8 +19,8 @@ class SimpleJunctionTest {
 
     @BeforeEach
     void setUp() {
-        simpleJunctionUnderTest = new SimpleJunction("juncUnderTest", 0, 0, false);
-        simpleJunctionUnderTestAdj1 = new SimpleJunction("juncUnderTestAdj1",1, 1, false);
+        simpleJunctionUnderTest = new SimpleJunction("juncUnderTest", 1, 1, true);
+        simpleJunctionUnderTestAdj1 = new SimpleJunction("juncUnderTestAdj1",4, 4, false);
         simpleJunctionUnderTestAdj2 = new SimpleJunction("juncUnderTestAdj2",2, 2, false);
         // add adjacent Junctions
         simpleJunctionUnderTest.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
@@ -43,8 +43,8 @@ class SimpleJunctionTest {
     @Test
     void testSetAdjacent() {
         SimpleJunction a = new SimpleJunction("a", 9,9, false);
-        SimpleJunction b = new SimpleJunction("b",9,9, false);
-        SimpleJunction c = new SimpleJunction("c",9,9, false);
+        SimpleJunction b = new SimpleJunction("b",10,9, false);
+        SimpleJunction c = new SimpleJunction("c",8,9, false);
         // Setup
         final List<ITCM> adj = Arrays.asList(a,b,c);
 
@@ -58,8 +58,10 @@ class SimpleJunctionTest {
     @Test
     void testEnterQueue() {
         // Setup
-        final ITCM origin = simpleJunctionUnderTestAdj1;
-        final IVehicle vehicle = new Car(simpleJunctionUnderTest, simpleJunctionUnderTestAdj1);
+        final ITCM origin = new SimpleJunction("origin", 23, 45, true);
+        final IVehicle vehicle = new Car(origin, simpleJunctionUnderTest);
+        simpleJunctionUnderTest.setAdjacent(Arrays.asList(origin));
+        origin.setAdjacent(Arrays.asList(simpleJunctionUnderTest));
 
         // Run the test
         final boolean result = simpleJunctionUnderTest.enterQueue(origin, vehicle);
@@ -84,7 +86,7 @@ class SimpleJunctionTest {
     void testCompareTo() {
         // Setup
         final int expectedResult = 0;
-        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 0, 0, false);
+        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 1, 1, true);
         sjUnderTestCopy.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
 
         // Run the test

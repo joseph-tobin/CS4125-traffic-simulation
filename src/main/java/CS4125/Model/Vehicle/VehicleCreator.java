@@ -30,7 +30,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
 
     @Override
     public void run() {
-        while (ctr < 5 && !(Thread.interrupted())) {
+        while (true && !(Thread.interrupted())) {
             ITCM[] routeStartEnd = getRandom();
             IVehicle v = new Car(routeStartEnd[0], routeStartEnd[1]);
 
@@ -42,7 +42,6 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
                 e.printStackTrace();
             }
             nodes = Simulation.INSTANCE.getEndpoints();
-//            ctr++;
         }
     }
 
@@ -65,4 +64,13 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
 
     @Override
     public void setTimer(int t) { this.timer = t;}
+
+    @Override
+    public void waitWhileAdding() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -35,7 +35,7 @@ public class Adjacency {
             maxCapacity = (int) Math.ceil(maxCapacity / 10); // make sure the max queue is at least 1
             queue = new ArrayBlockingQueue<>(maxCapacity);
         } catch (Exception e) {
-            System.out.println("Check node coordinates");
+            System.out.println("Null x, y coords passed to Adjacency object");
             System.out.println(e.getMessage());
         }
     }
