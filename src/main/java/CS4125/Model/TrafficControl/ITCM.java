@@ -25,6 +25,7 @@ public interface ITCM extends IGraphable {
     abstract boolean enterQueue(ITCM origin, IVehicle vehicle);
     abstract void exitQueue(ITCM prevNode);
     abstract int getCurrentQueue(ITCM dest);
+    abstract int getMaxQueue(ITCM current);
     abstract void setEndpoint(boolean bool);
     abstract boolean isEndpoint();
 }

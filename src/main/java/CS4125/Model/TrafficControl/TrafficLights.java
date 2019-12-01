@@ -66,6 +66,9 @@ public class TrafficLights extends TCMDecorator {
     public int getCurrentQueue(ITCM dest) {
         return super.getTcm().getCurrentQueue(dest);
     }
+    public int getMaxQueue(ITCM dest) {
+        return super.getTcm().getMaxQueue(dest);
+    }
 
     @Override
     public void setEndpoint(boolean bool) {

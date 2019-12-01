@@ -138,6 +138,14 @@ public class SimpleJunction extends Subject implements IEndpoint {
         }
         return -1;
     }
+//    @Override
+    public int getMaxQueue(ITCM dest) {
+        for(Adjacency a: adjacencyObjs) {
+            if(a.getAdj().equals(dest))
+                return a.getMaxCapacity();
+        }
+        return -1;
+    }
 
     @Override
     public void setEndpoint(boolean bool) {

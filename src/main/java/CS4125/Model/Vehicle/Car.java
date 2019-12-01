@@ -5,7 +5,6 @@ import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Utils.Observer;
-import sun.awt.X11.XSystemTrayPeer;
 
 import java.util.*;
 import java.sql.Timestamp;

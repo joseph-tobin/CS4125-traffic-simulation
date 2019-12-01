@@ -297,12 +297,12 @@ public enum Simulation{
 	}
 
 	public int getJourneyTime(ITCM current, ITCM next) {
-		//ITCM current = v.getCurrentNode();
-		//ITCM next = v.getNextNode();
 		float dist = current.distanceTo(next);
-		float queue = next.getCurrentQueue(next);
-		float time = (queue) + dist / 10;
-		return (int) time * 100;
+		float queue = next.getCurrentQueue(current);
+		int maxQueue = next.getMaxQueue(current);
+		float percentQueue = queue / maxQueue;
+		float time = (100 - percentQueue) * (dist / 5);
+		return (int) time;
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };

@@ -69,6 +69,11 @@ public class Roundabout extends TCMDecorator {
     }
 
     @Override
+    public int getMaxQueue(ITCM current) {
+        return super.getTcm().getMaxQueue(current);
+    }
+
+    @Override
     public void setEndpoint(boolean bool) {
         super.getTcm().setEndpoint(bool);
     }
