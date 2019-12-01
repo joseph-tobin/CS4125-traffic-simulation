@@ -42,7 +42,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
                 e.printStackTrace();
             }
             nodes = Simulation.INSTANCE.getEndpoints();
-            ctr++;
+//            ctr++;
         }
     }
 

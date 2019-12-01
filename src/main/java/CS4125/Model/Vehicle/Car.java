@@ -18,6 +18,7 @@ public class Car implements Runnable, IVehicle, Observer {
 	private List<IGraphable> route;
 	private Timestamp initialTime;
 	private Timestamp endTime;
+	private boolean finished = false;
 
 	public Car(ITCM start, ITCM end){
 		startNode = start;
@@ -40,30 +41,27 @@ public class Car implements Runnable, IVehicle, Observer {
 	public Timestamp getEndTime() {return endTime;}
 
 	public void move() {
-		if(getNextNode() != null) {
+		if(!finished) {
 			while (!(this.getNextNode().enterQueue(currentNode,this)))
-				System.out.println("Waiting"); // wait until the node is available to enter#
+				System.out.println("Waiting" + this.toString()); // wait until the node is available to enter#
 			// leave previous queue
 
 			if(currentNode != startNode) {
-				System.out.println("exiting curing");
+				System.out.println("exiting during" + this.toString());
 				currentNode.exitQueue(prevNode);
 			}
 
-
+			System.out.println("itr:" + currentNodeIndex + " " + startNode.toString() + " " + currentNode.toString() + " " + endNode.toString());
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
 			addToMoveQueue();
-			System.out.println("Moving to " + currentNode.getLabel());
+
 
 			if (currentNode.equals(endNode)) {
+				finished = true;
 				this.endTime = new Timestamp(System.currentTimeMillis());
 			}
-		}
-		else {
-			System.out.println("exiting at the end");
-			currentNode.exitQueue(prevNode);
 		}
 	}
 
@@ -77,7 +75,7 @@ public class Car implements Runnable, IVehicle, Observer {
 	@Override
 	public void update(int state) {
 		if(state==0) {
-			this.move();
+//			this.move();
 			subject.detach(this);
 			subject.attach(this);
 		}
@@ -85,15 +83,15 @@ public class Car implements Runnable, IVehicle, Observer {
 
 	@Override
 	public void run() {
-		while(currentNode != endNode) {
+		while(!finished) {
 			move();
 			try {
 				long time = Simulation.INSTANCE.getJourneyTime(prevNode, currentNode);
-				System.out.println("sleeping: " + time);
-				Thread.sleep(time);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		currentNode.exitQueue(prevNode);
 	}
 }

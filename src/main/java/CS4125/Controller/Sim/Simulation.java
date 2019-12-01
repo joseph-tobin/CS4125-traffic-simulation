@@ -306,9 +306,9 @@ public enum Simulation{
 		float queue = next.getCurrentQueue(current);
 		int maxQueue = next.getMaxQueue(current) / 10;
 		float percentQueue = queue / maxQueue;
-		System.out.println("Queue size: " + queue);
-		System.out.println("Queue max: " + maxQueue);
-		System.out.println("Queue full: " + percentQueue);
+//		System.out.println("Queue size: " + queue);
+//		System.out.println("Queue max: " + maxQueue);
+//		System.out.println("Queue full: " + percentQueue);
 		float time = (percentQueue + 1) * (dist / 5);
 		return (int) time * 100;
 	}
