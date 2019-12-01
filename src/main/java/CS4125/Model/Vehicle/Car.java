@@ -45,21 +45,24 @@ public class Car implements Runnable, IVehicle, Observer {
 				System.out.println("Waiting"); // wait until the node is available to enter#
 			// leave previous queue
 
+			if(currentNode != startNode)
+				currentNode.exitQueue(prevNode);
+
+
 			prevNode = currentNode;
 			currentNode = getNextNode();
 			currentNodeIndex++;
 			addToMoveQueue();
 			System.out.println("Moving to " + currentNode.getLabel());
 
-			if(currentNode != startNode)
-				currentNode.exitQueue(prevNode);
-
 			if (currentNode.equals(endNode)) {
 				this.endTime = new Timestamp(System.currentTimeMillis());
 			}
 		}
-		else
+		else {
+			System.out.println("exiting at the end");
 			currentNode.exitQueue(prevNode);
+		}
 	}
 
 	/**
