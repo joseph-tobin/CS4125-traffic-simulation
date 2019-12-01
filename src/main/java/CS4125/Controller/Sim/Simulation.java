@@ -27,6 +27,7 @@ public enum Simulation{
 	private int vehicleQuantity;
 	private List<IVehicle> vehicles;
 	private Queue<Move> moveQueue;
+	private Queue<IVehicle> waitingQueue;
 	private static UIController controller;
 	private IVehicleCreator vc;
 
@@ -254,6 +255,10 @@ public enum Simulation{
 			}
 		}
 		return endpoints;
+	}
+
+	public Queue<IVehicle> getWaitingQueue() {
+		return this.waitingQueue;
 	}
 
 	/**
