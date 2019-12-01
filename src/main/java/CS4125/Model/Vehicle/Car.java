@@ -5,11 +5,12 @@ import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
 import CS4125.Model.Utils.Observer;
+import sun.awt.X11.XSystemTrayPeer;
 
 import java.util.*;
 import java.sql.Timestamp;
 
-public class Car implements IVehicle, Observer {
+public class Car implements Runnable, IVehicle, Observer {
 	private ITCM currentNode;
 	private ITCM prevNode = null;
 	private int currentNodeIndex = 0;
@@ -73,6 +74,20 @@ public class Car implements IVehicle, Observer {
 			this.move();
 			subject.detach(this);
 			subject.attach(this);
+		}
+	}
+
+	@Override
+	public void run() {
+		while(currentNode != endNode) {
+			move();
+			try {
+				long time = Simulation.INSTANCE.getJourneyTime(prevNode, currentNode);
+				System.out.println("sleeping: " + time);
+				Thread.sleep(time);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
