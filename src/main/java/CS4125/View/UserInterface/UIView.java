@@ -3,7 +3,6 @@ package CS4125.View.UserInterface;
 //import CS4125.Controller.Sim.Simulation;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
-//import CS4125.View.UISim;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
