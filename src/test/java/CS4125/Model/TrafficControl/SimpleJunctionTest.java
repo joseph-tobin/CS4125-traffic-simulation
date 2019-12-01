@@ -81,18 +81,4 @@ class SimpleJunctionTest {
         // Verify the results
         assertEquals(expectedResult, result);
     }
-
-    @Test
-    void testCompareTo() {
-        // Setup
-        final int expectedResult = 0;
-        final ITCM sjUnderTestCopy = new SimpleJunction("jncUnderTestCopy", 1, 1, true);
-        sjUnderTestCopy.setAdjacent(Arrays.asList(simpleJunctionUnderTestAdj1, simpleJunctionUnderTestAdj2));
-
-        // Run the test
-        final int result = simpleJunctionUnderTest.compareTo(sjUnderTestCopy);
-
-        // Verify the results
-        assertEquals(expectedResult, result);
-    }
 }
