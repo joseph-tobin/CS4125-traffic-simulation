@@ -71,6 +71,12 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-server-sdk -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>6.9.0</version>
+        </dependency>
     </dependencies>
 
 
