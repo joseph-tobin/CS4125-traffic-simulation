@@ -213,10 +213,10 @@ public enum Simulation{
 
 		// adding to nodeList
 		TrafficLights f = new TrafficLights(new SimpleJunction("TrafficLights_f",300,200, true));
-		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_e",100,200, true));
+		TrafficLights e = new TrafficLights(new SimpleJunction("TrafficLights_e",100,200, false));
 		TrafficLights d = new TrafficLights(new SimpleJunction("TrafficLights_d",55,300, false));
 		TrafficLights c = new TrafficLights(new SimpleJunction("TrafficLights_c",300,125, true));
-		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",400,300, false));
+		TrafficLights b = new TrafficLights(new SimpleJunction("TrafficLights_b",400,300, true));
 		TrafficLights a = new TrafficLights(new SimpleJunction("TrafficLights_a",200,400, true));
 		f.setAdjacent(new ArrayList<ITCM>(Arrays.asList(e)));
 		e.setAdjacent(new ArrayList<ITCM>(Arrays.asList(c,d,f)));
@@ -304,10 +304,13 @@ public enum Simulation{
 	public int getJourneyTime(ITCM current, ITCM next) {
 		float dist = current.distanceTo(next);
 		float queue = next.getCurrentQueue(current);
-		int maxQueue = next.getMaxQueue(current);
+		int maxQueue = next.getMaxQueue(current) / 100;
 		float percentQueue = queue / maxQueue;
-		float time = (100 - percentQueue) * (dist / 5);
-		return (int) time;
+		System.out.println("Queue size: " + queue);
+		System.out.println("Queue max: " + maxQueue);
+		System.out.println("Queue full: " + percentQueue);
+		float time = (percentQueue + 1) * (dist / 5);
+		return (int) time * 100;
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
