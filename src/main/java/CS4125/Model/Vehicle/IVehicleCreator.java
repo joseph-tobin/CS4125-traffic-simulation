@@ -1,4 +1,4 @@
-package CS4125.Model.Utils;
+package CS4125.Model.Vehicle;
 
 
 import CS4125.Model.TrafficControl.ITCM;
