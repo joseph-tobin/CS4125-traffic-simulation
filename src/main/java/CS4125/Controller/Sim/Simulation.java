@@ -301,8 +301,8 @@ public enum Simulation{
 		float queue = next.getCurrentQueue(current);
 		int maxQueue = next.getMaxQueue(current);
 		float percentQueue = queue / maxQueue;
-		float time = (100 - percentQueue) * (dist / 5);
-		return (int) time;
+		float time = (percentQueue + 1) * (dist / 5);
+		return (int) time * 100;
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };

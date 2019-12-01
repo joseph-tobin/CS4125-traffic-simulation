@@ -58,6 +58,8 @@ public class Car implements Runnable, IVehicle, Observer {
 				this.endTime = new Timestamp(System.currentTimeMillis());
 			}
 		}
+		else
+			currentNode.exitQueue(prevNode);
 	}
 
 	/**
