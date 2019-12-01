@@ -2,7 +2,7 @@ package CS4125.Controller.Sim;
 
 
 import CS4125.Model.Metrics.Metric;
-import CS4125.Model.Utils.IVehicleCreator;
+import CS4125.Model.Vehicle.IVehicleCreator;
 import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
