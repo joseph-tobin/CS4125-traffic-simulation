@@ -137,7 +137,8 @@ public class UIView extends Application {
 					getSimPane().getChildren().remove(c);
 				}
 			}
-			Simulation.INSTANCE.restoreFromMemento(Simulation.INSTANCE.getSavedSims().get(0));
+			//Simulation.INSTANCE.restoreFromMemento(Simulation.INSTANCE.getSavedSims().get(0));
+			Simulation.INSTANCE.getSavedSims().get(0).restoreFromMemento();
 		});
 
 		Button refreshBtn = new Button("Refresh");

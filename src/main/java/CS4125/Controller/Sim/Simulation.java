@@ -317,34 +317,8 @@ public enum Simulation{
 		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), getMoveQueue(), this.controller, this.vc));
 	}
 
-	public void restoreFromMemento(Memento memento) {
-		List<ITCM> nl = memento.getNodeList();
-		routeMap = memento.getRouteMap();
-		vehicles = memento.getVehicles();
-		moveQueue = memento.getMoveQueue();
-		controller = memento.getController();
-		vc = memento.getVehicleCreator();
-
-		// delete all old nodes
-        for (ITCM n: Simulation.INSTANCE.nodeList) {
-            controller.deleteNode(n);
-        }
-
-        // re-add memento nodes
-        for (ITCM n: nl) {
-            controller.addNode(n);
-            for (ITCM value : n.getAdjacent()) {
-                controller.addEdge(n, value);
-            }
-        }
-
-        // TODO: MoveConsumer changed, need to be able to save the move consumer state and re start
-       // createVehicles(getEndpoints(), 1200); // this might be problem
-       // new MoveConsumer(moveQueue).start();
-
-	}
-
 	public class Memento {
+
 		public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 		private HashMap<String, IVehicle> routeMap;
 		private List<IVehicle> vehicles;
@@ -361,6 +335,26 @@ public enum Simulation{
 			this.controller = controller;
 			this.moveQueue = moveQueue;
 			this.vc = vc;
+		}
+
+		public void restoreFromMemento() {
+			// delete all old nodes
+			for (ITCM n : Simulation.INSTANCE.nodeList) {
+				controller.deleteNode(n);
+			}
+
+			// re-add memento nodes
+			for (ITCM n : nodeList) {
+				controller.addNode(n);
+				for (ITCM value : n.getAdjacent()) {
+					controller.addEdge(n, value);
+				}
+			}
+
+			// TODO: MoveConsumer changed, need to be able to save the move consumer state and re start
+			// createVehicles(getEndpoints(), 1200); // this might be problem
+			// new MoveConsumer(moveQueue).start();
+
 		}
 
 
