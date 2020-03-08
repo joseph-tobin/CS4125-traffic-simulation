@@ -305,4 +305,64 @@ public enum Simulation{
 	public HashMap<String, IVehicle> getRouteMap(){
 		return this.routeMap;
 	}
+
+	public Memento saveToMemento() {
+		return new Memento(nodeList, routeMap, vehicles, moveQueue, controller, vc);
+	}
+
+	public void restoreFromMemento(Memento memento) {
+		nodeList = memento.getNodeList();
+		routeMap = memento.getRouteMap();
+		//circles = memento.getCircles();
+		//vehicleQuantity = memento.getVehicleQuantity();
+		vehicles = memento.getVehicles();
+		moveQueue = memento.getMoveQueue();
+		controller = memento.getController();
+		vc = memento.getVehicleCreator();
+	}
+
+	public class Memento {
+		public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
+		private HashMap<String, IVehicle> routeMap;
+		private List<IVehicle> vehicles;
+		private Queue<Move> moveQueue;
+		private UIController controller;
+		private IVehicleCreator vc;
+
+
+		public Memento(List<ITCM> nodeList, HashMap<String, IVehicle> routeMap, List<IVehicle> vehicles, Queue<Move> moveQueue, UIController controller, IVehicleCreator
+				vc) {
+			this.nodeList = new ArrayList<ITCM>();
+			this.routeMap = new HashMap<String, IVehicle>();
+			this.vehicles = new ArrayList<IVehicle>();
+			this.controller = controller;
+			moveQueue = new ArrayBlockingQueue<Move>(10000);
+		}
+
+
+		public UIController getController() {
+			return controller;
+		}
+
+		public List<ITCM> getNodeList() {
+			return this.nodeList;
+		}
+
+		public HashMap<String, IVehicle> getRouteMap() {
+			return this.routeMap;
+		}
+
+		public List<IVehicle> getVehicles() {
+			return vehicles;
+		}
+
+		public Queue<Move> getMoveQueue() {
+			return moveQueue;
+		}
+
+		public IVehicleCreator getVehicleCreator() {
+			return vc;
+		}
+	}
+
 }
