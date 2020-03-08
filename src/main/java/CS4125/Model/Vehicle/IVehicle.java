@@ -7,7 +7,7 @@ import CS4125.Model.Utils.Observer;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface IVehicle extends Observer, Runnable {
+public interface IVehicle extends Observer, Runnable, Cloneable {
     public abstract ITCM getCurrentNode();
     public abstract ITCM getNextNode();
     public abstract ITCM getStarNode();
@@ -16,4 +16,5 @@ public interface IVehicle extends Observer, Runnable {
     abstract List<IGraphable> getRoute();
     public abstract void move();
     public abstract void update(int state);
+    public abstract IVehicle makeCopy();
 }

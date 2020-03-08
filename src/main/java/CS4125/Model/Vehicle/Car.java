@@ -28,17 +28,41 @@ public class Car implements Runnable, IVehicle, Observer {
 		initialTime = new Timestamp(System.currentTimeMillis());
 	}
 
-	public ITCM getCurrentNode()		{return currentNode;}
+	public IVehicle makeCopy(){
+		Car carObj = null;
+
+		try {
+			carObj = (Car) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		return carObj;
+	}
+
+	public ITCM getCurrentNode(){
+		return currentNode;
+	}
 	public ITCM getNextNode() {
 		return (route.get(currentNodeIndex+1) != null) ? (ITCM) route.get(currentNodeIndex+1) : null;
 	}
-	public ITCM getStarNode()			{return startNode;}
-	public ITCM getEndNode()			{return endNode;}
-	public List<IGraphable> getRoute()	{return route;}
+	public ITCM getStarNode() {
+		return startNode;
+	}
+	public ITCM getEndNode() {
+		return endNode;
+	}
+	public List<IGraphable> getRoute() {
+		return route;
+	}
 	@Override
-	public Timestamp getInitialTime() {return initialTime;}
+	public Timestamp getInitialTime() {
+		return initialTime;
+	}
 	@Override
-	public Timestamp getEndTime() {return endTime;}
+	public Timestamp getEndTime() {
+		return endTime;
+	}
 
 	public void move() {
 		if(!finished) {

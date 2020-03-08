@@ -3,7 +3,9 @@ package CS4125.Model.Vehicle;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -16,20 +18,48 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
     private List<ITCM> nodes;
     private Random rand;
     int ctr = 0;
+    private Map<String, IVehicle> premade;
+    private Map<IVehicle, Integer> premade_count;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
         System.out.println("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
         rand = new Random(42);
+        premade_count = new HashMap<>();
+        premade = new HashMap<>();
         this.start();
     }
 
     @Override
     public void run() {
-        while (true && !(Thread.interrupted())) {
+        while (!(Thread.interrupted())) {
             ITCM[] routeStartEnd = getRandom();
-            IVehicle v = new Car(routeStartEnd[0], routeStartEnd[1]);
+            String routeString = routeStartEnd[0].toString() + routeStartEnd[1].toString();
+            IVehicle v = null;
+
+            /* Prototype Design Pattern Implementation
+             * checking if we already made a vehicle with these start & end points
+             */
+            if(premade.containsKey(routeString)) {
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
+                // checking if this vehicle has been used to copy more than 4 times, remove after this
+                IVehicle toCopy = premade.get(routeString);
+                int count = premade_count.get(toCopy);
+                if(count > 2) {
+                    System.out.println("///////////////-deleting-/////////////////");
+                    premade_count.remove(toCopy);
+                    premade.remove(routeString);
+                }
+                v = toCopy.makeCopy();
+                premade_count.replace(toCopy, count + 1);
+                toCopy = null;
+            }
+            else {
+                v = new Car(routeStartEnd[0], routeStartEnd[1]);
+                premade.put(routeStartEnd[0].toString() + routeStartEnd[1].toString(), v);
+                premade_count.put(v, 1);
+            }
 
             new Thread(v).start();
 
