@@ -20,10 +20,16 @@ public class UIController{
 	private Map<String, Circle> nodeLabelCircles;
 	private Map<Line, List<String> > nodeEdges;
 
+	private List<PathTransition> animations;
+
+	private List<Circle> circles;
+
 	public UIController(UIView view){
 		this.view = view;
 		nodeLabelCircles = new HashMap<>();
 		nodeEdges = new HashMap<>();
+		animations = new ArrayList<>();
+		circles = new ArrayList<>();
 	}
 
 	/**
@@ -160,6 +166,9 @@ public class UIController{
 		t.setPath(p);
 		t.play();
 
+		animations.add(t);
+		circles.add(c);
+
 		t.setOnFinished(event -> {
 			t.stop();
 			view.getSimPane().getChildren().remove(c);
@@ -175,5 +184,13 @@ public class UIController{
 		List<String> strOut = new ArrayList<>(Arrays.asList(nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()])));
 		strOut.removeIf(node -> node.equals(selected));
 		return strOut;
+	}
+
+	public List<PathTransition> getAnimations() {
+		return animations;
+	}
+
+	public List<Circle> getCircles() {
+		return circles;
 	}
 }

@@ -3,6 +3,7 @@ package CS4125.View.UserInterface;
 //import CS4125.Controller.Sim.Simulation;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
+import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -122,13 +123,21 @@ public class UIView extends Application {
 
 		Button saveBtn = new Button("Save");
 		saveBtn.setOnAction(event -> {
-			// save to database
+			Simulation.INSTANCE.saveToMemento();
 		});
 
 		Button loadBtn = new Button("Load");
 		loadBtn.setOnAction(event -> {
-			// load setup from database
-			// *** run sim with those metrics
+			// TODO: Change this to maybe open a dialog with all saved sims and click it defaults 0th saved sim
+			// stop current paths
+			// TODO: Stop and delete
+			for (PathTransition t: controller.getAnimations()) {
+				t.stop();
+				for (Circle c: controller.getCircles()) {
+					getSimPane().getChildren().remove(c);
+				}
+			}
+			Simulation.INSTANCE.restoreFromMemento(Simulation.INSTANCE.getSavedSims().get(0));
 		});
 
 		Button refreshBtn = new Button("Refresh");

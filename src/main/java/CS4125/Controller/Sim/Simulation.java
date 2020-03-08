@@ -9,6 +9,7 @@ import CS4125.Model.Vehicle.IVehicle;
 import CS4125.Model.Vehicle.Move;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
+import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.scene.shape.Circle;
 import CS4125.Model.TrafficControl.SimpleJunction;
@@ -22,6 +23,9 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
+
+
+    private List<Memento> savedSims;
 	private HashMap<String, IVehicle> routeMap;
 	private List<Circle> circles;
 	private int vehicleQuantity;
@@ -32,6 +36,7 @@ public enum Simulation{
 	private IVehicleCreator vc;
 
 
+
 	public void init(UIController controller) {
 		this.nodeList = new ArrayList<ITCM>();
 		this.routeMap = new HashMap<String, IVehicle>();
@@ -40,6 +45,7 @@ public enum Simulation{
 		this.controller = controller;
 		this.circles = new ArrayList<Circle>();
 		moveQueue = new ArrayBlockingQueue<Move>(10000);
+		savedSims = new ArrayList<Memento>();
 	}
 
 	Simulation() {
@@ -278,9 +284,9 @@ public enum Simulation{
 		float queue = next.getCurrentQueue(current);
 		int maxQueue = next.getMaxQueue(current) / 10;
 		float percentQueue = queue / maxQueue;
-		System.out.println("Queue size: " + queue);
-		System.out.println("Queue max: " + maxQueue);
-		System.out.println("Queue full: " + percentQueue);
+		//System.out.println("Queue size: " + queue);
+		//System.out.println("Queue max: " + maxQueue);
+		//System.out.println("Queue full: " + percentQueue);
 		float time = (percentQueue + 1) * (dist / 5);
 		return (int) time * 100;
 	}
@@ -288,6 +294,7 @@ public enum Simulation{
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
 	public Queue<Move> getMoveQueue() { return this.moveQueue; }
 	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}
+	public List<Memento> getSavedSims() { return savedSims; }
 
 	/**
 	 * Adds the vehicle animation to UI Controller with the current index
@@ -306,19 +313,35 @@ public enum Simulation{
 		return this.routeMap;
 	}
 
-	public Memento saveToMemento() {
-		return new Memento(nodeList, routeMap, vehicles, moveQueue, controller, vc);
+	public void saveToMemento() {
+		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), getMoveQueue(), this.controller, this.vc));
 	}
 
 	public void restoreFromMemento(Memento memento) {
-		nodeList = memento.getNodeList();
+		List<ITCM> nl = memento.getNodeList();
 		routeMap = memento.getRouteMap();
-		//circles = memento.getCircles();
-		//vehicleQuantity = memento.getVehicleQuantity();
 		vehicles = memento.getVehicles();
 		moveQueue = memento.getMoveQueue();
 		controller = memento.getController();
 		vc = memento.getVehicleCreator();
+
+		// delete all old nodes
+        for (ITCM n: Simulation.INSTANCE.nodeList) {
+            controller.deleteNode(n);
+        }
+
+        // re-add memento nodes
+        for (ITCM n: nl) {
+            controller.addNode(n);
+            for (ITCM value : n.getAdjacent()) {
+                controller.addEdge(n, value);
+            }
+        }
+
+        // TODO: MoveConsumer changed, need to be able to save the move consumer state and re start
+       // createVehicles(getEndpoints(), 1200); // this might be problem
+       // new MoveConsumer(moveQueue).start();
+
 	}
 
 	public class Memento {
@@ -332,11 +355,12 @@ public enum Simulation{
 
 		public Memento(List<ITCM> nodeList, HashMap<String, IVehicle> routeMap, List<IVehicle> vehicles, Queue<Move> moveQueue, UIController controller, IVehicleCreator
 				vc) {
-			this.nodeList = new ArrayList<ITCM>();
-			this.routeMap = new HashMap<String, IVehicle>();
-			this.vehicles = new ArrayList<IVehicle>();
+			this.nodeList = nodeList;
+			this.routeMap = routeMap;
+			this.vehicles = vehicles;
 			this.controller = controller;
-			moveQueue = new ArrayBlockingQueue<Move>(10000);
+			this.moveQueue = moveQueue;
+			this.vc = vc;
 		}
 
 
