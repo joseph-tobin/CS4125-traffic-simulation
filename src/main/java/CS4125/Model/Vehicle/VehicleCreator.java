@@ -43,10 +43,10 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
              */
             if(premade.containsKey(routeString)) {
                 System.out.println("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
-                // checking if this vehicle has been used to copy more than 4 times, remove after this
+                // checking if this vehicle has been used to copy more than 5 times, remove after this
                 IVehicle toCopy = premade.get(routeString);
                 int count = premade_count.get(toCopy);
-                if(count > 2) {
+                if(count > 5) {
                     System.out.println("///////////////-deleting-/////////////////");
                     premade_count.remove(toCopy);
                     premade.remove(routeString);
