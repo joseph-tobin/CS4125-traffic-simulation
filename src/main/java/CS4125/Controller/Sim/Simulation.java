@@ -286,7 +286,15 @@ public enum Simulation{
 	}
 
 	public List<IVehicle> getVehicleList() {return this.vehicles; };
-	public Queue<Move> getMoveQueue() { return this.moveQueue; }
+
+	/**
+	 * Synchronised method to get move queue, allows for safer cross threads get operations
+	 * @return Queue of moves produced by vehicles
+	 */
+	public synchronized Queue<Move> getMoveQueue() {
+			return this.moveQueue;
+	}
+
 	public void addVehicleToVehicleList(IVehicle v) {vehicles.add(v);}
 
 	/**

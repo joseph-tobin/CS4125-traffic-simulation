@@ -26,6 +26,7 @@ public class MoveConsumer extends Thread {
     public synchronized void consume() {
         Move m = null;
         while (true) {
+            moveQueue = Simulation.INSTANCE.getMoveQueue();
             m = moveQueue.poll();
             if(m != null)
                 Simulation.INSTANCE.addMoveAnimimation(m);
