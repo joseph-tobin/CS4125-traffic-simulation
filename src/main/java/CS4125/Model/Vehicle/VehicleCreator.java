@@ -22,7 +22,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
     private Map<IVehicle, Integer> premade_count;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
-        System.out.println("Starting vehicle creation thread");
+        Simulation.INSTANCE.logger.info("Starting vehicle creation thread");
         this.timer = timer;
         this.nodes = nodes;
         rand = new Random(42);
@@ -42,12 +42,12 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
              * checking if we already made a vehicle with these start & end points
              */
             if(premade.containsKey(routeString)) {
-                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
+                Simulation.INSTANCE.logger.info("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
                 // checking if this vehicle has been used to copy more than 5 times, remove after this
                 IVehicle toCopy = premade.get(routeString);
                 int count = premade_count.get(toCopy);
                 if(count > 5) {
-                    System.out.println("///////////////-deleting-/////////////////");
+                    Simulation.INSTANCE.logger.info("///////////////-deleting-/////////////////");
                     premade_count.remove(toCopy);
                     premade.remove(routeString);
                 }

@@ -2,6 +2,8 @@ package CS4125.Controller.Sim;
 
 
 import CS4125.Model.Metrics.Metric;
+import CS4125.Model.Utils.BasicLogger;
+import CS4125.Model.Utils.LoggingAdapter;
 import CS4125.Model.Vehicle.IVehicleCreator;
 import CS4125.Model.Vehicle.Car;
 import CS4125.Model.TrafficControl.*;
@@ -23,7 +25,7 @@ public enum Simulation{
 	INSTANCE;
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
-
+	public LoggingAdapter logger;
 
     private List<Memento> savedSims;
 	private HashMap<String, IVehicle> routeMap;
@@ -34,6 +36,8 @@ public enum Simulation{
 	private Queue<IVehicle> waitingQueue;
 	private static UIController controller;
 	private IVehicleCreator vc;
+
+
 
 
 
@@ -58,6 +62,8 @@ public enum Simulation{
 		nodeList.clear();
 		vehicles.clear();
 		routeMap.clear();
+
+		logger = LoggingAdapter.createLogger(BasicLogger.class);
 
 		defaultNodes();
 
@@ -155,7 +161,7 @@ public enum Simulation{
 			addAdjacent(nodeList.get(l1index), nodeList.get(l2index));
 			controller.addEdge(nodeList.get(l1index), nodeList.get(l2index));
 		} else {
-			System.out.println("Labels not found");
+			logger.debug("Labels not found");
 		}
 	}
 
@@ -173,7 +179,7 @@ public enum Simulation{
             removeAdjacent(nodeList.get(l1index), nodeList.get(l2index));
             controller.deleteEdge(nodeList.get(l1index), nodeList.get(l2index));
         } else {
-            System.out.println("Labels not found");
+            logger.debug("Labels not found");
         }
     }
 
@@ -284,9 +290,9 @@ public enum Simulation{
 		float queue = next.getCurrentQueue(current);
 		int maxQueue = next.getMaxQueue(current) / 10;
 		float percentQueue = queue / maxQueue;
-		//System.out.println("Queue size: " + queue);
-		//System.out.println("Queue max: " + maxQueue);
-		//System.out.println("Queue full: " + percentQueue);
+		//logger.debug("Queue size: " + queue);
+		//logger.debug("Queue max: " + maxQueue);
+		//logger.debug("Queue full: " + percentQueue);
 		float time = (percentQueue + 1) * (dist / 5);
 		return (int) time * 100;
 	}
