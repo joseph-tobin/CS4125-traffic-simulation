@@ -38,8 +38,9 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
             String routeString = routeStartEnd[0].toString() + routeStartEnd[1].toString();
             IVehicle v = null;
 
-            /* Prototype Design Pattern Implementation
-             * checking if we already made a vehicle with these start & end points
+            /*
+              Prototype Design Pattern Implementation
+              checking if we already made a vehicle with these start & end points
              */
             if(premade.containsKey(routeString)) {
                 Simulation.INSTANCE.logger.info("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
