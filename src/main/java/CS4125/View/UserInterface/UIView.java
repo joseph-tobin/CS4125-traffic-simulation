@@ -3,6 +3,7 @@ package CS4125.View.UserInterface;
 //import CS4125.Controller.Sim.Simulation;
 import CS4125.Controller.Sim.Simulation;
 import CS4125.View.EventHandlers.UIController;
+import CS4125.View.UserInterface.Command.*;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ public class UIView extends Application {
 
 	private UIController controller;
 	private Stage stage;
+	private CommandExecutor commandExecutor = new CommandExecutor();
 
 	/**
 	 * Start point of the application
@@ -93,10 +95,7 @@ public class UIView extends Application {
 		controls.getChildren().add(new Label("Traffic Level:"));
 		slider.valueProperty().addListener(event-> {
 			System.out.println(slider.getValue());
-			// @Joe
-			// reduce interval for createVehicle thread in simulation
-			Simulation.INSTANCE.setVCTimer((int) slider.getValue()); // yo dawg it is joe here we can change this to double if necessary i just cba rn
-			// also this can only be called when vehicle creation thread has been created, maybe disable slider button if vehicles havent been created?
+			commandExecutor.executeOp(new SliderChangeCommand(slider.getValue()));
 		});
 		controls.getChildren().add(slider);
 
@@ -123,7 +122,7 @@ public class UIView extends Application {
 
 		Button saveBtn = new Button("Save");
 		saveBtn.setOnAction(event -> {
-			Simulation.INSTANCE.saveToMemento();
+			commandExecutor.executeOp(new MementoSaveCommand());
 		});
 
 		Button loadBtn = new Button("Load");
@@ -137,8 +136,7 @@ public class UIView extends Application {
 					getSimPane().getChildren().remove(c);
 				}
 			}
-			//Simulation.INSTANCE.restoreFromMemento(Simulation.INSTANCE.getSavedSims().get(0));
-			Simulation.INSTANCE.getSavedSims().get(0).restoreFromMemento();
+			commandExecutor.executeOp(new MementoRestoreCommand());
 		});
 
 		Button refreshBtn = new Button("Refresh");
@@ -195,9 +193,11 @@ public class UIView extends Application {
 			// grab x & y, add node
 			// prefixing label with tcmType for different representation in UI
 			String thisTCM = tcmType + "_" + name_input.getText();
-			Simulation.INSTANCE.addNode(
-					tcmType, thisTCM,
-					Integer.parseInt(x_input.getText()), Integer.parseInt(y_input.getText()), endpoint);
+
+			commandExecutor.executeOp(new AddTLightsCommand(thisTCM, x_input.getText(), y_input.getText(), endpoint));
+			//commandExecutor.executeOp(new AddRoundaboutCommand....)
+			//commandExecutor.executeOp(new AddSimpleJuncCommand....)
+
 			connectTCMPane(dialog, thisTCM);
 		});
 
