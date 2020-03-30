@@ -12,5 +12,5 @@ Document detailing what patterns are being used and where they will be implement
     * Increases number of passed refs within the system.
     
  <h4>Command Pattern</h4>
- * Encapsulates commands sent from the UI to the Simulation logic layer.\n
- * Enables undo and redo operations whilst hiding the implementation from the UI.\n
+ * Encapsulates commands sent from the UI to the Simulation logic layer.<br>
+ * Enables undo and redo operations whilst hiding the implementation from the UI.<br>
