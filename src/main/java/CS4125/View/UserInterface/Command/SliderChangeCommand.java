@@ -12,4 +12,5 @@ public class SliderChangeCommand implements ICommand {
     public void execute() {
         Simulation.INSTANCE.setVCTimer(sliderValue.intValue());
     }
+    public void undo() {}
 }

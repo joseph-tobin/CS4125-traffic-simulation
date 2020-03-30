@@ -24,4 +24,6 @@ public class AddTLightsCommand implements ICommand{
                 thisType, thisTCM,
                 Integer.parseInt(x_inputText), Integer.parseInt(y_inputText), endpoint);
     }
+
+    public void undo() {}
 }

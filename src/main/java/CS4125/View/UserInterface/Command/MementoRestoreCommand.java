@@ -6,4 +6,5 @@ public class MementoRestoreCommand implements ICommand{
     public void execute() {
         Simulation.INSTANCE.getSavedSims().get(0).restoreFromMemento();
     }
+    public void undo() {}
 }

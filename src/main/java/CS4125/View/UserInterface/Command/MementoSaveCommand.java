@@ -7,5 +7,6 @@ public class MementoSaveCommand implements ICommand{
     public void execute() {
         Simulation.INSTANCE.saveToMemento();
     }
+    public void undo() {}
 
 }
