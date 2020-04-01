@@ -19,7 +19,7 @@ public class LoggingInterceptor implements Interceptor {
     public static LoggingInterceptor getInstance(String type) {
         if (instance == null) {
             switch (type) {
-                case "BasicLogger":   instance = new LoggingInterceptor(new BasicLogger());    break;
+                case "BasicLogger":   instance = new LoggingInterceptor(LoggingAdapter.createLogger(BasicLogger.class));    break;
             }
         }
         return instance;
