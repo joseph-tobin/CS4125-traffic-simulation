@@ -20,6 +20,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
     int ctr = 0;
     private Map<String, IVehicle> premade;
     private Map<IVehicle, Integer> premade_count;
+    private VehicleFactory vFactory;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
         Simulation.INSTANCE.logger.info("Starting vehicle creation thread");
@@ -28,6 +29,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
         rand = new Random(42);
         premade_count = new HashMap<>();
         premade = new HashMap<>();
+        vFactory = new VehicleFactory();
         this.start();
     }
 
@@ -57,7 +59,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
                 toCopy = null;
             }
             else {
-                v = new Car(routeStartEnd[0], routeStartEnd[1]);
+                v = vFactory.makeVehicle("car", routeStartEnd[0], routeStartEnd[1]);
                 premade.put(routeStartEnd[0].toString() + routeStartEnd[1].toString(), v);
                 premade_count.put(v, 1);
             }
