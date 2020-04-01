@@ -45,18 +45,22 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
               checking if we already made a vehicle with these start & end points
              */
             if(premade.containsKey(routeString)) {
-                Simulation.INSTANCE.logger.info("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
                 // checking if this vehicle has been used to copy more than 5 times, remove after this
                 IVehicle toCopy = premade.get(routeString);
                 int count = premade_count.get(toCopy);
                 if(count > 5) {
-                    Simulation.INSTANCE.logger.info("///////////////-deleting-/////////////////");
+                    Simulation.INSTANCE.logger.info("deleting vehicle: " + toCopy);
+                    v = vFactory.makeVehicle("car", routeStartEnd[0], routeStartEnd[1]);
+                    premade.replace(routeString, v);
                     premade_count.remove(toCopy);
-                    premade.remove(routeString);
+                    premade_count.put(v, 1);
                 }
-                v = toCopy.makeCopy();
-                premade_count.replace(toCopy, count + 1);
-                toCopy = null;
+                else {
+                    Simulation.INSTANCE.logger.info("copying vehicle: " + toCopy);
+                    v = toCopy.makeCopy();
+                    premade_count.replace(toCopy, count + 1);
+                    toCopy = null;
+                }
             }
             else {
                 v = vFactory.makeVehicle("car", routeStartEnd[0], routeStartEnd[1]);
