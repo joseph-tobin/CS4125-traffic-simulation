@@ -1,5 +1,8 @@
 package CS4125.View.UserInterface.Command;
 
+import CS4125.Model.Utils.BasicLogger;
+import CS4125.Model.Utils.LoggingAdapter;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.Stack;
 public class CommandExecutor {
     private Stack<ICommand> history = new Stack<>();
     private Stack<ICommand> undoHistory = new Stack<>();
+    private LoggingAdapter logger = LoggingAdapter.createLogger(BasicLogger .class);
 
     public void executeOp(ICommand command) {
         history.push(command);
@@ -20,7 +24,7 @@ public class CommandExecutor {
             cmdToUndo.undo();
             undoHistory.push(cmdToUndo);
         } else {
-            //TODO: Nothing to undo, show user popup?
+            logger.info("No commands in the undo stack");
         }
     }
 
@@ -30,7 +34,7 @@ public class CommandExecutor {
             cmdToRedo.redo();
             history.push(cmdToRedo);
         } else {
-            //TODO: Nothing to redo, show user popup?
+            logger.info("No commands in the redo stack");
         }
     }
 
