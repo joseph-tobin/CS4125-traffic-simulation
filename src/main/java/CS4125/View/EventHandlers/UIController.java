@@ -181,7 +181,11 @@ public class UIController{
 	 * @return list of nodes
 	 */
 	public List<String> getNodeLabels(String selected) {
-		List<String> strOut = new ArrayList<>(Arrays.asList(nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()])));
+		//List<String> strOut = new ArrayList<>(Arrays.asList(nodeLabelCircles.keySet().toArray(new String[nodeLabelCircles.size()])));
+		List<String> strOut = new ArrayList<>();
+		for (ITCM i : Simulation.INSTANCE.getNodeList()) {
+			strOut.add(i.getLabel());
+		}
 		strOut.removeIf(node -> node.equals(selected));
 		return strOut;
 	}

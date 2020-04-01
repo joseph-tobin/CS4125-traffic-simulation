@@ -26,7 +26,6 @@ public enum Simulation{
 
 	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 	public LoggingAdapter logger;
-
     private List<Memento> savedSims;
 	private HashMap<String, IVehicle> routeMap;
 	private List<Circle> circles;
@@ -327,12 +326,12 @@ public enum Simulation{
 	}
 
 	public void saveToMemento() {
-		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), getMoveQueue(), this.controller, this.vc));
+		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), new ArrayBlockingQueue<Move>(100, true, getMoveQueue()), this.controller, this.vc));
 	}
 
 	public class Memento {
 
-		public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
+		private List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 		private HashMap<String, IVehicle> routeMap;
 		private List<IVehicle> vehicles;
 		private Queue<Move> moveQueue;
@@ -352,17 +351,27 @@ public enum Simulation{
 
 		public void restoreFromMemento() {
 			// delete all old nodes
-			for (ITCM n : Simulation.INSTANCE.nodeList) {
+			for (ITCM n : Simulation.this.getNodeList()) {
 				controller.deleteNode(n);
 			}
 
 			// re-add memento nodes
-			for (ITCM n : nodeList) {
+			for (ITCM n : this.nodeList) {
+				logger.info(n.getLabel());
 				controller.addNode(n);
 				for (ITCM value : n.getAdjacent()) {
 					controller.addEdge(n, value);
 				}
 			}
+
+			Simulation.INSTANCE.nodeList.clear();
+			Simulation.INSTANCE.nodeList.addAll(this.nodeList);
+			Simulation.INSTANCE.vehicles.clear();
+			Simulation.INSTANCE.vehicles.addAll(this.vehicles);
+			Simulation.INSTANCE.routeMap = (HashMap<String, IVehicle>) this.routeMap.clone();
+			Simulation.INSTANCE.moveQueue.clear();
+			Simulation.INSTANCE.moveQueue.addAll(this.moveQueue);
+			Simulation.INSTANCE.vc = this.vc;
 
 			// TODO: MoveConsumer changed, need to be able to save the move consumer state and re start
 			// createVehicles(getEndpoints(), 1200); // this might be problem
