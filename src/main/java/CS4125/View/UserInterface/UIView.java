@@ -139,15 +139,14 @@ public class UIView extends Application {
 			commandExecutor.executeOp(new MementoRestoreCommand());
 		});
 
-		Button refreshBtn = new Button("Refresh");
+		Button refreshBtn = new Button("Undo");
 		refreshBtn.setOnAction(event -> {
-			// reset to default sim
-			Simulation.INSTANCE.run();
+			commandExecutor.undo();
 		});
 
-		Button playPauseBtn = new Button("Play");
+		Button playPauseBtn = new Button("Redo");
 		playPauseBtn.setOnAction(event -> {
-			Simulation.INSTANCE.pause();
+			commandExecutor.redo();
 		});
 
 		ioButtons.getChildren().addAll(playPauseBtn, refreshBtn, saveBtn, loadBtn);
@@ -193,11 +192,7 @@ public class UIView extends Application {
 			// grab x & y, add node
 			// prefixing label with tcmType for different representation in UI
 			String thisTCM = tcmType + "_" + name_input.getText();
-
-			commandExecutor.executeOp(new AddTLightsCommand(thisTCM, x_input.getText(), y_input.getText(), endpoint));
-			//commandExecutor.executeOp(new AddRoundaboutCommand....)
-			//commandExecutor.executeOp(new AddSimpleJuncCommand....)
-
+			commandExecutor.executeOp(new AddTCMCommand(tcmType, thisTCM, x_input.getText(), y_input.getText(), endpoint));
 			connectTCMPane(dialog, thisTCM);
 		});
 

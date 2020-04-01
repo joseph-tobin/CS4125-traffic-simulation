@@ -27,7 +27,8 @@ public class CommandExecutor {
     public void redo() {
         if (!undoHistory.isEmpty()) {
             ICommand cmdToRedo = undoHistory.pop();
-            executeOp(cmdToRedo);
+            cmdToRedo.redo();
+            history.push(cmdToRedo);
         } else {
             //TODO: Nothing to redo, show user popup?
         }

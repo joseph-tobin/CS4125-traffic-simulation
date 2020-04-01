@@ -55,7 +55,8 @@ class CommandExecutorTest {
             this.id = id;
         }
 
-        public void execute() {};
-        public void undo() {};
+        public void execute() {}
+        public void undo() {}
+        public void redo() {}
     }
 }

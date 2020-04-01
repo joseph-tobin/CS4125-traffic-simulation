@@ -6,5 +6,10 @@ public class MementoRestoreCommand implements ICommand{
     public void execute() {
         Simulation.INSTANCE.getSavedSims().get(0).restoreFromMemento();
     }
-    public void undo() {}
+    public void undo() {
+        // TODO: Doesn't do anything ,user popup?
+    }
+    public void redo() {
+        // TODO: Doesn't do anything ,user popup?
+    }
 }

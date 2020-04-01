@@ -281,6 +281,13 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
+	public ITCM getNode(String label){
+		for (ITCM i : this.nodeList) {
+			if(i.getLabel().equals(label)) { return i; }
+		}
+		return null;
+	}
+
 	public int getVehicleJourneyTime(IVehicle v) {
 		return v.getInitialTime().compareTo(v.getEndTime());
 	}
