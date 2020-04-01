@@ -19,9 +19,6 @@ public class SimpleJunction extends Subject implements IEndpoint {
     private List<ITCM> adjacent;
     private List<Adjacency> adjacencyObjs; // Mapping between 2 ITCM objects
 
-    private State currentState;
-    private int currentStateNum;
-
     /**
      * State enum, observers watch this state and respond appropriately
      * Used in future version.
@@ -44,8 +41,7 @@ public class SimpleJunction extends Subject implements IEndpoint {
         this.adjacent = new ArrayList<ITCM>();
         this.endpoint = endpoint;
         // GO is default state of SimpleJunction -> Pass through junction when possible
-        currentState = State.GO;
-        currentStateNum = currentState.getStateNum();
+        State currentState = State.GO;
     }
 
     /**
@@ -202,9 +198,8 @@ public class SimpleJunction extends Subject implements IEndpoint {
      */
     @Override
     public float distanceTo(IGraphable node) {
-        float dist = (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)
+        return (float) Math.sqrt(( ((ITCM)node).getY() - y) * (((ITCM)node).getY() - y)
                 + (((ITCM)node).getX() - x) * (((ITCM)node).getX() - x));
-        return dist;
     }
 
     /**
@@ -215,10 +210,6 @@ public class SimpleJunction extends Subject implements IEndpoint {
     @Override
     public int compareTo(Object o) {
         ITCM other = (ITCM) o;
-        if( ((ITCM)o).getEstimatedCost() > this.getEstimatedCost())
-            return -1;
-        else if(((ITCM)o).getEstimatedCost()  < this.getEstimatedCost())
-            return 1;
-        else return 0;
+        return Float.compare(this.getEstimatedCost(), ((ITCM) o).getEstimatedCost());
     }
 }
