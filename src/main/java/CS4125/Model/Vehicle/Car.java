@@ -4,6 +4,9 @@ import CS4125.Controller.Sim.Simulation;
 import CS4125.Model.TrafficControl.ITCM;
 import CS4125.Model.Utils.A_Star;
 import CS4125.Model.Utils.IGraphable;
+import CS4125.Model.Utils.Interceptor.Contexts.Context;
+import CS4125.Model.Utils.Interceptor.Contexts.RouteContext;
+import CS4125.Model.Utils.Interceptor.Frameworks.Framework;
 import CS4125.Model.Utils.Observer;
 
 import java.util.*;
@@ -25,6 +28,7 @@ public class Car implements Runnable, IVehicle, Observer {
 		currentNode = start;
 		endNode = end;
 		route = A_Star.findRoute(start, end);
+		logRoute();
 		initialTime = new Timestamp(System.currentTimeMillis());
 	}
 
@@ -117,5 +121,13 @@ public class Car implements Runnable, IVehicle, Observer {
 			}
 		}
 		currentNode.exitQueue(prevNode);
+	}
+
+	private void logRoute(){
+		Framework.getInstance().onLogEvent(
+				new RouteContext(String.format(
+						"'%s' class created route:",
+						this.getClass().getName()
+		), route));
 	}
 }

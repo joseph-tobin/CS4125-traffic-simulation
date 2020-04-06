@@ -1,20 +1,18 @@
 package CS4125.Controller.Sim;
 
 
-import CS4125.Model.Metrics.Metric;
+import CS4125.Model.TrafficControl.ITCM;
+import CS4125.Model.TrafficControl.Roundabout;
+import CS4125.Model.TrafficControl.SimpleJunction;
+import CS4125.Model.TrafficControl.TrafficLights;
 import CS4125.Model.Utils.BasicLogger;
 import CS4125.Model.Utils.LoggingAdapter;
-import CS4125.Model.Vehicle.IVehicleCreator;
-import CS4125.Model.Vehicle.Car;
-import CS4125.Model.TrafficControl.*;
 import CS4125.Model.Vehicle.IVehicle;
+import CS4125.Model.Vehicle.IVehicleCreator;
 import CS4125.Model.Vehicle.Move;
 import CS4125.Model.Vehicle.VehicleCreator;
 import CS4125.View.EventHandlers.UIController;
-import javafx.animation.PathTransition;
 import javafx.application.Platform;
-import javafx.scene.shape.Circle;
-import CS4125.Model.TrafficControl.SimpleJunction;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -24,13 +22,10 @@ public enum Simulation{
 
 	INSTANCE;
 
-	public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
+	private List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 	public LoggingAdapter logger;
-
     private List<Memento> savedSims;
-	private HashMap<String, IVehicle> routeMap;
-	private List<Circle> circles;
-	private int vehicleQuantity;
+	private Map<String, IVehicle> routeMap;
 	private List<IVehicle> vehicles;
 	private Queue<Move> moveQueue;
 	private Queue<IVehicle> waitingQueue;
@@ -45,9 +40,7 @@ public enum Simulation{
 		this.nodeList = new ArrayList<ITCM>();
 		this.routeMap = new HashMap<String, IVehicle>();
 		this.vehicles = new ArrayList<IVehicle>();
-		this.vehicleQuantity = 0;
-		this.controller = controller;
-		this.circles = new ArrayList<Circle>();
+		Simulation.controller = controller;
 		moveQueue = new ArrayBlockingQueue<Move>(10000);
 		savedSims = new ArrayList<Memento>();
 	}
@@ -67,8 +60,9 @@ public enum Simulation{
 
 		defaultNodes();
 
-		for (ITCM itcm : nodeList)
+		for (ITCM itcm : nodeList) {
 			controller.addNode(itcm);
+		}
 
 		for (ITCM itcm : nodeList) {
 			for (ITCM value : itcm.getAdjacent()) {
@@ -102,8 +96,9 @@ public enum Simulation{
 			case "Roundabout": n = new Roundabout(new SimpleJunction(name, x, y, false)); break;
 			default: n = new SimpleJunction(name,x,y, false); break;
 		}
-		if(endpoint) // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
+		if(endpoint) { // TODO: 30/11/2019 take boolean in param list, if boolean cast to IEndpoint
 			n.setEndpoint(true);
+		}
 		nodeList.add(n);
 		controller.addNode(n);
 	}
@@ -281,6 +276,13 @@ public enum Simulation{
 		return this.nodeList;
 	}
 
+	public ITCM getNode(String label){
+		for (ITCM i : this.nodeList) {
+			if(i.getLabel().equals(label)) { return i; }
+		}
+		return null;
+	}
+
 	public int getVehicleJourneyTime(IVehicle v) {
 		return v.getInitialTime().compareTo(v.getEndTime());
 	}
@@ -315,17 +317,17 @@ public enum Simulation{
 		);
 	}
 
-	public HashMap<String, IVehicle> getRouteMap(){
+	public Map<String, IVehicle> getRouteMap(){
 		return this.routeMap;
 	}
 
 	public void saveToMemento() {
-		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), getMoveQueue(), this.controller, this.vc));
+		savedSims.add(new Memento(new ArrayList<ITCM>(getNodeList()), new HashMap<String, IVehicle>(getRouteMap()), new ArrayList<IVehicle>(getVehicleList()), new ArrayBlockingQueue<Move>(100, true, getMoveQueue()), this.controller, this.vc));
 	}
 
 	public class Memento {
 
-		public List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
+		private List<ITCM> nodeList; // Having public breaks encapsulation - cannot have final due to it not being initialized before simulation
 		private HashMap<String, IVehicle> routeMap;
 		private List<IVehicle> vehicles;
 		private Queue<Move> moveQueue;
@@ -345,17 +347,27 @@ public enum Simulation{
 
 		public void restoreFromMemento() {
 			// delete all old nodes
-			for (ITCM n : Simulation.INSTANCE.nodeList) {
+			for (ITCM n : Simulation.this.getNodeList()) {
 				controller.deleteNode(n);
 			}
 
 			// re-add memento nodes
-			for (ITCM n : nodeList) {
+			for (ITCM n : this.nodeList) {
+				logger.info(n.getLabel());
 				controller.addNode(n);
 				for (ITCM value : n.getAdjacent()) {
 					controller.addEdge(n, value);
 				}
 			}
+
+			Simulation.INSTANCE.nodeList.clear();
+			Simulation.INSTANCE.nodeList.addAll(this.nodeList);
+			Simulation.INSTANCE.vehicles.clear();
+			Simulation.INSTANCE.vehicles.addAll(this.vehicles);
+			Simulation.INSTANCE.routeMap = (HashMap<String, IVehicle>) this.routeMap.clone();
+			Simulation.INSTANCE.moveQueue.clear();
+			Simulation.INSTANCE.moveQueue.addAll(this.moveQueue);
+			Simulation.INSTANCE.vc = this.vc;
 
 			// TODO: MoveConsumer changed, need to be able to save the move consumer state and re start
 			// createVehicles(getEndpoints(), 1200); // this might be problem

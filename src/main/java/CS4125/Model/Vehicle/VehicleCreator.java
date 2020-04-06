@@ -20,6 +20,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
     int ctr = 0;
     private Map<String, IVehicle> premade;
     private Map<IVehicle, Integer> premade_count;
+    private VehicleFactory vFactory;
 
     public VehicleCreator(List<ITCM> nodes, int timer) {
         Simulation.INSTANCE.logger.info("Starting vehicle creation thread");
@@ -28,6 +29,7 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
         rand = new Random(42);
         premade_count = new HashMap<>();
         premade = new HashMap<>();
+        vFactory = new VehicleFactory();
         this.start();
     }
 
@@ -38,25 +40,30 @@ public class VehicleCreator extends Thread implements IVehicleCreator {
             String routeString = routeStartEnd[0].toString() + routeStartEnd[1].toString();
             IVehicle v = null;
 
-            /* Prototype Design Pattern Implementation
-             * checking if we already made a vehicle with these start & end points
+            /*
+              Prototype Design Pattern Implementation
+              checking if we already made a vehicle with these start & end points
              */
             if(premade.containsKey(routeString)) {
-                Simulation.INSTANCE.logger.info("~~~~~~~~~~~~~~~~~~~~~~~copying~~~~~~~~~~~~~~~~~~~~~~");
                 // checking if this vehicle has been used to copy more than 5 times, remove after this
                 IVehicle toCopy = premade.get(routeString);
                 int count = premade_count.get(toCopy);
                 if(count > 5) {
-                    Simulation.INSTANCE.logger.info("///////////////-deleting-/////////////////");
+                    Simulation.INSTANCE.logger.info("deleting vehicle: " + toCopy);
+                    v = vFactory.makeVehicle("car", routeStartEnd[0], routeStartEnd[1]);
+                    premade.replace(routeString, v);
                     premade_count.remove(toCopy);
-                    premade.remove(routeString);
+                    premade_count.put(v, 1);
                 }
-                v = toCopy.makeCopy();
-                premade_count.replace(toCopy, count + 1);
-                toCopy = null;
+                else {
+                    Simulation.INSTANCE.logger.info("copying vehicle: " + toCopy);
+                    v = toCopy.makeCopy();
+                    premade_count.replace(toCopy, count + 1);
+                    toCopy = null;
+                }
             }
             else {
-                v = new Car(routeStartEnd[0], routeStartEnd[1]);
+                v = vFactory.makeVehicle("car", routeStartEnd[0], routeStartEnd[1]);
                 premade.put(routeStartEnd[0].toString() + routeStartEnd[1].toString(), v);
                 premade_count.put(v, 1);
             }

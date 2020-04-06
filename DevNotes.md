@@ -10,3 +10,7 @@ Document detailing what patterns are being used and where they will be implement
   * Consumables placed into a Queue that is started in a new thread from the Simulation. Refs to queue thread passed to relevant producers/ consumers.
     * Reduces processing load on main Simulation thread.
     * Increases number of passed refs within the system.
+    
+ <h4>Command Pattern</h4>
+ * Encapsulates commands sent from the UI to the Simulation logic layer.<br>
+ * Enables undo and redo operations whilst hiding the implementation from the UI.<br>
