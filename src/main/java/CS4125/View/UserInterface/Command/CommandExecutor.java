@@ -7,7 +7,7 @@ import java.util.Stack;
 public class CommandExecutor {
     private Stack<ICommand> history = new Stack<>();
     private Stack<ICommand> undoHistory = new Stack<>();
-    private LoggingAdapter logger = LoggingAdapter.createLogger(BasicLogger .class);
+    private LoggingAdapter logger = LoggingAdapter.createLogger("Command Executor", BasicLogger.class);
 
     public void executeOp(ICommand command) {
         history.push(command);
