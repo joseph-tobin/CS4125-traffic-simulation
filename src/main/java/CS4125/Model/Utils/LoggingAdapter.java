@@ -7,12 +7,12 @@ import javax.lang.model.type.UnknownTypeException;
  */
 abstract public class LoggingAdapter {
 
-    public static LoggingAdapter createLogger(Class<?> adaptee) throws UnknownTypeException {
+    public static LoggingAdapter createLogger(String loggerName, Class<?> adaptee) throws UnknownTypeException {
         // switch on (known) supported adaptable types
         switch(adaptee.getName()) {
             case "CS4125.Model.Utils.BasicLogger": {
                 System.out.println(">>> BasicLogger.class passed to LoggingAdapter");
-                return new BasicLogger();
+                return new BasicLogger(loggerName);
             }
             default: throw new UnknownTypeException(null, "Unsupported class " + adaptee.getName() + " passed to LoggingAdapter");
         }
