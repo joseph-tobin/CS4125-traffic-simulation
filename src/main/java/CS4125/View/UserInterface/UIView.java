@@ -163,7 +163,7 @@ public class UIView extends Application {
 		ObservableList<Simulation.Memento> observableList = FXCollections.observableList(Simulation.INSTANCE.getSavedSims());
 		ListView<Simulation.Memento> nodeOptions = new ListView<>(observableList);
 		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		Button connect_btn = new Button("Save");
+		Button connect_btn = new Button("Restore");
 
 		connect_btn.setOnAction(event -> {
 			dialog.close();
