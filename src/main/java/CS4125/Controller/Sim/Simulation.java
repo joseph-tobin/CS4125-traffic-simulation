@@ -56,7 +56,7 @@ public enum Simulation{
 		vehicles.clear();
 		routeMap.clear();
 
-		logger = LoggingAdapter.createLogger(BasicLogger.class);
+		logger = LoggingAdapter.createLogger("sim-inst", BasicLogger.class);
 
 		defaultNodes();
 

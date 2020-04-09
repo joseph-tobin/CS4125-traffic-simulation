@@ -127,16 +127,7 @@ public class UIView extends Application {
 
 		Button loadBtn = new Button("Load");
 		loadBtn.setOnAction(event -> {
-			// TODO: Change this to maybe open a dialog with all saved sims and click it defaults 0th saved sim
-			// stop current paths
-			// TODO: Stop and delete
-			for (PathTransition t: controller.getAnimations()) {
-				t.stop();
-				for (Circle c: controller.getCircles()) {
-					getSimPane().getChildren().remove(c);
-				}
-			}
-			commandExecutor.executeOp(new MementoRestoreCommand());
+			restoreMementoPane();
 		});
 
 		Button refreshBtn = new Button("Undo");
@@ -161,6 +152,37 @@ public class UIView extends Application {
 
 		Simulation.INSTANCE.init(controller);
 		Simulation.INSTANCE.run();
+	}
+
+	private void restoreMementoPane() {
+		final Stage dialog = new Stage();
+		dialog.setTitle("Saved instances");
+		Label nodeTitle = new Label("Choose an instance to reload to");
+		VBox dialogItems = new VBox(20);
+
+		ObservableList<Simulation.Memento> observableList = FXCollections.observableList(Simulation.INSTANCE.getSavedSims());
+		ListView<Simulation.Memento> nodeOptions = new ListView<>(observableList);
+		nodeOptions.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		Button connect_btn = new Button("Restore");
+
+		connect_btn.setOnAction(event -> {
+			dialog.close();
+			ObservableList<Simulation.Memento> selectedNodes = nodeOptions.getSelectionModel().getSelectedItems();
+			for(Simulation.Memento n : selectedNodes){
+				commandExecutor.executeOp(new MementoRestoreCommand(n));
+			}
+			for (PathTransition t: controller.getAnimations()) {
+				t.stop();
+				for (Circle c: controller.getCircles()) {
+					getSimPane().getChildren().remove(c);
+				}
+			}
+		});
+
+		dialogItems.getChildren().addAll(nodeTitle, nodeOptions, connect_btn);
+		Scene dialogScene = new Scene(dialogItems, 300, 300);
+		dialog.setScene(dialogScene);
+		dialog.show();
 	}
 
 	/**

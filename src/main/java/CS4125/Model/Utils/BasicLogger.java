@@ -1,7 +1,12 @@
 package CS4125.Model.Utils;
 
 public class BasicLogger extends LoggingAdapter {
-    StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = new StringBuilder();
+    private String loggerName;
+
+    public BasicLogger(String loggerName) {
+        this.loggerName = loggerName;
+    }
 
     @Override
     public void info(String message) {
@@ -23,6 +28,7 @@ public class BasicLogger extends LoggingAdapter {
 
     private void formatLog(String logLevel) {
         sb.append("[").append(new java.util.Date()).append("] ");
+        sb.append("{").append(loggerName).append("} ");
         sb.append(logLevel).append(" - ");
     }
 
