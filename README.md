@@ -6,13 +6,13 @@ Simulation software to model average road usage times based on different types o
 
 <h5>File Structure</h5>
 
-* See [report.pdf](./report.pdf) for documentation and details of the patterns used in this project.
+* See [report.pdf](./report.pdf) for documentation and details of the patterns used in this project
 
 * See [classDiagram.png](./classDiagram.png) for a complete class diagram of the project
 
-* See [./src/main/java/CS4125](./src/main/java/CS4125) for the source code of the project.
+* See [./src/main/java/CS4125](./src/main/java/CS4125) for the source code of the project
 
-* See [./CS4125-traffic-simulation-0.1-SNAPSHOT.jar](./CS4125-traffic-simulation-0.1-SNAPSHOT.jar) for a sample executable jar file.
+* See [./CS4125-traffic-simulation-0.1-SNAPSHOT.jar](./CS4125-traffic-simulation-0.1-SNAPSHOT.jar) for a sample executable jar file
 
 <h5>Authors</h5>
 
